@@ -54,6 +54,7 @@ class seso:
         op_id = data[2].split(':')[1].replace('"','')
         op_name = data[1].split(':')[1].replace('"','') + ' ' + data[0].split(':')[2].replace('"','')
         data = (req.text).split('[')[1].replace('[','').replace(']','').replace('{','').replace('}','').replace('"','').split(',')
+        # This ll be obsolite after the DMS ll work correctly
         if list(op_id)[0] == '0':
             op_id = op_id[-3:]
         if useTraining == True:
@@ -70,6 +71,7 @@ class seso:
         return op_id, op_name, unlock, training
     
     def loginLogout(self, *args):
+        # Login / Logout for operator
         op_name = args[0]
         op_id = args[1]
         inOut = args[2]
@@ -83,6 +85,9 @@ class seso:
         return logged
     
     def updateProdData(self, *args):
+        # Production data display
+        # There ll be probably changes since we dont need to calculate everything here
+        # Time ll show
         greenFPY = args[0]
         orangeFPY = args[1]
         payload = {'action': 'hourly', 'station': self.stationNumber}
