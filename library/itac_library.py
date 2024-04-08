@@ -1,7 +1,7 @@
 # ITAC library
 # input for self class ITAC should be station number and restAPI adress
 
-import requests
+from requests import post
 import ctypes
 
 class itac:
@@ -27,24 +27,21 @@ class itac:
                     "client":"01",
                     "registrationType":"S",
                     "systemIdentifier":"Test"}}"""
-        req = requests.post(self.restAPI + self.login, headers = self.headers, data=body, timeout = self.tmout)
+        req = post(self.restAPI + self.login, headers = self.headers, data=body, timeout = self.tmout)
         if req.status_code != 200:
             ctypes.windll.user32.MessageBoxW(0, 'Error 0x301 iTAC regLogin problem ' + str(req.status_code), 'iTAC Message', 0x1000)
-
+        
         js = (req.text).replace(' ','').replace('\r\n','').replace('{"result":{"return_value":0','').split(',')
-        sessionId = js[1].replace('sessionContext":{','').split(':')[1]
-        persId = js[2].split(':')[1]
-        locale = js[3].replace('}}}','').replace('"','').split(':')[1]
+        globals()['sessionId'] = js[1].replace('sessionContext":{','').split(':')[1]
+        globals()['persId'] = js[2].split(':')[1]
+        globals()['locale'] = js[3].replace('}}}','').replace('"','').split(':')[1]
 
-        return sessionId, persId, locale
+        # return sessionId, persId, locale
 
     def sn_info(self, *args):
         # SN information
         # Part number, parts desc, work order and SN pos
-        sessionId = args[0]
-        persId = args[1]
-        locale = args[2]
-        sn = args[3]
+        sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
@@ -53,7 +50,7 @@ class itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberResultKeys": ["PART_NUMBER","PART_DESC","WORKORDER_NUMBER","SERIAL_NUMBER_POS"]}"""
-        req = requests.post(self.restAPI + self.sn_info, headers = self.headers, data = body, timeout = self.tmout)
+        req = post(self.restAPI + self.sn_info, headers = self.headers, data = body, timeout = self.tmout)
         if req.status_code != 200:
             ctypes.windll.user32.MessageBoxW(0, 'Error 0x302 iTAC trGetSerialNumberInfo problem ' + str(req.status_code), 'iTAC Message', 0x1000)
 
@@ -68,10 +65,7 @@ class itac:
     def sn_state(self, *args):
         # SN information
         # Incerlocking
-        sessionId = args[0]
-        persId = args[1]
-        locale = args[2]
-        sn = args[3]
+        sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
@@ -82,7 +76,7 @@ class itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberStateResultKeys": ["ERROR_CODE"]}"""
-        req = requests.post(self.restAPI + self.sn_state, headers = self.headers, data = body, timeout = self.tmout)
+        req = post(self.restAPI + self.sn_state, headers = self.headers, data = body, timeout = self.tmout)
         if req.status_code != 200:
             ctypes.windll.user32.MessageBoxW(0, 'Error 0x303 iTAC trCheckSerialNumberState problem ' + str(req.status_code), 'iTAC Message', 0x1000)
         
@@ -95,14 +89,11 @@ class itac:
 
     def upload(self, *args):
         # Upload of SN result
-        sessionId = args[0]
-        persId = args[1]
-        locale = args[2]
-        sn = args[3]
-        sn_pos = args[4]
-        test_result = args[5]
-        cycle_time = args[6]
-        upload_values = args[7]
+        sn = args[0]
+        sn_pos = args[1]
+        test_result = args[2]
+        cycle_time = args[3]
+        upload_values = args[4]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
@@ -119,19 +110,16 @@ class itac:
                     "recipeVersionMode":0,
                     "resultUploadKeys": ["MEASURE_TYPE","ERROR_CODE","MEASURE_FAIL_CODE","UNIT","MEASURE_NAME","MEASURE_VALUE","LOWER_LIMIT","UPPER_LIMIT","TEST_STEP_NUMBER"],
                     "resultUploadValues": [""" + upload_values + """]}"""
-        req = requests.post(self.restAPI + self.upload, headers = self.headers, data = body, timeout = self.tmout)
+        req = post(self.restAPI + self.upload, headers = self.headers, data = body, timeout = self.tmout)
         if req.status_code != 200:
             ctypes.windll.user32.MessageBoxW(0, 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' + str(req.status_code), 'iTAC Message', 0x1000)
 
     def logout(self, *args):
         # Logout
-        sessionId = args[0]
-        persId = args[1]
-        locale = args[2]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
                     "locale":""" + '"' + locale + '"' + """}}"""
-        req = requests.post(self.restAPI + self.logout, headers=self.headers, data=body, timeout=self.tmout)
+        req = post(self.restAPI + self.logout, headers=self.headers, data=body, timeout=self.tmout)
         if req.status_code != 200:
             ctypes.windll.user32.MessageBoxW(0, 'Error 0x305 iTAC regLogout problem ' + str(req.status_code), 'iTAC Message', 0x1000)

@@ -3,7 +3,7 @@
 # sesoData=https://seso.apag-elektronik.com/api/prod/
 # sesoOperator=https://seso.apag-elektronik.com/api/
 
-import requests
+from requests import post
 
 class seso:
     def __init__(self, *args):
@@ -24,13 +24,13 @@ class seso:
             else:
                 status = '1'
             payload = {'type': 'production', 'itac': '0', 'station': self.stationNumber, 'wa': workOrder, 'module': description, 'ap': serialNumber, 'result': status}
-            req = requests.post(self.restAPI, data = payload, timeout = self.tmout)
+            post(self.restAPI, data = payload, timeout = self.tmout)
 
     def operatorWithoutReader(self):
         # Function which returns the card number and operator name for tester without reader
         # If its secondary machine, then it doenst want trainings
         payload = {'type': 'station-info', 'station': self.stationNumber}
-        req = requests.post(self.restAPI, data = payload, timeout = self.tmout)
+        req = post(self.restAPI, data = payload, timeout = self.tmout)
         op_id = req.text.split(',')[5].split(':')[1].split('-')[0].replace('"','')
         op_name = req.text.split(',')[4].split(':')[1].split('-')[0].replace('"','')
         if list(op_id)[0] == '0':
@@ -49,7 +49,7 @@ class seso:
         cardReader = args[0]
         useTraining = args[1]
         payload = {'type': 'card', 'id': cardReader, 'station': self.stationNumber}
-        req = requests.post(self.restAPI, data = payload, timeout = self.tmout)
+        req = post(self.restAPI, data = payload, timeout = self.tmout)
         data = (req.text).split(',')
         op_id = data[2].split(':')[1].replace('"','')
         op_name = data[1].split(':')[1].replace('"','') + ' ' + data[0].split(':')[2].replace('"','')
@@ -76,7 +76,7 @@ class seso:
         op_id = args[1]
         inOut = args[2]
         payload = {'type': 'operator', 'station': self.stationNumber, 'perName': op_name, 'perNr': op_id, 'action': inOut}
-        req = requests.post(self.restAPI, data = payload, timeout = self.tmout)
+        post(self.restAPI, data = payload, timeout = self.tmout)
         if inOut == 'IN':
             logged = True
         else:
@@ -91,7 +91,7 @@ class seso:
         greenFPY = args[0]
         orangeFPY = args[1]
         payload = {'action': 'hourly', 'station': self.stationNumber}
-        data = requests.post(self.restAPI, data = payload, timeout = self.tmout).text.split(',')
+        data = post(self.restAPI, data = payload, timeout = self.tmout).text.split(',')
         working = int(data[3].split(':')[1]) + int(data[4].split(':')[1])
         testerType = data[0].split(':')[1].replace('"','')
         if 'ICT' in testerType:
