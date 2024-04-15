@@ -88,8 +88,6 @@ class seso:
         # Production data display
         # There ll be probably changes since we dont need to calculate everything here
         # Time ll show
-        greenFPY = args[0]
-        orangeFPY = args[1]
         payload = {'action': 'hourly', 'station': self.stationNumber}
         data = post(self.restAPI, data = payload, timeout = self.tmout).text.split(',')
         working = int(data[3].split(':')[1]) + int(data[4].split(':')[1])
@@ -102,10 +100,8 @@ class seso:
             pass_count = 0
             fail_count = 0
             fpy = 0
-            fpy_color = '#ff8787'
             module = ''
             lrf = 0
-            lrf_color = '#ff8787'
             curr_perf = 0
         else:
             pass_count = int(float(data[3].split(':')[1]))
@@ -125,18 +121,5 @@ class seso:
                 curr_perf = int(float(data[14].split(':')[1].replace('"','').replace('}','').replace(']','')))
             else:
                 curr_perf = 0
-            lrf_perc = lrf/100 * curr_perf
-            if fpy >= greenFPY:
-                fpy_color = '#539955'
-            elif fpy >= orangeFPY:
-                fpy_color = '#997753'
-            else:
-                fpy_color = '#995353'
-            if lrf_perc < 80:
-                lrf_color = '#995353'
-            elif lrf_perc < 100:
-                lrf_color = '#997753'
-            else:
-                lrf_color = '#539955'
 
-        return pass_count, fail_count, fpy, fpy_color, instructionList, module, lrf, lrf_color, curr_perf
+        return pass_count, fail_count, fpy, instructionList, module, lrf, curr_perf

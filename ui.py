@@ -5,6 +5,7 @@ import tkinter
 import ctypes
 from time import sleep
 from PIL import ImageTk, Image
+from library.seso_library import seso
 
 class UI:
     def __init__(self, *args):
@@ -19,6 +20,8 @@ class UI:
         self.op_id = 0
         self.fpy_perf = 0
         self.lrf_perf = 0
+        self.pass_count = 0
+        self.fail_count = 0
 
     def main(self, *args):
         top = tkinter.Tk()
@@ -75,6 +78,14 @@ class UI:
                 c.itemconfig(lrf_graph, fill = '#4954D7')
             c.itemconfig(fpy_graph, extent = 180 / 100 * self.fpy_perf - 0.01)
             c.itemconfig(lrf_graph, extent = 180 / 100 * self.lrf_perf - 0.01)
+            TOTAL_PCBS.config(text = 'Total: ' + str(self.pass_count + self.fail_count))
+            PASS_PCBS.config(text = 'Passed: ' + str(self.pass_count))
+            FAIL_PCBS.config(text = 'Failed: ' + str(self.fail_count))
+            self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf, curr_perf = seso.updateProdData(seso('40010021', 'https://seso.apag-elektronik.com/api/prod/'))
+            if self.lrf_perf > 100:
+                self.lrf_perf = 100
+            # pass_count, fail_count, fpy, instructionList, module, lrf, curr_perf
+            sleep(1)
 
         instr_button = tkinter.Button(top, text = 'Instruction', command = '', width = 9, bd = 0, bg = self.graphBack, font = ('Arial 9'), fg = 'black')
         instr_button.place(x = 5, y = 224)
@@ -97,11 +108,18 @@ class UI:
         operator = tkinter.Label(top, text = self.op_id, bg = self.canvasBack, font = ('Arial 14'), fg = self.textColor)
         operator.place(x = 240, y = 30, anchor = 'center')
 
-        fpy_base = c.create_arc(-60, 0, 220, 250, start = 270, extent = 180, fill = self.graphBack, outline = '')
+        c.create_arc(-60, 0, 220, 250, start = 270, extent = 180, fill = self.graphBack, outline = '')
         fpy_graph = c.create_arc(-60, 0, 220, 250, start = 270, extent = 180, fill = self.graphColor, outline = '')
-        lrf_base = c.create_arc(-20, 35, 180, 215, start = 270, extent = 180, fill = self.graphBack, outline = '')
+        c.create_arc(-20, 35, 180, 215, start = 270, extent = 180, fill = self.graphBack, outline = '')
         lrf_graph = c.create_arc(-20, 35, 180, 215, start = 270, extent = 180, fill = self.graphColor, outline = '')
-        lrf_middle = c.create_arc(20, 70, 140, 180, start = 270, extent = 180, fill = self.rectBack, outline = '')
+        c.create_arc(20, 70, 140, 180, start = 270, extent = 180, fill = self.rectBack, outline = '')
+
+        TOTAL_PCBS = tkinter.Label(top, text = 'Total: ' + str(self.pass_count + self.fail_count), bg = self.canvasBack, font = ('Arial 8'), fg = self.textColor)
+        PASS_PCBS = tkinter.Label(top, text = 'Passed: ' + str(self.pass_count), bg = self.canvasBack, font = ('Arial 8'), fg = self.textColor)
+        FAIL_PCBS = tkinter.Label(top, text = 'Failed: ' + str(self.fail_count), bg = self.canvasBack, font = ('Arial 8'), fg = self.textColor)
+        TOTAL_PCBS.place(x = 230, y = 100)
+        PASS_PCBS.place(x = 230, y = 115)
+        FAIL_PCBS.place(x = 230, y = 130)
 
         if self.company_logo != 'False':
             try:
@@ -116,10 +134,9 @@ class UI:
         top.protocol('WM_DELETE_WINDOW', main_exit)
         while self.run:
             top.update()
-            sleep(1)
             update_data()
         top.quit()
         top.destroy()
         exit(0)
 
-# UI.main(UI(96,65))
+UI.main(UI())
