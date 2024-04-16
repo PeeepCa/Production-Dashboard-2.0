@@ -76,8 +76,8 @@ class UI:
                 c.itemconfig(lrf_graph, fill = '#72BE77')
             else:
                 c.itemconfig(lrf_graph, fill = '#4954D7')
-            c.itemconfig(fpy_graph, extent = 180 / 100 * self.fpy_perf - 0.01)
-            c.itemconfig(lrf_graph, extent = 180 / 100 * self.lrf_perf - 0.01)
+            c.itemconfig(fpy_graph, extent = 180 / 100 * self.fpy_perf)
+            c.itemconfig(lrf_graph, extent = 180 / 100 * self.lrf_perf)
             TOTAL_PCBS.config(text = 'Total: ' + str(self.pass_count + self.fail_count))
             PASS_PCBS.config(text = 'Passed: ' + str(self.pass_count))
             FAIL_PCBS.config(text = 'Failed: ' + str(self.fail_count))
