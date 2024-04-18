@@ -40,7 +40,6 @@ class UI:
         window_height = 250
         screen_width = int(top.winfo_screenwidth() - window_width)
         screen_height = int(top.winfo_screenheight() - window_height - 40)
-
         top.title('Dashboard')
         top.geometry(f'{window_width}x{window_height}+{screen_width}+{screen_height}')
         top.config(bg = '#484179')
@@ -48,7 +47,6 @@ class UI:
         top.overrideredirect(True)
         top.anchor('center')
         top.attributes('-topmost', 1)
-
         c = tkinter.Canvas(width = 400, height = 250, bg = self.canvasBack, bd = -2)
         c.create_rectangle(0, 0, 80, 250, tags = 'ch', fill = self.rectBack, width = 0)
         c.pack()
@@ -116,13 +114,13 @@ class UI:
         c.tag_bind('APP_MINIMIZE', '<Button-1>', minimize)
         c.tag_bind('APP_MINIMIZE_ICO', '<Button-1>', minimize)
         c.itemconfig(APP_MINIMIZE, fill = 'black')
-
+        
         APP_NAME = tkinter.Label(top, text = 'Production Dashboard', bg = self.canvasBack, font = ('Arial 10'), fg = self.textColor)
         APP_NAME.place(x = 240, y = 10, anchor = 'center')
-
+        
         operator = tkinter.Label(top, text = self.op_id, bg = self.canvasBack, font = ('Arial 14'), fg = self.textColor)
         operator.place(x = 240, y = 30, anchor = 'center')
-
+        
         c.create_arc(-60, 0, 220, 250, start = 270, extent = 180, fill = self.graphBack, outline = '')
         fpy_graph = c.create_arc(-60, 0, 220, 250, start = 270, extent = 180, fill = self.graphColor, outline = '')
         c.create_arc(-20, 35, 180, 215, start = 270, extent = 180, fill = self.graphBack, outline = '')
