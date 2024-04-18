@@ -1,5 +1,5 @@
 # Dodělat iTAC
-# Dodělat Logování
+# Dodělat Logování - Hotovo
 # Dodělat čtečku
 
 import tkinter
@@ -8,15 +8,23 @@ from time import sleep
 from PIL import ImageTk, Image
 from library.seso_library import seso
 from library.logger_library import logger
+from library.config_library import config
 
 class UI:
     def __init__(self):
+        # stationNumber, PATH, thread_number, restAPI, bool(remove_file), sesoData, bool(useSESO), bool(parselog), bool(useReader), COM, BAUD, int(greenFPY), int(orangeFPY), bool(showIntr), bool(useLogin), company_logo, sesoOperator, bool(useTraining), log_format, serverInstrGen
+        temp = config.read_config(config('C:\\production\\tester.ini', '//fs/gs/IndustrialEngineering/Public/04_Testing/01_APPs/production/Configuration/'))
+        self.stationNo = temp[0]
+        self.companyLogo = temp[15]
+        self.greenFpy = temp[11]
+        self.orangeFpy = temp[12]
+        self.sesoData = temp[5]
+        self.useSeso = temp[6]
         self.canvasBack = 'white'
         self.rectBack = '#1f1fc2'
         self.graphBack = '#766fd2'
         self.textColor = '#1f1fc2'
         self.graphColor = '#4954D7'
-        self.company_logo = '//fs/gs/IndustrialEngineering/Public/04_Testing/01_APPs/production/Configuration/apag logo.bmp'
         self.run = True
         self.dsh_offset = 0
         self.op_id = 0
@@ -24,6 +32,7 @@ class UI:
         self.lrf_perf = 0
         self.pass_count = 0
         self.fail_count = 0
+        logger.log_event(logger(), 'Logging started.')
 
     def main(self):
         top = tkinter.Tk()
@@ -45,6 +54,7 @@ class UI:
         c.pack()
 
         def main_exit(*args):
+            logger.log_event(logger(), 'App exit by button.')
             self.run = False
 
         def minimize(*args):
@@ -63,15 +73,19 @@ class UI:
             c.pack()
 
         def update_data():
-            self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf, curr_perf = seso.updateProdData(seso('40010021', 'https://seso.apag-elektronik.com/api/prod/'))
+            if self.useSeso == True:
+                self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf, curr_perf = seso.updateProdData(seso(self.stationNo, self.sesoData))
+            else:
+                # Placeholder
+                pass
             current_color = c.itemcget(APP_ALIVE, 'fill')
             if current_color == 'black':
                 c.itemconfig(APP_ALIVE, fill = 'white')
             else:
                 c.itemconfig(APP_ALIVE, fill = 'black')
-            if self.fpy_perf >= 98:
+            if self.fpy_perf >= self.greenFpy:
                 c.itemconfig(fpy_graph, fill = '#72BE77')
-            elif self.fpy_perf >= 95:
+            elif self.fpy_perf >= self.orangeFpy:
                 c.itemconfig(fpy_graph, fill = '#DF9F69')
             else:
                 c.itemconfig(fpy_graph, fill = '#4954D7')
@@ -122,9 +136,9 @@ class UI:
         PASS_PCBS.place(x = 230, y = 115)
         FAIL_PCBS.place(x = 230, y = 130)
 
-        if self.company_logo != 'False':
+        if self.companyLogo != 'False':
             try:
-                img = Image.open(self.company_logo)
+                img = Image.open(self.companyLogo)
                 img = img.resize((75,45))
                 photoImg =  ImageTk.PhotoImage(img)
                 logo = tkinter.Label(top , image = photoImg , height = 45 , width = 75 , borderwidth = 0)
