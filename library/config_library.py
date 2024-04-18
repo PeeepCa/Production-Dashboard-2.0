@@ -7,6 +7,7 @@ class config:
         self.tester_no = file1.read(-1)
         file2 = open(args[1] + self.tester_no + '.ini', 'r')
         self.temp = file2.read(-1).splitlines()
+        
     def read_config(self):
         try:
             for x in self.temp:
