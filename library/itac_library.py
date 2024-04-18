@@ -114,7 +114,7 @@ class itac:
         if req.status_code != 200:
             ctypes.windll.user32.MessageBoxW(0, 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' + str(req.status_code), 'iTAC Message', 0x1000)
 
-    def logout(self, *args):
+    def logout(self):
         # Logout
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,

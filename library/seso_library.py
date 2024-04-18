@@ -84,7 +84,7 @@ class seso:
 
         return logged
     
-    def updateProdData(self, *args):
+    def updateProdData(self):
         # Production data display
         # There ll be probably changes since we dont need to calculate everything here
         # Time ll show

@@ -1,14 +1,16 @@
-# pass_count, fail_count, fpy, fpy_color, instructionList, module, lrf, lrf_color, curr_perf
-# inputs
+# Dodělat iTAC
+# Dodělat Logování
+# Dodělat čtečku
 
 import tkinter
 import ctypes
 from time import sleep
 from PIL import ImageTk, Image
 from library.seso_library import seso
+from library.logger_library import logger
 
 class UI:
-    def __init__(self, *args):
+    def __init__(self):
         self.canvasBack = 'white'
         self.rectBack = '#1f1fc2'
         self.graphBack = '#766fd2'
@@ -23,7 +25,7 @@ class UI:
         self.pass_count = 0
         self.fail_count = 0
 
-    def main(self, *args):
+    def main(self):
         top = tkinter.Tk()
         window_width = 400 - self.dsh_offset
         window_height = 250
@@ -60,7 +62,8 @@ class UI:
             c.coords(APP_MINIMIZE_ICO, 380 - self.dsh_offset, 5, 390 - self.dsh_offset, 5)
             c.pack()
 
-        def update_data(*args):
+        def update_data():
+            self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf, curr_perf = seso.updateProdData(seso('40010021', 'https://seso.apag-elektronik.com/api/prod/'))
             current_color = c.itemcget(APP_ALIVE, 'fill')
             if current_color == 'black':
                 c.itemconfig(APP_ALIVE, fill = 'white')
@@ -76,15 +79,13 @@ class UI:
                 c.itemconfig(lrf_graph, fill = '#72BE77')
             else:
                 c.itemconfig(lrf_graph, fill = '#4954D7')
-            c.itemconfig(fpy_graph, extent = 180 / 100 * self.fpy_perf)
-            c.itemconfig(lrf_graph, extent = 180 / 100 * self.lrf_perf)
             TOTAL_PCBS.config(text = 'Total: ' + str(self.pass_count + self.fail_count))
             PASS_PCBS.config(text = 'Passed: ' + str(self.pass_count))
             FAIL_PCBS.config(text = 'Failed: ' + str(self.fail_count))
-            self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf, curr_perf = seso.updateProdData(seso('40010021', 'https://seso.apag-elektronik.com/api/prod/'))
+            c.itemconfig(fpy_graph, extent = 180 / 100 * self.fpy_perf)
             if self.lrf_perf > 100:
                 self.lrf_perf = 100
-            # pass_count, fail_count, fpy, instructionList, module, lrf, curr_perf
+            c.itemconfig(lrf_graph, extent = 180 / 100 * self.lrf_perf)
             sleep(1)
 
         instr_button = tkinter.Button(top, text = 'Instruction', command = '', width = 9, bd = 0, bg = self.graphBack, font = ('Arial 9'), fg = 'black')
@@ -130,6 +131,7 @@ class UI:
                 logo.place(x = 323 , y = 203)
             except FileNotFoundError:
                 ctypes.windll.user32.MessageBoxW(0, 'Error 0x202 Image not found. Please check image name.', 'Error', 0x1000)
+                logger.log_event(logger(), 'Error 0x202 Image not found.')
 
         top.protocol('WM_DELETE_WINDOW', main_exit)
         while self.run:
