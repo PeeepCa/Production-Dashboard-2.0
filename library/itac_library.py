@@ -36,8 +36,6 @@ class itac:
         globals()['persId'] = js[2].split(':')[1]
         globals()['locale'] = js[3].replace('}}}','').replace('"','').split(':')[1]
 
-        # return sessionId, persId, locale
-
     def sn_info(self, *args):
         # SN information
         # Part number, parts desc, work order and SN pos
@@ -59,7 +57,6 @@ class itac:
         part_desc = str(data[2])
         wa = str(data[3])
         sn_pos = str(data[4].split(']')[0])
-
         return part_no, part_desc, wa, sn_pos
 
     def sn_state(self, *args):
@@ -84,7 +81,6 @@ class itac:
         status = status.replace('"','').replace('}','').replace('[','').replace(']','').split(':')[1]
         if status != '0' and status != '212':
             ctypes.windll.user32.MessageBoxW(0, 'iTAC AOI ' + status, 'iTAC Message', 0x1000)
-
         return status
 
     def upload(self, *args):

@@ -5,7 +5,7 @@ import serial
 import ctypes
 from library.logger_library import logger
 
-class HW:
+class hw:
     def __init__(self, *args):
         # input of COM and BAUD // COM8, 9600
         self.msg_show = 1
@@ -48,7 +48,3 @@ class HW:
 
     def rfid_close(self):
         ser.close()
-
-HW.rfid_open(HW('COM8', '9600'))
-print(HW.rfid_read(HW('COM8', '9600')))
-HW.rfid_close(HW('COM8', '9600'))

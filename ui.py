@@ -1,6 +1,6 @@
 # Dodělat iTAC
 # Dodělat Logování - Hotovo
-# Dodělat čtečku
+# Dodělat čtečku - Hotovo
 # Dodělat offline režim
 # Dodělat mustry
 
@@ -12,7 +12,7 @@ from PIL import ImageTk, Image
 from library.seso_library import seso
 from library.logger_library import logger
 from library.config_library import config
-from library.hw_library import HW
+from library.hw_library import hw
 
 class UI:
     def __init__(self):
@@ -24,15 +24,16 @@ class UI:
         self.greenFpy = temp[11]
         self.orangeFpy = temp[12]
         self.sesoData = temp[5]
+        self.sesoOperator = temp[16]
         self.useSeso = temp[6]
         self.useReader = temp[8]
         self.COM = temp[9]
         self.BAUD = temp[10]
-        self.canvasBack = 'white'
-        self.rectBack = '#1f1fc2'
-        self.graphBack = '#766fd2'
-        self.textColor = '#1f1fc2'
-        self.graphColor = '#4954D7'
+        self.canvasBack = temp[20]
+        self.rectBack = temp[21]
+        self.graphBack = temp[22]
+        self.textColor = temp[23]
+        self.graphColor = temp[24]
         self.run = True
         self.dsh_offset = 0
         self.op_id = 0
@@ -41,8 +42,11 @@ class UI:
         self.pass_count = 0
         self.fail_count = 0
         self.msg_show = 1
-        if self.useSeso == True:
-            self.useReader = HW.rfid_open(HW(self.COM, self.BAUD))
+        self.op_name = ''
+        self.unlock = False
+        self.training = ''
+        if self.useReader == True:
+            self.useReader = hw.rfid_open(hw(self.COM, self.BAUD))
         logger.log_event(logger(), 'Logging started.')
 
     def main(self):
@@ -67,7 +71,7 @@ class UI:
             logger.log_event(logger(), 'App exit by button.')
             self.run = False
             if self.useSeso == True:
-                self.useReader = HW.rfid_close(HW(self.COM, self.BAUD))
+                self.useReader = hw.rfid_close(hw(self.COM, self.BAUD))
 
         def minimize(*args):
             # minimise the window
@@ -88,10 +92,13 @@ class UI:
         def update_data():
             # update function for seso and other dynamic data
             if self.useReader == True:
-                self.card_id = HW.rfid_read(HW(self.COM, self.BAUD))
-                print(self.card_id)
+                self.card_id = hw.rfid_read(hw(self.COM, self.BAUD))
             if self.useSeso == True:
                 self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf, curr_perf = seso.updateProdData(seso(self.stationNo, self.sesoData))
+                if int(self.card_id) == 0:
+                    self.op_id, self.op_name, self.unlock, self.training = seso.operatorWithoutReader(seso(self.stationNo, self.sesoOperator))
+                if self.useReader == True and int(self.card_id) > 0:
+                    self.op_id, self.op_name, self.unlock, self.training = seso.operatorWithReader(seso(self.stationNo, self.sesoOperator), self.card_id, False)
             else:
                 # Placeholder
                 pass
@@ -113,6 +120,7 @@ class UI:
             TOTAL_PCBS.config(text = 'Total: ' + str(self.pass_count + self.fail_count))
             PASS_PCBS.config(text = 'Passed: ' + str(self.pass_count))
             FAIL_PCBS.config(text = 'Failed: ' + str(self.fail_count))
+            operator.config(text = self.op_id)
             c.itemconfig(fpy_graph, extent = 180 / 100 * self.fpy_perf)
             if self.lrf_perf > 100:
                 self.lrf_perf = 100

@@ -65,8 +65,18 @@ class config:
                         useTraining = ''
                 elif 'log_format' in x:
                     log_format = x.split('=')[1]
+                elif 'background_main' in x:
+                    canvasBack = x.split('=')[1]
+                elif 'background_second' in x:
+                    rectBack = x.split('=')[1]
+                elif 'default_graph' in x:
+                    graphBack = x.split('=')[1]
+                elif 'text_color' in x:
+                    textColor = x.split('=')[1]
+                elif 'background_graph' in x:
+                    graphColor = x.split('=')[1]
 
-            return stationNumber, PATH, thread_number, restAPI, bool(remove_file), sesoData, bool(useSESO), bool(parselog), bool(useReader), COM, BAUD, int(greenFPY), int(orangeFPY), bool(showIntr), bool(useLogin), company_logo, sesoOperator, bool(useTraining), log_format, serverInstrGen
+            return stationNumber, PATH, thread_number, restAPI, bool(remove_file), sesoData, bool(useSESO), bool(parselog), bool(useReader), COM, BAUD, int(greenFPY), int(orangeFPY), bool(showIntr), bool(useLogin), company_logo, sesoOperator, bool(useTraining), log_format, serverInstrGen, canvasBack, rectBack, graphBack, textColor, graphColor
     
         except UnboundLocalError:
             ctypes.windll.user32.MessageBoxW(0, 'Variable not found in config.', 'Error', 0x1000)
