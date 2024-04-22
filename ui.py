@@ -1,25 +1,33 @@
 # Dodělat iTAC
 # Dodělat Logování - Hotovo
 # Dodělat čtečku
+# Dodělat offline režim
+# Dodělat mustry
 
 import tkinter
 import ctypes
+from socket import gethostname
 from time import sleep
 from PIL import ImageTk, Image
 from library.seso_library import seso
 from library.logger_library import logger
 from library.config_library import config
+from library.hw_library import HW
 
 class UI:
     def __init__(self):
         # stationNumber, PATH, thread_number, restAPI, bool(remove_file), sesoData, bool(useSESO), bool(parselog), bool(useReader), COM, BAUD, int(greenFPY), int(orangeFPY), bool(showIntr), bool(useLogin), company_logo, sesoOperator, bool(useTraining), log_format, serverInstrGen
-        temp = config.read_config(config('C:\\production\\tester.ini', '//fs/gs/IndustrialEngineering/Public/04_Testing/01_APPs/production/Configuration/'))
+        # init for all the default data + readout of the config file
+        temp = config.read_config(config('//fs/gs/IndustrialEngineering/Public/04_Testing/01_APPs/production/Configuration/' + gethostname() + '.ini'))
         self.stationNo = temp[0]
         self.companyLogo = temp[15]
         self.greenFpy = temp[11]
         self.orangeFpy = temp[12]
         self.sesoData = temp[5]
         self.useSeso = temp[6]
+        self.useReader = temp[8]
+        self.COM = temp[9]
+        self.BAUD = temp[10]
         self.canvasBack = 'white'
         self.rectBack = '#1f1fc2'
         self.graphBack = '#766fd2'
@@ -32,6 +40,9 @@ class UI:
         self.lrf_perf = 0
         self.pass_count = 0
         self.fail_count = 0
+        self.msg_show = 1
+        if self.useSeso == True:
+            self.useReader = HW.rfid_open(HW(self.COM, self.BAUD))
         logger.log_event(logger(), 'Logging started.')
 
     def main(self):
@@ -52,10 +63,14 @@ class UI:
         c.pack()
 
         def main_exit(*args):
+            # just the exit which stops the main loop
             logger.log_event(logger(), 'App exit by button.')
             self.run = False
+            if self.useSeso == True:
+                self.useReader = HW.rfid_close(HW(self.COM, self.BAUD))
 
         def minimize(*args):
+            # minimise the window
             if self.dsh_offset == 320:
                 self.dsh_offset = 0
             else:
@@ -71,6 +86,10 @@ class UI:
             c.pack()
 
         def update_data():
+            # update function for seso and other dynamic data
+            if self.useReader == True:
+                self.card_id = HW.rfid_read(HW(self.COM, self.BAUD))
+                print(self.card_id)
             if self.useSeso == True:
                 self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf, curr_perf = seso.updateProdData(seso(self.stationNo, self.sesoData))
             else:
@@ -98,7 +117,7 @@ class UI:
             if self.lrf_perf > 100:
                 self.lrf_perf = 100
             c.itemconfig(lrf_graph, extent = 180 / 100 * self.lrf_perf)
-            sleep(1)
+            sleep(0.5)
 
         instr_button = tkinter.Button(top, text = 'Instruction', command = '', width = 9, bd = 0, bg = self.graphBack, font = ('Arial 9'), fg = 'black')
         instr_button.place(x = 5, y = 224)
@@ -135,6 +154,7 @@ class UI:
         FAIL_PCBS.place(x = 230, y = 130)
 
         if self.companyLogo != 'False':
+            # Company logo
             try:
                 img = Image.open(self.companyLogo)
                 img = img.resize((75,45))
@@ -146,9 +166,12 @@ class UI:
                 logger.log_event(logger(), 'Error 0x202 Image not found.')
 
         top.protocol('WM_DELETE_WINDOW', main_exit)
+
         while self.run:
+            # Main loop for update the GUI
             top.update()
             update_data()
+
         top.quit()
         top.destroy()
         exit(0)

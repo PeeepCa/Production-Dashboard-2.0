@@ -1,0 +1,19 @@
+22.04.2024 09:56:28: Logging started.
+22.04.2024 09:56:43: App exit by button.
+22.04.2024 09:59:36: Logging started.
+22.04.2024 10:00:15: Logging started.
+22.04.2024 10:00:24: Logging started.
+22.04.2024 10:09:10: Logging started.
+22.04.2024 10:09:19: App exit by button.
+22.04.2024 10:51:15: RFID reader at COM8 doesnt work. POPUP for continue or exit
+22.04.2024 10:59:42: RFID reader at COM14 doesnt work. POPUP for continue or exit
+22.04.2024 10:59:42: Logging started.
+22.04.2024 11:00:09: Logging started.
+22.04.2024 11:00:56: App exit by button.
+22.04.2024 11:01:03: Logging started.
+22.04.2024 11:01:22: App exit by button.
+22.04.2024 11:01:53: Logging started.
+22.04.2024 11:02:34: Logging started.
+22.04.2024 11:02:55: App exit by button.
+22.04.2024 11:03:11: Logging started.
+22.04.2024 11:03:36: App exit by button.

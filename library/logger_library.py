@@ -1,4 +1,4 @@
-# Logger
+# Logger library
 
 from datetime import datetime
 
