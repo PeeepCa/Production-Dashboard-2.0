@@ -1,8 +1,8 @@
 # HW library
 # so far only the RFID reader
 
-import serial
-import ctypes
+from serial import Serial, serialutil
+from ctypes import windll
 from library.logger_library import logger
 
 class hw:
@@ -14,11 +14,11 @@ class hw:
 
     def rfid_open(self):
         try:
-            globals()['ser'] = serial.Serial(self.COM, self.BAUD, timeout=0.5)
+            globals()['ser'] = Serial(self.COM, self.BAUD, timeout=0.5)
             useReader = True
-        except serial.serialutil.SerialException:
+        except serialutil.SerialException:
             if self.msg_show == 1:
-                dec = ctypes.windll.user32.MessageBoxW(0, 'Error 0x203 Reader at: ' + self.COM + ' cannot be found.\rContinue withour reader?', 'HW Error', 0x1001)
+                dec = windll.user32.MessageBoxW(0, 'Error 0x203 Reader at: ' + self.COM + ' cannot be found.\rContinue withour reader?', 'HW Error', 0x1001)
                 logger.log_event(logger(), 'RFID reader at ' + self.COM + ' doesnt work. POPUP for continue or exit')
                 if dec == 1:
                     useReader = False
@@ -39,11 +39,11 @@ class hw:
                 serialString = '0'
             return serialString
 
-        except serial.serialutil.SerialException:
+        except serialutil.SerialException:
             logger.log_event(logger(), 'RFID reader trying to reconnect.')
-            HW.rfid_close()
+            hw.rfid_close()
             self.msg_show = 0
-            HW.rfid_open(self.COM, self.BAUD)
+            hw.rfid_open(self.COM, self.BAUD)
             self.msg_show = 1
 
     def rfid_close(self):

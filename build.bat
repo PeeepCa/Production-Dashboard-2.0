@@ -1,3 +1,3 @@
-cd C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard
+cd C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0
 
-py -3.7 -m PyInstaller production.pyw --onefile -w
+py -3.7 -m PyInstaller ui.py --onefile -w

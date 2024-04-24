@@ -3,9 +3,14 @@
 # Dodělat čtečku - Hotovo
 # Dodělat offline režim
 # Dodělat mustry
+# Odzkošeno i jako exe
+# Multithreading - částečně hotovo
 
 import tkinter
-import ctypes
+import sys
+from threading import Thread
+from ctypes import windll
+from os import path
 from socket import gethostname
 from time import sleep
 from PIL import ImageTk, Image
@@ -18,7 +23,12 @@ class UI:
     def __init__(self):
         # stationNumber, PATH, thread_number, restAPI, bool(remove_file), sesoData, bool(useSESO), bool(parselog), bool(useReader), COM, BAUD, int(greenFPY), int(orangeFPY), bool(showIntr), bool(useLogin), company_logo, sesoOperator, bool(useTraining), log_format, serverInstrGen
         # init for all the default data + readout of the config file
-        temp = config.read_config(config('//fs/gs/IndustrialEngineering/Public/04_Testing/01_APPs/production/Configuration/' + gethostname() + '.ini'))
+        logger.log_event(logger(), 'Logging started.')
+        if getattr(sys, 'frozen', False):
+            application_path = path.dirname(sys.executable)
+        elif __file__:
+            application_path = path.dirname(__file__)
+        temp = config.read_config(config(application_path + '/Configuration/' + gethostname() + '.ini'))
         self.stationNo = temp[0]
         self.companyLogo = temp[15]
         self.greenFpy = temp[11]
@@ -34,6 +44,7 @@ class UI:
         self.graphBack = temp[22]
         self.textColor = temp[23]
         self.graphColor = temp[24]
+        self.threadCount = temp[2]
         self.run = True
         self.dsh_offset = 0
         self.op_id = 0
@@ -47,9 +58,8 @@ class UI:
         self.training = ''
         if self.useReader == True:
             self.useReader = hw.rfid_open(hw(self.COM, self.BAUD))
-        logger.log_event(logger(), 'Logging started.')
 
-    def main(self):
+    def UI(self):
         top = tkinter.Tk()
         window_width = 400 - self.dsh_offset
         window_height = 250
@@ -69,9 +79,9 @@ class UI:
         def main_exit(*args):
             # just the exit which stops the main loop
             logger.log_event(logger(), 'App exit by button.')
-            self.run = False
             if self.useSeso == True:
                 self.useReader = hw.rfid_close(hw(self.COM, self.BAUD))
+            self.run = False
 
         def minimize(*args):
             # minimise the window
@@ -170,18 +180,27 @@ class UI:
                 logo = tkinter.Label(top , image = photoImg , height = 45 , width = 75 , borderwidth = 0)
                 logo.place(x = 323 , y = 203)
             except FileNotFoundError:
-                ctypes.windll.user32.MessageBoxW(0, 'Error 0x202 Image not found. Please check image name.', 'Error', 0x1000)
-                logger.log_event(logger(), 'Error 0x202 Image not found.')
+                windll.user32.MessageBoxW(0, 'Error 0x001 Image not found. Please check image name.', 'Error', 0x1000)
+                logger.log_event(logger(), 'Error 0x001 Image not found.')
 
         top.protocol('WM_DELETE_WINDOW', main_exit)
 
         while self.run:
-            # Main loop for update the GUI
-            top.update()
-            update_data()
+            try:
+                # Main loop for update the GUI
+                top.update()
+                update_data()
+            except:
+                windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.', 'Error', 0x1000)
+                logger.log_event(logger(), 'Error 0x000 Undefined error in main.')
 
         top.quit()
         top.destroy()
-        exit(0)
+        sys.exit(0)
 
-UI.main(UI())
+    def main():
+        t0 = Thread(target = UI.UI(UI()))
+        t0.start()
+
+if __name__ == '__main__':
+    UI.main()

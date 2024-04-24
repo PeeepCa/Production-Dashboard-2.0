@@ -1,4 +1,4 @@
-import ctypes
+from ctypes import windll
 from library.logger_library import logger
 
 class config:
@@ -79,8 +79,8 @@ class config:
             return stationNumber, PATH, thread_number, restAPI, bool(remove_file), sesoData, bool(useSESO), bool(parselog), bool(useReader), COM, BAUD, int(greenFPY), int(orangeFPY), bool(showIntr), bool(useLogin), company_logo, sesoOperator, bool(useTraining), log_format, serverInstrGen, canvasBack, rectBack, graphBack, textColor, graphColor
     
         except UnboundLocalError:
-            ctypes.windll.user32.MessageBoxW(0, 'Variable not found in config.', 'Error', 0x1000)
+            windll.user32.MessageBoxW(0, 'Error 0x101 Variable not found in config.', 'Error', 0x1000)
             logger.log_event(logger(), 'Variable not found in config.')
         except NameError:
-            ctypes.windll.user32.MessageBoxW(0, 'Variable not found in return of function.', 'Error', 0x1000)
+            windll.user32.MessageBoxW(0, 'Error 0x102 Variable not found in return of function.', 'Error', 0x1000)
             logger.log_event(logger(), 'Variable not found in return of function.')

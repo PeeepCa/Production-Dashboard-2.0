@@ -3,7 +3,7 @@
 # sesoData=https://seso.apag-elektronik.com/api/prod/
 # sesoOperator=https://seso.apag-elektronik.com/api/
 
-import ctypes
+from ctypes import windll
 from requests import post
 from requests import exceptions
 from library.logger_library import logger
@@ -31,7 +31,7 @@ class seso:
                 post(self.restAPI, data = payload, timeout = self.tmout)
         except exceptions.MissingSchema:
             logger.log_event(logger(), 'Wrong URL at upload.')
-            ctypes.windll.user32.MessageBoxW(0, 'Error 0x401 URL for upload.', 'SESO Message', 0x1000)
+            windll.user32.MessageBoxW(0, 'Error 0x401 URL for upload.', 'SESO Message', 0x1000)
 
     def operatorWithoutReader(self):
         try:
@@ -52,7 +52,7 @@ class seso:
             return op_id, op_name, unlock, training
         except exceptions.MissingSchema:
             logger.log_event(logger(), 'Wrong URL at operatorWithoutReader.')
-            ctypes.windll.user32.MessageBoxW(0, 'Error 0x402 URL for operatorWithoutReader.', 'SESO Message', 0x1000)
+            windll.user32.MessageBoxW(0, 'Error 0x402 URL for operatorWithoutReader.', 'SESO Message', 0x1000)
     
     def operatorWithReader(self, *args):
         try:
@@ -83,7 +83,7 @@ class seso:
             return op_id, op_name, unlock, training
         except exceptions.MissingSchema:
             logger.log_event(logger(), 'Wrong URL at operatorWithReader.')
-            ctypes.windll.user32.MessageBoxW(0, 'Error 0x403 URL for operatorWithReader.', 'SESO Message', 0x1000)
+            windll.user32.MessageBoxW(0, 'Error 0x403 URL for operatorWithReader.', 'SESO Message', 0x1000)
 
     
     def loginLogout(self, *args):
@@ -101,7 +101,7 @@ class seso:
             return logged
         except exceptions.MissingSchema:
             logger.log_event(logger(), 'Wrong URL at loginLogout.')
-            ctypes.windll.user32.MessageBoxW(0, 'Error 0x404 URL for loginLogout.', 'SESO Message', 0x1000)
+            windll.user32.MessageBoxW(0, 'Error 0x404 URL for loginLogout.', 'SESO Message', 0x1000)
     
     def updateProdData(self):
         try:
@@ -145,4 +145,4 @@ class seso:
             return pass_count, fail_count, fpy, instructionList, module, lrf, curr_perf
         except exceptions.MissingSchema:
             logger.log_event(logger(), 'Wrong URL at updateProdData.')
-            ctypes.windll.user32.MessageBoxW(0, 'Error 0x405 URL for updateProdData.', 'SESO Message', 0x1000)
+            windll.user32.MessageBoxW(0, 'Error 0x405 URL for updateProdData.', 'SESO Message', 0x1000)
