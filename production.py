@@ -8,6 +8,7 @@
 
 import tkinter
 import sys
+from psutil import process_iter
 from threading import Thread
 from ctypes import windll
 from os import path
@@ -19,7 +20,7 @@ from library.logger_library import logger
 from library.config_library import config
 from library.hw_library import hw
 
-class UI:
+class app:
     def __init__(self):
         # stationNumber, PATH, thread_number, restAPI, bool(remove_file), sesoData, bool(useSESO), bool(parselog), bool(useReader), COM, BAUD, int(greenFPY), int(orangeFPY), bool(showIntr), bool(useLogin), company_logo, sesoOperator, bool(useTraining), log_format, serverInstrGen
         # init for all the default data + readout of the config file
@@ -58,6 +59,15 @@ class UI:
         self.training = ''
         if self.useReader == True:
             self.useReader = hw.rfid_open(hw(self.COM, self.BAUD))
+
+    def checkAppStatus():
+        n = 0
+        for p in process_iter(attrs=['pid', 'name']):
+            if p.info['name'] == 'production.exe':
+                n = n + 1
+                if n > 2:
+                    windll.user32.MessageBoxW(0, 'Error 0x204 App is already running' , 'Error', 0x1000)
+                    exit(0)
 
     def UI(self):
         top = tkinter.Tk()
@@ -183,7 +193,7 @@ class UI:
                 windll.user32.MessageBoxW(0, 'Error 0x001 Image not found. Please check image name.', 'Error', 0x1000)
                 logger.log_event(logger(), 'Error 0x001 Image not found.')
 
-        top.protocol('WM_DELETE_WINDOW', main_exit)
+        # top.protocol('WM_DELETE_WINDOW', main_exit)
 
         while self.run:
             try:
@@ -194,13 +204,10 @@ class UI:
                 windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.', 'Error', 0x1000)
                 logger.log_event(logger(), 'Error 0x000 Undefined error in main.')
 
-        top.quit()
-        top.destroy()
-        sys.exit(0)
-
     def main():
-        t0 = Thread(target = UI.UI(UI()))
+        app.checkAppStatus()
+        t0 = Thread(target = app.UI(app()))
         t0.start()
 
 if __name__ == '__main__':
-    UI.main()
+    sys.exit(app.main())

@@ -1,0 +1,31 @@
+25.04.2024 08:38:41: Logging started.
+25.04.2024 08:38:54: Logging started.
+25.04.2024 08:39:54: Logging started.
+25.04.2024 08:40:00: App exit by button.
+25.04.2024 08:44:27: Logging started.
+25.04.2024 08:44:30: App exit by button.
+25.04.2024 09:14:41: Logging started.
+25.04.2024 09:14:48: App exit by button.
+25.04.2024 09:14:58: Logging started.
+25.04.2024 09:15:07: App exit by button.
+25.04.2024 09:16:27: Logging started.
+25.04.2024 09:16:32: App exit by button.
+25.04.2024 09:16:43: Logging started.
+25.04.2024 09:16:48: App exit by button.
+25.04.2024 09:29:58: Logging started.
+25.04.2024 09:30:03: App exit by button.
+25.04.2024 09:30:05: Error 0x000 Undefined error in main.
+25.04.2024 09:30:17: Logging started.
+25.04.2024 09:30:23: App exit by button.
+25.04.2024 09:30:39: Logging started.
+25.04.2024 09:30:43: App exit by button.
+25.04.2024 09:31:25: Logging started.
+25.04.2024 09:31:30: App exit by button.
+25.04.2024 09:31:34: App exit by button.
+25.04.2024 09:31:35: App exit by button.
+25.04.2024 09:31:37: App exit by button.
+25.04.2024 09:31:37: App exit by button.
+25.04.2024 09:32:02: Logging started.
+25.04.2024 09:32:06: App exit by button.
+25.04.2024 09:32:44: Logging started.
+25.04.2024 09:32:51: App exit by button.
