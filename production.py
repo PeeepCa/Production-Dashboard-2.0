@@ -200,8 +200,8 @@ class App:
             try:
                 img = Image.open(self.companyLogo)
                 img = img.resize((75, 45))
-                photoimg = ImageTk.PhotoImage(img)
-                logo = tkinter.Label(top, image=photoimg, height=45, width=75, borderwidth=0)
+                photo_img = ImageTk.PhotoImage(img)
+                logo = tkinter.Label(top, image=photo_img, height=45, width=75, borderwidth=0)
                 logo.place(x=323, y=203)
             except FileNotFoundError:
                 windll.user32.MessageBoxW(0, 'Error 0x001 Image not found. Please check image name.', 'Error', 0x1000)

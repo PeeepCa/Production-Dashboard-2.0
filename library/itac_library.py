@@ -5,7 +5,7 @@ from requests import post
 from ctypes import windll
 
 
-class ITAC:
+class Itac:
     def __init__(self, *args):
         # init for all components needed for library to work
         self.login = 'regLogin'
@@ -14,7 +14,7 @@ class ITAC:
         self.upload = 'trUploadResultDataAndRecipe'
         self.logout = 'regLogout'
         self.headers = {'content-type': 'application/json'}
-        self.tmout = 5
+        self.timeout = 5
         self.stationNumber = args[0]
         self.restAPI = args[1]
 
@@ -28,7 +28,7 @@ class ITAC:
                     "client":"01",
                     "registrationType":"S",
                     "systemIdentifier":"Test"}}"""
-        req = post(self.restAPI + self.login, headers = self.headers, data = body, timeout = self.tmout)
+        req = post(self.restAPI + self.login, headers = self.headers, data = body, timeout = self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x301 iTAC regLogin problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
@@ -50,7 +50,7 @@ class ITAC:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberResultKeys": ["PART_NUMBER","PART_DESC","WORKORDER_NUMBER","SERIAL_NUMBER_POS"]}"""
-        req = post(self.restAPI + self.sn_info, headers = self.headers, data = body, timeout = self.tmout)
+        req = post(self.restAPI + self.sn_info, headers = self.headers, data = body, timeout = self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x302 iTAC trGetSerialNumberInfo problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
@@ -76,7 +76,7 @@ class ITAC:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberStateResultKeys": ["ERROR_CODE"]}"""
-        req = post(self.restAPI + self.sn_state, headers = self.headers, data = body, timeout = self.tmout)
+        req = post(self.restAPI + self.sn_state, headers = self.headers, data = body, timeout = self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x303 iTAC trCheckSerialNumberState problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
@@ -111,7 +111,7 @@ class ITAC:
                     "resultUploadKeys": ["MEASURE_TYPE","ERROR_CODE","MEASURE_FAIL_CODE","UNIT","MEASURE_NAME",
                     "MEASURE_VALUE","LOWER_LIMIT","UPPER_LIMIT","TEST_STEP_NUMBER"],
                     "resultUploadValues": [""" + upload_values + """]}"""
-        req = post(self.restAPI + self.upload, headers = self.headers, data = body, timeout = self.tmout)
+        req = post(self.restAPI + self.upload, headers = self.headers, data = body, timeout = self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
@@ -122,7 +122,7 @@ class ITAC:
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
                     "locale":""" + '"' + locale + '"' + """}}"""
-        req = post(self.restAPI + self.logout, headers=self.headers, data=body, timeout=self.tmout)
+        req = post(self.restAPI + self.logout, headers=self.headers, data=body, timeout=self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x305 iTAC regLogout problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
