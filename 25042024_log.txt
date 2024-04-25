@@ -29,3 +29,259 @@
 25.04.2024 09:32:06: App exit by button.
 25.04.2024 09:32:44: Logging started.
 25.04.2024 09:32:51: App exit by button.
+25.04.2024 12:58:37: Logging started.
+25.04.2024 12:59:12: Error 0x000 Undefined error in main.
+25.04.2024 12:59:16: App exit by button.
+25.04.2024 12:59:22: Logging started.
+25.04.2024 12:59:38: App exit by button.
+25.04.2024 12:59:55: Logging started.
+25.04.2024 13:01:03: Error 0x000 Undefined error in main.
+25.04.2024 13:01:06: App exit by button.
+25.04.2024 13:01:25: Logging started.
+25.04.2024 13:02:23: Logging started.
+25.04.2024 13:02:40: Error 0x000 Undefined error in main.
+25.04.2024 13:03:06: Logging started.
+25.04.2024 13:04:03: Logging started.
+25.04.2024 13:04:30: Logging started.
+25.04.2024 13:04:53: Logging started.
+25.04.2024 13:07:43: Logging started.
+25.04.2024 13:14:56: Logging started.
+25.04.2024 13:15:18: App exit by button.
+25.04.2024 13:15:38: Logging started.
+25.04.2024 13:20:15: Logging started.
+25.04.2024 13:20:44: Logging started.
+25.04.2024 13:22:24: Logging started.
+25.04.2024 13:22:48: Logging started.
+25.04.2024 13:26:03: Logging started.
+25.04.2024 13:26:10: App exit by button.
+25.04.2024 13:29:31: Logging started.
+25.04.2024 13:29:32: Logging started.
+25.04.2024 13:29:41: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 13:29:43: Error 0x000 Undefined error in main.
+25.04.2024 13:29:44: Error 0x000 Undefined error in main.
+25.04.2024 13:29:44: Error 0x000 Undefined error in main.
+25.04.2024 13:30:47: Logging started.
+25.04.2024 13:30:48: Logging started.
+25.04.2024 13:31:00: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 13:31:01: Error 0x000 Undefined error in main.
+25.04.2024 13:31:02: Error 0x000 Undefined error in main.
+25.04.2024 13:31:42: Logging started.
+25.04.2024 13:31:47: App exit by button.
+25.04.2024 13:38:27: Logging started.
+25.04.2024 13:38:29: Logging started.
+25.04.2024 13:38:33: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 13:39:48: Logging started.
+25.04.2024 13:39:49: Logging started.
+25.04.2024 13:39:53: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 13:40:50: Logging started.
+25.04.2024 13:40:51: Logging started.
+25.04.2024 13:41:13: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 13:41:15: Error 0x000 Undefined error in main.
+25.04.2024 13:41:15: Error 0x000 Undefined error in main.
+25.04.2024 13:41:47: Logging started.
+25.04.2024 13:41:48: Logging started.
+25.04.2024 13:41:50: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 13:55:33: Logging started.
+25.04.2024 13:55:57: Logging started.
+25.04.2024 13:56:16: Logging started.
+25.04.2024 13:56:17: Logging started.
+25.04.2024 13:56:20: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 13:56:30: Logging started.
+25.04.2024 13:56:31: Logging started.
+25.04.2024 13:56:32: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 13:57:16: Logging started.
+25.04.2024 13:57:27: App exit by button.
+25.04.2024 14:01:24: Logging started.
+25.04.2024 14:01:33: App exit by button.
+25.04.2024 14:02:04: Logging started.
+25.04.2024 14:02:08: App exit by button.
+25.04.2024 14:07:07: Logging started.
+25.04.2024 14:07:08: Logging started.
+25.04.2024 14:07:11: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:07:38: Logging started.
+25.04.2024 14:07:52: Logging started.
+25.04.2024 14:07:53: Logging started.
+25.04.2024 14:07:55: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:07:59: Logging started.
+25.04.2024 14:08:00: Logging started.
+25.04.2024 14:08:01: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:08:54: Logging started.
+25.04.2024 14:09:11: Logging started.
+25.04.2024 14:09:25: App exit by button.
+25.04.2024 14:10:42: Logging started.
+25.04.2024 14:11:38: Logging started.
+25.04.2024 14:13:06: Logging started.
+25.04.2024 14:16:20: Logging started.
+25.04.2024 14:16:21: Logging started.
+25.04.2024 14:16:27: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:16:28: Error 0x000 Undefined error in main.
+25.04.2024 14:19:30: Logging started.
+25.04.2024 14:19:38: App exit by button.
+25.04.2024 14:25:07: Logging started.
+25.04.2024 14:25:17: App exit by button.
+25.04.2024 14:26:37: Logging started.
+25.04.2024 14:28:21: Logging started.
+25.04.2024 14:28:26: Logging started.
+25.04.2024 14:28:34: App exit by button.
+25.04.2024 14:31:04: Logging started.
+25.04.2024 14:31:09: App exit by button.
+25.04.2024 14:34:20: Logging started.
+25.04.2024 14:34:25: App exit by button.
+25.04.2024 14:36:27: Logging started.
+25.04.2024 14:36:38: App exit by button.
+25.04.2024 14:41:40: Logging started.
+25.04.2024 14:41:48: RFID reader trying to reconnect.
+25.04.2024 14:41:58: Error 0x000 Undefined error in main.
+25.04.2024 14:41:58: RFID reader trying to reconnect.
+25.04.2024 14:41:58: Error 0x000 Undefined error in main.
+25.04.2024 14:41:58: RFID reader trying to reconnect.
+25.04.2024 14:41:59: Error 0x000 Undefined error in main.
+25.04.2024 14:41:59: RFID reader trying to reconnect.
+25.04.2024 14:41:59: Error 0x000 Undefined error in main.
+25.04.2024 14:41:59: RFID reader trying to reconnect.
+25.04.2024 14:41:59: Error 0x000 Undefined error in main.
+25.04.2024 14:41:59: RFID reader trying to reconnect.
+25.04.2024 14:42:00: Error 0x000 Undefined error in main.
+25.04.2024 14:42:00: RFID reader trying to reconnect.
+25.04.2024 14:42:00: Error 0x000 Undefined error in main.
+25.04.2024 14:42:00: RFID reader trying to reconnect.
+25.04.2024 14:42:00: Error 0x000 Undefined error in main.
+25.04.2024 14:42:00: RFID reader trying to reconnect.
+25.04.2024 14:42:00: Error 0x000 Undefined error in main.
+25.04.2024 14:42:00: RFID reader trying to reconnect.
+25.04.2024 14:42:00: Error 0x000 Undefined error in main.
+25.04.2024 14:42:00: RFID reader trying to reconnect.
+25.04.2024 14:42:00: Error 0x000 Undefined error in main.
+25.04.2024 14:42:00: RFID reader trying to reconnect.
+25.04.2024 14:42:01: Error 0x000 Undefined error in main.
+25.04.2024 14:42:01: RFID reader trying to reconnect.
+25.04.2024 14:42:01: Error 0x000 Undefined error in main.
+25.04.2024 14:42:01: RFID reader trying to reconnect.
+25.04.2024 14:42:01: Error 0x000 Undefined error in main.
+25.04.2024 14:42:01: RFID reader trying to reconnect.
+25.04.2024 14:42:01: Error 0x000 Undefined error in main.
+25.04.2024 14:42:01: RFID reader trying to reconnect.
+25.04.2024 14:42:30: Logging started.
+25.04.2024 14:42:34: RFID reader trying to reconnect.
+25.04.2024 14:43:17: Logging started.
+25.04.2024 14:43:20: RFID reader trying to reconnect.
+25.04.2024 14:43:46: Logging started.
+25.04.2024 14:43:49: RFID reader trying to reconnect.
+25.04.2024 14:44:38: Logging started.
+25.04.2024 14:44:44: RFID reader trying to reconnect.
+25.04.2024 14:44:50: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:46:46: Logging started.
+25.04.2024 14:46:50: RFID reader trying to reconnect.
+25.04.2024 14:46:55: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:48:09: Logging started.
+25.04.2024 14:48:14: RFID reader trying to reconnect.
+25.04.2024 14:48:18: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:49:02: Logging started.
+25.04.2024 14:49:07: RFID reader trying to reconnect.
+25.04.2024 14:49:15: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:51:57: Logging started.
+25.04.2024 14:52:00: RFID reader trying to reconnect.
+25.04.2024 14:53:18: Logging started.
+25.04.2024 14:53:22: RFID reader trying to reconnect.
+25.04.2024 14:53:32: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 14:54:42: Logging started.
+25.04.2024 14:54:46: RFID reader trying to reconnect.
+25.04.2024 15:00:12: Logging started.
+25.04.2024 15:00:17: RFID reader trying to reconnect.
+25.04.2024 15:01:49: Logging started.
+25.04.2024 15:01:53: RFID reader trying to reconnect.
+25.04.2024 15:03:29: Logging started.
+25.04.2024 15:03:34: RFID reader trying to reconnect.
+25.04.2024 15:03:35: RFID reader trying to reconnect.
+25.04.2024 15:03:36: RFID reader trying to reconnect.
+25.04.2024 15:03:36: RFID reader trying to reconnect.
+25.04.2024 15:03:37: RFID reader trying to reconnect.
+25.04.2024 15:03:38: RFID reader trying to reconnect.
+25.04.2024 15:03:39: RFID reader trying to reconnect.
+25.04.2024 15:03:39: RFID reader trying to reconnect.
+25.04.2024 15:03:40: RFID reader trying to reconnect.
+25.04.2024 15:03:41: RFID reader trying to reconnect.
+25.04.2024 15:04:48: Logging started.
+25.04.2024 15:11:59: Logging started.
+25.04.2024 15:12:04: RFID reader trying to reconnect.
+25.04.2024 15:12:56: Logging started.
+25.04.2024 15:13:47: Logging started.
+25.04.2024 15:14:08: Logging started.
+25.04.2024 15:14:12: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 15:16:03: Logging started.
+25.04.2024 15:16:05: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 15:16:11: App exit by button.
+25.04.2024 15:17:03: Logging started.
+25.04.2024 15:17:05: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 15:17:13: App exit by button.
+25.04.2024 15:17:53: Logging started.
+25.04.2024 15:17:55: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 15:17:58: App exit by button.
+25.04.2024 15:18:01: App exit by button.
+25.04.2024 15:18:41: Logging started.
+25.04.2024 15:18:42: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 15:18:45: App exit by button.
+25.04.2024 15:18:53: Logging started.
+25.04.2024 15:18:59: RFID reader at COM8 doesnt work. POPUP for continue or exit
+25.04.2024 15:19:03: Logging started.
+25.04.2024 15:19:58: Logging started.
+25.04.2024 15:20:02: RFID reader trying to reconnect.
+25.04.2024 15:20:46: Logging started.
+25.04.2024 15:20:50: RFID reader trying to reconnect.
+25.04.2024 15:21:27: Logging started.
+25.04.2024 15:21:31: RFID reader trying to reconnect.
+25.04.2024 15:23:40: Logging started.
+25.04.2024 15:23:44: RFID reader trying to reconnect.
+25.04.2024 15:23:45: RFID reader trying to reconnect.
+25.04.2024 15:23:46: RFID reader trying to reconnect.
+25.04.2024 15:23:47: RFID reader trying to reconnect.
+25.04.2024 15:23:47: RFID reader trying to reconnect.
+25.04.2024 15:23:48: RFID reader trying to reconnect.
+25.04.2024 15:23:49: RFID reader trying to reconnect.
+25.04.2024 15:23:50: RFID reader trying to reconnect.
+25.04.2024 15:23:50: RFID reader trying to reconnect.
+25.04.2024 15:23:51: RFID reader trying to reconnect.
+25.04.2024 15:23:52: RFID reader trying to reconnect.
+25.04.2024 15:27:26: Logging started.
+25.04.2024 15:27:38: App exit by button.
+25.04.2024 15:35:07: Logging started.
+25.04.2024 15:35:10: RFID reader trying to reconnect.
+25.04.2024 15:35:11: RFID reader trying to reconnect.
+25.04.2024 15:35:12: RFID reader trying to reconnect.
+25.04.2024 15:35:12: RFID reader trying to reconnect.
+25.04.2024 15:35:13: RFID reader trying to reconnect.
+25.04.2024 15:35:14: RFID reader trying to reconnect.
+25.04.2024 15:35:15: RFID reader trying to reconnect.
+25.04.2024 15:35:15: RFID reader trying to reconnect.
+25.04.2024 15:38:50: Logging started.
+25.04.2024 15:39:01: App exit by button.
+25.04.2024 16:00:32: Logging started.
+25.04.2024 16:00:43: App exit by button.
+25.04.2024 16:13:19: Logging started.
+25.04.2024 16:13:26: RFID reader trying to reconnect.
+25.04.2024 16:13:27: RFID reader trying to reconnect.
+25.04.2024 16:13:28: RFID reader trying to reconnect.
+25.04.2024 16:13:29: RFID reader trying to reconnect.
+25.04.2024 16:13:29: RFID reader trying to reconnect.
+25.04.2024 16:13:30: RFID reader trying to reconnect.
+25.04.2024 16:13:31: RFID reader trying to reconnect.
+25.04.2024 16:13:32: RFID reader trying to reconnect.
+25.04.2024 16:13:32: RFID reader trying to reconnect.
+25.04.2024 16:13:33: RFID reader trying to reconnect.
+25.04.2024 16:13:44: App exit by button.
+25.04.2024 16:17:50: Logging started.
+25.04.2024 16:17:53: App exit by button.
+25.04.2024 16:19:50: Logging started.
+25.04.2024 16:19:57: RFID reader trying to reconnect.
+25.04.2024 16:19:57: RFID reader trying to reconnect.
+25.04.2024 16:19:58: RFID reader trying to reconnect.
+25.04.2024 16:19:59: RFID reader trying to reconnect.
+25.04.2024 16:20:00: RFID reader trying to reconnect.
+25.04.2024 16:20:01: RFID reader trying to reconnect.
+25.04.2024 16:20:01: RFID reader trying to reconnect.
+25.04.2024 16:20:02: RFID reader trying to reconnect.
+25.04.2024 16:20:03: RFID reader trying to reconnect.
+25.04.2024 16:20:04: RFID reader trying to reconnect.
+25.04.2024 16:20:04: RFID reader trying to reconnect.
+25.04.2024 16:20:05: RFID reader trying to reconnect.
+25.04.2024 16:20:24: Logging started.

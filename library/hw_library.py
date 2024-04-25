@@ -1,50 +1,59 @@
 # HW library
 # so far only the RFID reader
 
+import sys
 from serial import Serial, serialutil
 from ctypes import windll
-from library.logger_library import logger
+from library.logger_library import Logger
 
-class hw:
+msg_show = 1
+ser = Serial()
+
+
+class Hw:
     def __init__(self, *args):
         # input of COM and BAUD // COM8, 9600
-        self.msg_show = 1
         self.COM = args[0]
         self.BAUD = args[1]
 
     def rfid_open(self):
         try:
             globals()['ser'] = Serial(self.COM, self.BAUD, timeout=0.5)
-            useReader = True
+            use_reader = True
         except serialutil.SerialException:
-            if self.msg_show == 1:
-                dec = windll.user32.MessageBoxW(0, 'Error 0x203 Reader at: ' + self.COM + ' cannot be found.\rContinue withour reader?', 'HW Error', 0x1001)
-                logger.log_event(logger(), 'RFID reader at ' + self.COM + ' doesnt work. POPUP for continue or exit')
+            if msg_show == 1:
+                dec = windll.user32.MessageBoxW(0, 'Error 0x203 Reader at: ' + self.COM +
+                                                ' cannot be found.\rContinue without reader?', 'HW Error', 0x1001)
+                Logger.log_event(Logger(), 'RFID reader at ' + self.COM + ' doesnt work. POPUP for continue or exit')
                 if dec == 1:
-                    useReader = False
+                    use_reader = False
                 else:
-                    exit(0)
+                    sys.exit()
             else:
-                useReader = True
-        return useReader
+                use_reader = True
+        return use_reader
 
     def rfid_read(self):
         # readout of CARD id
         try:
             ser.write(b'0500100\r')
-            serialString = ser.readline()
-            if len(serialString) == 21:
-                serialString = str(int(serialString.decode('utf-8')[-9:], 16))
+            serial_string = ser.readline()
+            if len(serial_string) == 21:
+                serial_string = str(int(serial_string.decode('utf-8')[-9:], 16))
             else:
-                serialString = '0'
-            return serialString
+                serial_string = '0'
+            print(serial_string)
+            return serial_string
 
         except serialutil.SerialException:
-            logger.log_event(logger(), 'RFID reader trying to reconnect.')
-            hw.rfid_close()
-            self.msg_show = 0
-            hw.rfid_open(self.COM, self.BAUD)
-            self.msg_show = 1
+            Logger.log_event(Logger(), 'RFID reader trying to reconnect.')
+            Hw.rfid_close()
+            global msg_show
+            msg_show = 0
+            Hw.rfid_open(Hw(self.COM, self.BAUD))
+            msg_show = 1
+            return '0'
 
-    def rfid_close(self):
+    @staticmethod
+    def rfid_close():
         ser.close()
