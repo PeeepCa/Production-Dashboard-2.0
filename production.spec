@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['production.pyw'],
+    ['production.py'],
     pathex=[],
     binaries=[],
     datas=[],

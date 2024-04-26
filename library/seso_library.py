@@ -1,44 +1,46 @@
 # SESO library
-# input for self class SESO should be station number and restAPI adress
+# input for self class SESO should be station number and restAPI address
 # sesoData=https://seso.apag-elektronik.com/api/prod/
 # sesoOperator=https://seso.apag-elektronik.com/api/
 
 from ctypes import windll
 from requests import post
 from requests import exceptions
-from library.logger_library import logger
+from library.logger_library import Logger
 
-class seso:
+
+class Seso:
     def __init__(self, *args):
-        self.stationNumber = args[0]
-        self.restAPI = args[1]
-        self.tmout = 5
+        self.station_number = args[0]
+        self.rest_api = args[1]
+        self.timeout = 5
 
     def upload(self, *args):
         try:
             # Uploading the results to SESO
-            serialNumber = args[0]
-            workOrder = args[1]
+            serial_number = args[0]
+            work_order = args[1]
             status = args[2]
             description = args[3]
-            workOrder = workOrder.strip(' ')
-            if workOrder != 'locale':
+            work_order = work_order.strip(' ')
+            if work_order != 'locale':
                 if status == 'fail':
                     status = '0'
                 else:
                     status = '1'
-                payload = {'type': 'production', 'itac': '0', 'station': self.stationNumber, 'wa': workOrder, 'module': description, 'ap': serialNumber, 'result': status}
-                post(self.restAPI, data = payload, timeout = self.tmout)
+                payload = {'type': 'production', 'itac': '0', 'station': self.station_number, 'wa': work_order,
+                           'module': description, 'ap': serial_number, 'result': status}
+                post(self.rest_api, data = payload, timeout = self.timeout)
         except exceptions.MissingSchema:
-            logger.log_event(logger(), 'Wrong URL at upload.')
+            Logger.log_event(Logger(), 'Wrong URL at upload.')
             windll.user32.MessageBoxW(0, 'Error 0x401 URL for upload.', 'SESO Message', 0x1000)
 
-    def operatorWithoutReader(self):
+    def operator_without_reader(self):
         try:
             # Function which returns the card number and operator name for tester without reader
-            # If its secondary machine, then it doenst want trainings
-            payload = {'type': 'station-info', 'station': self.stationNumber}
-            req = post(self.restAPI, data = payload, timeout = self.tmout)
+            # If its secondary machine, then it does not want trainings
+            payload = {'type': 'station-info', 'station': self.station_number}
+            req = post(self.rest_api, data = payload, timeout = self.timeout)
             op_id = req.text.split(',')[5].split(':')[1].split('-')[0].replace('"','')
             op_name = req.text.split(',')[4].split(':')[1].split('-')[0].replace('"','')
             if list(op_id)[0] == '0':
@@ -51,25 +53,26 @@ class seso:
                 unlock = False
             return op_id, op_name, unlock, training
         except exceptions.MissingSchema:
-            logger.log_event(logger(), 'Wrong URL at operatorWithoutReader.')
+            Logger.log_event(Logger(), 'Wrong URL at operatorWithoutReader.')
             windll.user32.MessageBoxW(0, 'Error 0x402 URL for operatorWithoutReader.', 'SESO Message', 0x1000)
     
-    def operatorWithReader(self, *args):
+    def operator_with_reader(self, *args):
         try:
             # This function checks the trainings for primary machine and returns back operator name and id
             # sesoOperator
-            cardReader = args[0]
-            useTraining = args[1]
-            payload = {'type': 'card', 'id': cardReader, 'station': self.stationNumber}
-            req = post(self.restAPI, data = payload, timeout = self.tmout)
-            data = (req.text).split(',')
+            card_reader = args[0]
+            use_training = args[1]
+            payload = {'type': 'card', 'id': card_reader, 'station': self.station_number}
+            req = post(self.rest_api, data = payload, timeout = self.timeout)
+            data = req.text.split(',')
             op_id = data[2].split(':')[1].replace('"','')
             op_name = data[1].split(':')[1].replace('"','') + ' ' + data[0].split(':')[2].replace('"','')
-            data = (req.text).split('[')[1].replace('[','').replace(']','').replace('{','').replace('}','').replace('"','').split(',')
-            # This ll be obsolite after the DMS ll work correctly
+            data = (req.text.split('[')[1].replace('[','').replace(']','')
+                    .replace('{','').replace('}','').replace('"','').split(','))
+            # This ll be obsolete after the DMS ll work correctly
             if list(op_id)[0] == '0':
                 op_id = op_id[-3:]
-            if useTraining == True:
+            if use_training is True:
                 if len(data) > 1:
                     training = 'Training OK'
                     unlock = True
@@ -82,41 +85,41 @@ class seso:
 
             return op_id, op_name, unlock, training
         except exceptions.MissingSchema:
-            logger.log_event(logger(), 'Wrong URL at operatorWithReader.')
+            Logger.log_event(Logger(), 'Wrong URL at operatorWithReader.')
             windll.user32.MessageBoxW(0, 'Error 0x403 URL for operatorWithReader.', 'SESO Message', 0x1000)
 
-    
-    def loginLogout(self, *args):
+    def login_logout(self, *args):
         try:
             # Login / Logout for operator
             op_name = args[0]
             op_id = args[1]
-            inOut = args[2]
-            payload = {'type': 'operator', 'station': self.stationNumber, 'perName': op_name, 'perNr': op_id, 'action': inOut}
-            post(self.restAPI, data = payload, timeout = self.tmout)
-            if inOut == 'IN':
+            in_out = args[2]
+            payload = {'type': 'operator', 'station': self.station_number, 'perName': op_name, 'perNr': op_id,
+                       'action': in_out}
+            post(self.rest_api, data = payload, timeout = self.timeout)
+            if in_out == 'IN':
                 logged = True
             else:
                 logged = False
             return logged
         except exceptions.MissingSchema:
-            logger.log_event(logger(), 'Wrong URL at loginLogout.')
+            Logger.log_event(Logger(), 'Wrong URL at loginLogout.')
             windll.user32.MessageBoxW(0, 'Error 0x404 URL for loginLogout.', 'SESO Message', 0x1000)
     
-    def updateProdData(self):
+    def update_prod_data(self):
         try:
             # Production data display
-            # There ll be probably changes since we dont need to calculate everything here
+            # There ll be probably changes since we do not need to calculate everything here
             # Time ll show
             # sesoData
-            payload = {'action': 'hourly', 'station': self.stationNumber}
-            data = post(self.restAPI, data = payload, timeout = self.tmout).text.split(',')
+            payload = {'action': 'hourly', 'station': self.station_number}
+            data = post(self.rest_api, data = payload, timeout = self.timeout).text.split(',')
             working = int(data[3].split(':')[1]) + int(data[4].split(':')[1])
-            testerType = data[0].split(':')[1].replace('"','')
-            if 'ICT' in testerType:
-                instructionList = [*range(60,64,1)]
+            tester_type = data[0].split(':')[1].replace('"','')
+            if 'ICT' in tester_type:
+                instruction_list = [*range(60,64,1)]
             else:
-                instructionList = {*range(65,69,1)}
+                instruction_list = {*range(65,69,1)}
             if working == 0:
                 pass_count = 0
                 fail_count = 0
@@ -142,7 +145,7 @@ class seso:
                     curr_perf = int(float(data[14].split(':')[1].replace('"','').replace('}','').replace(']','')))
                 else:
                     curr_perf = 0
-            return pass_count, fail_count, fpy, instructionList, module, lrf, curr_perf
+            return pass_count, fail_count, fpy, instruction_list, module, lrf, curr_perf
         except exceptions.MissingSchema:
-            logger.log_event(logger(), 'Wrong URL at updateProdData.')
+            Logger.log_event(Logger(), 'Wrong URL at updateProdData.')
             windll.user32.MessageBoxW(0, 'Error 0x405 URL for updateProdData.', 'SESO Message', 0x1000)
