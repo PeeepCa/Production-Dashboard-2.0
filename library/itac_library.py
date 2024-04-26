@@ -28,15 +28,15 @@ class Itac:
                     "client":"01",
                     "registrationType":"S",
                     "systemIdentifier":"Test"}}"""
-        req = post(self.restAPI + self.login, headers = self.headers, data = body, timeout = self.timeout)
+        req = post(self.restAPI + self.login, headers=self.headers, data=body, timeout=self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x301 iTAC regLogin problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
         
-        js = req.text.replace(' ','').replace('\r\n','').replace('{"result":{"return_value":0','').split(',')
-        globals()['sessionId'] = js[1].replace('sessionContext":{','').split(':')[1]
+        js = req.text.replace(' ', '').replace('\r\n', '').replace('{"result":{"return_value":0', '').split(',')
+        globals()['sessionId'] = js[1].replace('sessionContext":{', '').split(':')[1]
         globals()['persId'] = js[2].split(':')[1]
-        globals()['locale'] = js[3].replace('}}}','').replace('"','').split(':')[1]
+        globals()['locale'] = js[3].replace('}}}', '').replace('"', '').split(':')[1]
 
     def sn_info(self, *args):
         # SN information
@@ -50,12 +50,12 @@ class Itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberResultKeys": ["PART_NUMBER","PART_DESC","WORKORDER_NUMBER","SERIAL_NUMBER_POS"]}"""
-        req = post(self.restAPI + self.sn_info, headers = self.headers, data = body, timeout = self.timeout)
+        req = post(self.restAPI + self.sn_info, headers=self.headers, data=body, timeout=self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x302 iTAC trGetSerialNumberInfo problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
 
-        data = req.text.replace(' ','').replace('\r\n','').replace('"','').split(',')
+        data = req.text.replace(' ', '').replace('\r\n', '').replace('"', '').split(',')
         part_no = str(data[1]).split('[')[1]
         part_desc = str(data[2])
         wa = str(data[3])
@@ -76,13 +76,13 @@ class Itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberStateResultKeys": ["ERROR_CODE"]}"""
-        req = post(self.restAPI + self.sn_state, headers = self.headers, data = body, timeout = self.timeout)
+        req = post(self.restAPI + self.sn_state, headers=self.headers, data=body, timeout=self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x303 iTAC trCheckSerialNumberState problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
         
-        status = req.text.replace(' ','').replace('\r\n','').split(',')[1]
-        status = status.replace('"','').replace('}','').replace('[','').replace(']','').split(':')[1]
+        status = req.text.replace(' ', '').replace('\r\n', '').split(',')[1]
+        status = status.replace('"', '').replace('}', '').replace('[', '').replace(']', '').split(':')[1]
         if status != '0' and status != '212':
             windll.user32.MessageBoxW(0, 'iTAC AOI ' + status, 'iTAC Message', 0x1000)
         return status
@@ -111,7 +111,7 @@ class Itac:
                     "resultUploadKeys": ["MEASURE_TYPE","ERROR_CODE","MEASURE_FAIL_CODE","UNIT","MEASURE_NAME",
                     "MEASURE_VALUE","LOWER_LIMIT","UPPER_LIMIT","TEST_STEP_NUMBER"],
                     "resultUploadValues": [""" + upload_values + """]}"""
-        req = post(self.restAPI + self.upload, headers = self.headers, data = body, timeout = self.timeout)
+        req = post(self.restAPI + self.upload, headers=self.headers, data=body, timeout=self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)

@@ -30,7 +30,7 @@ class Seso:
                     status = '1'
                 payload = {'type': 'production', 'itac': '0', 'station': self.station_number, 'wa': work_order,
                            'module': description, 'ap': serial_number, 'result': status}
-                post(self.rest_api, data = payload, timeout = self.timeout)
+                post(self.rest_api, data=payload, timeout=self.timeout)
         except exceptions.MissingSchema:
             Logger.log_event(Logger(), 'Wrong URL at upload.')
             windll.user32.MessageBoxW(0, 'Error 0x401 URL for upload.', 'SESO Message', 0x1000)
@@ -40,9 +40,9 @@ class Seso:
             # Function which returns the card number and operator name for tester without reader
             # If its secondary machine, then it does not want trainings
             payload = {'type': 'station-info', 'station': self.station_number}
-            req = post(self.rest_api, data = payload, timeout = self.timeout)
-            op_id = req.text.split(',')[5].split(':')[1].split('-')[0].replace('"','')
-            op_name = req.text.split(',')[4].split(':')[1].split('-')[0].replace('"','')
+            req = post(self.rest_api, data=payload, timeout=self.timeout)
+            op_id = req.text.split(',')[5].split(':')[1].split('-')[0].replace('"', '')
+            op_name = req.text.split(',')[4].split(':')[1].split('-')[0].replace('"', '')
             if list(op_id)[0] == '0':
                 op_id = op_id[-3:]
             if len(op_id) > 1:
@@ -63,12 +63,12 @@ class Seso:
             card_reader = args[0]
             use_training = args[1]
             payload = {'type': 'card', 'id': card_reader, 'station': self.station_number}
-            req = post(self.rest_api, data = payload, timeout = self.timeout)
+            req = post(self.rest_api, data=payload, timeout=self.timeout)
             data = req.text.split(',')
-            op_id = data[2].split(':')[1].replace('"','')
-            op_name = data[1].split(':')[1].replace('"','') + ' ' + data[0].split(':')[2].replace('"','')
-            data = (req.text.split('[')[1].replace('[','').replace(']','')
-                    .replace('{','').replace('}','').replace('"','').split(','))
+            op_id = data[2].split(':')[1].replace('"', '')
+            op_name = data[1].split(':')[1].replace('"', '') + ' ' + data[0].split(':')[2].replace('"', '')
+            data = (req.text.split('[')[1].replace('[', '').replace(']', '')
+                    .replace('{', '').replace('}', '').replace('"', '').split(','))
             # This ll be obsolete after the DMS ll work correctly
             if list(op_id)[0] == '0':
                 op_id = op_id[-3:]
@@ -96,7 +96,7 @@ class Seso:
             in_out = args[2]
             payload = {'type': 'operator', 'station': self.station_number, 'perName': op_name, 'perNr': op_id,
                        'action': in_out}
-            post(self.rest_api, data = payload, timeout = self.timeout)
+            post(self.rest_api, data=payload, timeout=self.timeout)
             if in_out == 'IN':
                 logged = True
             else:
@@ -113,13 +113,13 @@ class Seso:
             # Time ll show
             # sesoData
             payload = {'action': 'hourly', 'station': self.station_number}
-            data = post(self.rest_api, data = payload, timeout = self.timeout).text.split(',')
+            data = post(self.rest_api, data=payload, timeout=self.timeout).text.split(',')
             working = int(data[3].split(':')[1]) + int(data[4].split(':')[1])
-            tester_type = data[0].split(':')[1].replace('"','')
+            tester_type = data[0].split(':')[1].replace('"', '')
             if 'ICT' in tester_type:
-                instruction_list = [*range(60,64,1)]
+                instruction_list = [*range(60, 64, 1)]
             else:
-                instruction_list = {*range(65,69,1)}
+                instruction_list = {*range(65, 69, 1)}
             if working == 0:
                 pass_count = 0
                 fail_count = 0
@@ -130,19 +130,19 @@ class Seso:
             else:
                 pass_count = int(float(data[3].split(':')[1]))
                 fail_count = int(float(data[4].split(':')[1]))
-                module = data[2].split(':')[1].replace('"','')
+                module = data[2].split(':')[1].replace('"', '')
                 if '[]' not in data[9]:
                     try:
                         fpy = int(float(data[9].split(':')[1]))
-                        lrf = int(float(data[10].split(':')[1].replace('"','')))
-                    except:
+                        lrf = int(float(data[10].split(':')[1].replace('"', '')))
+                    except IndexError:
                         fpy = 0
-                        lrf = 1
+                        lrf = 0
                 else:
                     fpy = 0
-                    lrf = 1
+                    lrf = 0
                 if fpy > 0:
-                    curr_perf = int(float(data[14].split(':')[1].replace('"','').replace('}','').replace(']','')))
+                    curr_perf = int(float(data[14].split(':')[1].replace('"', '').replace('}', '').replace(']', '')))
                 else:
                     curr_perf = 0
             return pass_count, fail_count, fpy, instruction_list, module, lrf, curr_perf
