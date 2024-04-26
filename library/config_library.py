@@ -12,6 +12,7 @@ class Config:
         self.seso_data = ''
         self.seso_operator = ''
         self.use_seso = ''
+        self.use_itac = ''
         self.parse_log = ''
         self.use_reader = ''
         self.com = ''
@@ -55,6 +56,10 @@ class Config:
                 elif 'sesoOperator' in x:
                     self.seso_operator = x.split('=')[1]
                 elif 'SESO' in x:
+                    self.use_itac = x.split('=')[1]
+                    if self.use_itac == 'False':
+                        self.use_itac = ''
+                elif 'ITAC' in x:
                     self.use_seso = x.split('=')[1]
                     if self.use_seso == 'False':
                         self.use_seso = ''
@@ -108,7 +113,7 @@ class Config:
                     self.com, self.baud, int(self.green_fpy), int(self.orange_fpy), bool(self.show_instr),
                     bool(self.use_login), self.company_logo, self.seso_operator, bool(self.use_training),
                     self.log_format, self.server_instr_gen, self.canvas_back, self.rect_back, self.graph_back,
-                    self.text_color, self.graph_color)
+                    self.text_color, self.graph_color), bool(self.use_itac)
     
         except UnboundLocalError:
             windll.user32.MessageBoxW(0, 'Error 0x101 Variable not found in config.', 'Error', 0x1000)

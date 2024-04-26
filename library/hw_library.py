@@ -42,7 +42,6 @@ class Hw:
                 serial_string = str(int(serial_string.decode('utf-8')[-9:], 16))
             else:
                 serial_string = '0'
-            print(serial_string)
             return serial_string
 
         except serialutil.SerialException:

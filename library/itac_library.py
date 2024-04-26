@@ -3,6 +3,7 @@
 
 from requests import post
 from ctypes import windll
+from logger_library import Logger
 
 
 class Itac:
@@ -32,6 +33,7 @@ class Itac:
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x301 iTAC regLogin problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
+            Logger.log_event(Logger(), 'Error 0x301 iTAC regLogin problem ' + str(req.status_code))
         
         js = req.text.replace(' ', '').replace('\r\n', '').replace('{"result":{"return_value":0', '').split(',')
         globals()['sessionId'] = js[1].replace('sessionContext":{', '').split(':')[1]
@@ -54,6 +56,7 @@ class Itac:
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x302 iTAC trGetSerialNumberInfo problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
+            Logger.log_event(Logger(), 'Error 0x302 iTAC trGetSerialNumberInfo problem ' + str(req.status_code))
 
         data = req.text.replace(' ', '').replace('\r\n', '').replace('"', '').split(',')
         part_no = str(data[1]).split('[')[1]
@@ -80,6 +83,7 @@ class Itac:
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x303 iTAC trCheckSerialNumberState problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
+            Logger.log_event(Logger(), 'Error 0x303 iTAC trCheckSerialNumberState problem ' + str(req.status_code))
         
         status = req.text.replace(' ', '').replace('\r\n', '').split(',')[1]
         status = status.replace('"', '').replace('}', '').replace('[', '').replace(']', '').split(':')[1]
@@ -115,6 +119,7 @@ class Itac:
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
+            Logger.log_event(Logger(), 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' + str(req.status_code))
 
     def logout(self):
         # Logout
@@ -126,3 +131,4 @@ class Itac:
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x305 iTAC regLogout problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
+            Logger.log_event(Logger(), 'Error 0x305 iTAC regLogout problem ' + str(req.status_code))

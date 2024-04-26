@@ -30,7 +30,7 @@ class App:
         elif __file__:
             application_path = path.dirname(__file__)
         else:
-            application_path = ''
+            application_path = None
         temp = Config.read_config(Config(application_path + '/Configuration/' + gethostname() + '.ini'))
         self.stationNo = temp[0]
         self.companyLogo = temp[15]
@@ -56,10 +56,14 @@ class App:
         self.pass_count = 0
         self.fail_count = 0
         self.msg_show = 1
-        self.op_name = ''
+        self.op_name = None
         self.unlock = False
-        self.training = ''
+        self.training = None
         self.card_id = '0'
+        self.window_width = None
+        self.window_height = None
+        self.screen_width = None
+        self.screen_height = None
         if self.useReader:
             self.useReader = Hw.rfid_open(Hw(self.COM, self.BAUD))
 
@@ -75,12 +79,12 @@ class App:
 
     def ui(self):
         top = tkinter.Tk()
-        window_width = 400 - self.dsh_offset
-        window_height = 250
-        screen_width = int(top.winfo_screenwidth() - window_width)
-        screen_height = int(top.winfo_screenheight() - window_height - 40)
+        self.window_width = 400 - self.dsh_offset
+        self.window_height = 250
+        self.screen_width = int(top.winfo_screenwidth() - self.window_width)
+        self.screen_height = int(top.winfo_screenheight() - self.window_height - 40)
         top.title('Dashboard')
-        top.geometry(f'{window_width}x{window_height}+{screen_width}+{screen_height}')
+        top.geometry(f'{self.window_width}x{self.window_height}+{self.screen_width}+{self.screen_height}')
         top.config(bg='#484179')
         top.attributes('-alpha', 0.8)
         top.overrideredirect(True)
@@ -103,11 +107,11 @@ class App:
                 self.dsh_offset = 0
             else:
                 self.dsh_offset = 320
-            window_width = 400 - self.dsh_offset
-            window_height = 250
-            screen_width = int(top.winfo_screenwidth() - window_width)
-            screen_height = int(top.winfo_screenheight() - window_height - 40)
-            top.geometry(f'{window_width}x{window_height}+{screen_width}+{screen_height}')
+            self.window_width = 400 - self.dsh_offset
+            self.window_height = 250
+            self.screen_width = int(top.winfo_screenwidth() - self.window_width)
+            self.screen_height = int(top.winfo_screenheight() - self.window_height - 40)
+            top.geometry(f'{self.window_width}x{self.window_height}+{self.screen_width}+{self.screen_height}')
             c.coords(app_alive, 390 - self.dsh_offset, 0, 400 - self.dsh_offset, 10)
             c.coords(app_minimize, 380 - self.dsh_offset, 0, 390 - self.dsh_offset, 10)
             c.coords(app_minimize_ico, 380 - self.dsh_offset, 5, 390 - self.dsh_offset, 5)
