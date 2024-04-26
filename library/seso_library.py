@@ -27,8 +27,14 @@ class seso:
                     status = '0'
                 else:
                     status = '1'
+<<<<<<< Updated upstream
                 payload = {'type': 'production', 'itac': '0', 'station': self.stationNumber, 'wa': workOrder, 'module': description, 'ap': serialNumber, 'result': status}
                 post(self.restAPI, data = payload, timeout = self.tmout)
+=======
+                payload = {'type': 'production', 'itac': '0', 'station': self.station_number, 'wa': work_order,
+                           'module': description, 'ap': serial_number, 'result': status}
+                post(self.rest_api, data=payload, timeout=self.timeout)
+>>>>>>> Stashed changes
         except exceptions.MissingSchema:
             logger.log_event(logger(), 'Wrong URL at upload.')
             windll.user32.MessageBoxW(0, 'Error 0x401 URL for upload.', 'SESO Message', 0x1000)
@@ -36,9 +42,15 @@ class seso:
     def operatorWithoutReader(self):
         try:
             # Function which returns the card number and operator name for tester without reader
+<<<<<<< Updated upstream
             # If its secondary machine, then it doenst want trainings
             payload = {'type': 'station-info', 'station': self.stationNumber}
             req = post(self.restAPI, data = payload, timeout = self.tmout)
+=======
+            # If its secondary machine, then it does not want trainings
+            payload = {'type': 'station-info', 'station': self.station_number}
+            req = post(self.rest_api, data=payload, timeout=self.timeout)
+>>>>>>> Stashed changes
             op_id = req.text.split(',')[5].split(':')[1].split('-')[0].replace('"','')
             op_name = req.text.split(',')[4].split(':')[1].split('-')[0].replace('"','')
             if list(op_id)[0] == '0':
@@ -58,11 +70,19 @@ class seso:
         try:
             # This function checks the trainings for primary machine and returns back operator name and id
             # sesoOperator
+<<<<<<< Updated upstream
             cardReader = args[0]
             useTraining = args[1]
             payload = {'type': 'card', 'id': cardReader, 'station': self.stationNumber}
             req = post(self.restAPI, data = payload, timeout = self.tmout)
             data = (req.text).split(',')
+=======
+            card_reader = args[0]
+            use_training = args[1]
+            payload = {'type': 'card', 'id': card_reader, 'station': self.station_number}
+            req = post(self.rest_api, data=payload, timeout=self.timeout)
+            data = req.text.split(',')
+>>>>>>> Stashed changes
             op_id = data[2].split(':')[1].replace('"','')
             op_name = data[1].split(':')[1].replace('"','') + ' ' + data[0].split(':')[2].replace('"','')
             data = (req.text).split('[')[1].replace('[','').replace(']','').replace('{','').replace('}','').replace('"','').split(',')
@@ -91,10 +111,18 @@ class seso:
             # Login / Logout for operator
             op_name = args[0]
             op_id = args[1]
+<<<<<<< Updated upstream
             inOut = args[2]
             payload = {'type': 'operator', 'station': self.stationNumber, 'perName': op_name, 'perNr': op_id, 'action': inOut}
             post(self.restAPI, data = payload, timeout = self.tmout)
             if inOut == 'IN':
+=======
+            in_out = args[2]
+            payload = {'type': 'operator', 'station': self.station_number, 'perName': op_name, 'perNr': op_id,
+                       'action': in_out}
+            post(self.rest_api, data=payload, timeout=self.timeout)
+            if in_out == 'IN':
+>>>>>>> Stashed changes
                 logged = True
             else:
                 logged = False
@@ -109,8 +137,13 @@ class seso:
             # There ll be probably changes since we dont need to calculate everything here
             # Time ll show
             # sesoData
+<<<<<<< Updated upstream
             payload = {'action': 'hourly', 'station': self.stationNumber}
             data = post(self.restAPI, data = payload, timeout = self.tmout).text.split(',')
+=======
+            payload = {'action': 'hourly', 'station': self.station_number}
+            data = post(self.rest_api, data=payload, timeout=self.timeout).text.split(',')
+>>>>>>> Stashed changes
             working = int(data[3].split(':')[1]) + int(data[4].split(':')[1])
             testerType = data[0].split(':')[1].replace('"','')
             if 'ICT' in testerType:

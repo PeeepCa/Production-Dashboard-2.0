@@ -1,10 +1,10 @@
-# Dodělat iTAC
-# Dodělat Logování - Hotovo
-# Dodělat čtečku - Hotovo
-# Dodělat offline režim
-# Dodělat mustry
-# Odzkošeno i jako exe
-# Multithreading - částečně hotovo
+# Finnish iTAC
+# Finnish logging - Done
+# Finnish reader - Done
+# Finnish offline mode
+# Finnish muster
+# Try exe build - Done
+# Multithreading - Partially done
 
 import tkinter
 import sys

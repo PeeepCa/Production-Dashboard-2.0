@@ -27,7 +27,11 @@ class itac:
                     "client":"01",
                     "registrationType":"S",
                     "systemIdentifier":"Test"}}"""
+<<<<<<< Updated upstream
         req = post(self.restAPI + self.login, headers = self.headers, data=body, timeout = self.tmout)
+=======
+        req = post(self.restAPI + self.login, headers=self.headers, data=body, timeout=self.timeout)
+>>>>>>> Stashed changes
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x301 iTAC regLogin problem ' + str(req.status_code), 'iTAC Message', 0x1000)
         
@@ -48,7 +52,11 @@ class itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberResultKeys": ["PART_NUMBER","PART_DESC","WORKORDER_NUMBER","SERIAL_NUMBER_POS"]}"""
+<<<<<<< Updated upstream
         req = post(self.restAPI + self.sn_info, headers = self.headers, data = body, timeout = self.tmout)
+=======
+        req = post(self.restAPI + self.sn_info, headers=self.headers, data=body, timeout=self.timeout)
+>>>>>>> Stashed changes
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x302 iTAC trGetSerialNumberInfo problem ' + str(req.status_code), 'iTAC Message', 0x1000)
 
@@ -73,7 +81,11 @@ class itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberStateResultKeys": ["ERROR_CODE"]}"""
+<<<<<<< Updated upstream
         req = post(self.restAPI + self.sn_state, headers = self.headers, data = body, timeout = self.tmout)
+=======
+        req = post(self.restAPI + self.sn_state, headers=self.headers, data=body, timeout=self.timeout)
+>>>>>>> Stashed changes
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x303 iTAC trCheckSerialNumberState problem ' + str(req.status_code), 'iTAC Message', 0x1000)
         
@@ -106,7 +118,11 @@ class itac:
                     "recipeVersionMode":0,
                     "resultUploadKeys": ["MEASURE_TYPE","ERROR_CODE","MEASURE_FAIL_CODE","UNIT","MEASURE_NAME","MEASURE_VALUE","LOWER_LIMIT","UPPER_LIMIT","TEST_STEP_NUMBER"],
                     "resultUploadValues": [""" + upload_values + """]}"""
+<<<<<<< Updated upstream
         req = post(self.restAPI + self.upload, headers = self.headers, data = body, timeout = self.tmout)
+=======
+        req = post(self.restAPI + self.upload, headers=self.headers, data=body, timeout=self.timeout)
+>>>>>>> Stashed changes
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' + str(req.status_code), 'iTAC Message', 0x1000)
 

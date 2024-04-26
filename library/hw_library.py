@@ -36,8 +36,13 @@ class hw:
             if len(serialString) == 21:
                 serialString = str(int(serialString.decode('utf-8')[-9:], 16))
             else:
+<<<<<<< Updated upstream
                 serialString = '0'
             return serialString
+=======
+                serial_string = '0'
+            return serial_string
+>>>>>>> Stashed changes
 
         except serialutil.SerialException:
             logger.log_event(logger(), 'RFID reader trying to reconnect.')
