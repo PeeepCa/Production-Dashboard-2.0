@@ -113,7 +113,7 @@ class Config:
                     self.com, self.baud, int(self.green_fpy), int(self.orange_fpy), bool(self.show_instr),
                     bool(self.use_login), self.company_logo, self.seso_operator, bool(self.use_training),
                     self.log_format, self.server_instr_gen, self.canvas_back, self.rect_back, self.graph_back,
-                    self.text_color, self.graph_color), bool(self.use_itac)
+                    self.text_color, self.graph_color, bool(self.use_itac))
     
         except UnboundLocalError:
             windll.user32.MessageBoxW(0, 'Error 0x101 Variable not found in config.', 'Error', 0x1000)

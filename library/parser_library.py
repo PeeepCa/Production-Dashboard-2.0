@@ -26,6 +26,10 @@ class Parser:
         self.pos = None
         self.meas_fail_code = None
         self.itac_pos = None
+        self.test_result = None
+        self.itac_desc = None
+        self.itac_wa = None
+        self.status = None
 
     def rexxam_handle(self):
         while self.run:
@@ -67,11 +71,11 @@ class Parser:
 
                         result_data = data[0].split(',')
                         if 'OK' in result_data[8] and 'OK' in result_data[9]:
-                            test_result = '0'
-                            status = 'pass'
+                            self.test_result = '0'
+                            self.status = 'pass'
                         else:
-                            test_result = '1'
-                            status = 'fail'
+                            self.test_result = '1'
+                            self.status = 'fail'
 
                         self.sn = data[0].split(',')
                         self.sn = self.sn[5] + self.sn[4] + 'E9'
@@ -81,8 +85,8 @@ class Parser:
                                 continue
 
                             itac_data = Itac.check0(self.sn)
-                            itac_wa = itac_data[2]
-                            itac_desc = itac_data[1]
+                            self.itac_wa = itac_data[2]
+                            self.itac_desc = itac_data[1]
                             self.itac_pos = itac_data[3]
 
                             for x in range(size):
@@ -166,15 +170,15 @@ class Parser:
                             upload_values = upload_values.replace(',', '', 1)
 
                             if self.use_itac is True:
-                                Itac.upload(self.station_number, self.sn, self.itac_pos, test_result,
+                                Itac.upload(self.station_number, self.sn, self.itac_pos, self.test_result,
                                             '20', upload_values)
-                            Seso.upload(itac_desc, self.station_number, itac_wa, status, self.sn)
+                            Seso.upload(self.itac_desc, self.station_number, self.itac_wa, self.status, self.sn)
 
                             if self.use_seso is False:
                                 global pass_count
                                 global fail_count
 
-                                if status == 'pass':
+                                if self.status == 'pass':
                                     pass_count += 1
                                 else:
                                     fail_count += 1
@@ -287,12 +291,12 @@ class Parser:
 
                         for x in range(self.start_number, start_array[i]):
                             if any(['<' in data[x], '>' in data[x]]):
-                                test_result = '1'
-                                status = 'fail'
+                                self.test_result = '1'
+                                self.status = 'fail'
                                 break
                             else:
-                                test_result = '0'
-                                status = 'pass'
+                                self.test_result = '0'
+                                self.status = 'pass'
 
                         for x in range(self.start_number, start_array[i]):
                             if 'SN ' in data[x]:
@@ -333,12 +337,12 @@ class Parser:
                                 continue
 
                             itac_data = Itac.check0(self.sn)
-                            itac_wa = itac_data[2]
-                            itac_desc = itac_data[1]
+                            self.itac_wa = itac_data[2]
+                            self.itac_desc = itac_data[1]
                             self.itac_pos = itac_data[3]
 
-                            if any([itac_desc == 'M830', itac_desc == 'M830-001', itac_desc == 'M830-002',
-                                    itac_desc == 'M830-003']):
+                            if any([self.itac_desc == 'M830', self.itac_desc == 'M830-001', self.itac_desc == 'M830-002',
+                                    self.itac_desc == 'M830-003']):
                                 if int(self.itac_pos) in range(0, 10):
                                     comp = 0
                                 elif int(self.itac_pos) in range(10, 19):
@@ -348,14 +352,14 @@ class Parser:
                                 else:
                                     comp = 27
 
-                            elif any([itac_desc == 'M951', itac_desc == 'M951-001', itac_desc == 'M952',
-                                      itac_desc == 'M952-001', itac_desc == 'M953', itac_desc == 'M953-001']):
+                            elif any([self.itac_desc == 'M951', self.itac_desc == 'M951-001', self.itac_desc == 'M952',
+                                      self.itac_desc == 'M952-001', self.itac_desc == 'M953', self.itac_desc == 'M953-001']):
                                 if int(self.itac_pos) in range(0, 18):
                                     comp = 0
                                 else:
                                     comp = 18
 
-                            elif any([itac_desc == 'M976-002-HAUPTPL.', itac_desc == 'M976-001-HAUPTPL.']):
+                            elif any([self.itac_desc == 'M976-002-HAUPTPL.', self.itac_desc == 'M976-001-HAUPTPL.']):
                                 if int(self.itac_pos) in range(0, 43):
                                     comp = 0
                                 else:
@@ -395,8 +399,8 @@ class Parser:
                                     name = name[0].split('=')
                                     contact_c += 1
                                     self.meas_fail_code = '1'
-                                    test_result = '1'
-                                    status = 'fail'
+                                    self.test_result = '1'
+                                    self.status = 'fail'
                                 if 'OPEN PIN GROUPS' in data[x]:
                                     name[0] += '=' + data[x + 2]
                                     name[0] = (name[0].replace('**', '').replace('~', '')
@@ -408,8 +412,8 @@ class Parser:
                                     name[1] = name[1] + '( , )'
                                     contact_c += 1
                                     self.meas_fail_code = '1'
-                                    test_result = '1'
-                                    status = 'fail'
+                                    self.test_result = '1'
+                                    self.status = 'fail'
                                 if 'NAILS NOT MAKING CONTACT' in data[x]:
                                     name[0] += '=' + data[x + 3]
                                     name[0] = (name[0].replace('**', '').replace('(', '').replace('(', '')
@@ -419,8 +423,8 @@ class Parser:
                                     name = name[0].split('=')
                                     contact_c += 1
                                     self.meas_fail_code = '1'
-                                    test_result = '1'
-                                    status = 'fail'
+                                    self.test_result = '1'
+                                    self.status = 'fail'
                                 if 'Shorted Nails' in data[x]:
                                     name[0] += '=' + data[x + 1]
                                     name[0] = (name[0].replace('**', '').replace('~', '')
@@ -431,8 +435,8 @@ class Parser:
                                     name = name[0].split('=')
                                     contact_c += 1
                                     self.meas_fail_code = '1'
-                                    test_result = '1'
-                                    status = 'fail'
+                                    self.test_result = '1'
+                                    self.status = 'fail'
                                 if len(name) < 2:
                                     continue
                                 if name[1] == '':
@@ -487,9 +491,9 @@ class Parser:
                         cycle_time = str(cycle_time.total_seconds())
 
                         if self.use_itac is True:
-                            Itac.upload(self.station_number, self.sn, self.itac_pos, test_result, cycle_time,
+                            Itac.upload(self.station_number, self.sn, self.itac_pos, self.test_result, cycle_time,
                                         upload_values)
-                        Seso.upload(itac_desc, self.station_number, itac_wa, status, self.sn)
+                        Seso.upload(self.itac_desc, self.station_number, self.itac_wa, self.status, self.sn)
 
                     # End of main function definition
                     ########################################################
@@ -497,7 +501,7 @@ class Parser:
                             global pass_count
                             global fail_count
 
-                            if status == 'pass':
+                            if self.status == 'pass':
                                 pass_count += 1
                             else:
                                 fail_count += 1
