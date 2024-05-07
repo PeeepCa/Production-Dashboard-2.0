@@ -12,12 +12,13 @@ from library.seso_library import Seso
 
 class Parser:
     def __init__(self, *args):
-        self.run = True
-        self.path = args[0]
-        self.use_itac = args[1]
-        self.use_seso = args[2]
-        self.remove_file = args[3]
-        self.station_number = args[4]
+        self.run = args[0]
+        self.path = args[1]
+        self.what_to_handle = args[2]
+        self.use_itac = args[3]
+        self.use_seso = args[4]
+        self.remove_file = args[5]
+        self.station_number = args[6]
         self.start_number = None
         self.split_path = None
         self.tLock = BoundedSemaphore(value=1)
@@ -559,3 +560,11 @@ class Parser:
                     except ValueError:
                         continue
         exit(0)
+
+    def main(self):
+        if self.what_to_handle == 'stdf':
+            Parser.stdf_handle(self)
+        elif self.what_to_handle == 'rexxam':
+            Parser.rexxam_handle(self)
+        else:
+            pass
