@@ -1,5 +1,6 @@
 from ctypes import windll
 from library.logger_library import Logger
+from sys import exc_info
 
 
 class Config:
@@ -117,7 +118,7 @@ class Config:
     
         except UnboundLocalError:
             windll.user32.MessageBoxW(0, 'Error 0x101 Variable not found in config.', 'Error', 0x1000)
-            Logger.log_event(Logger(), 'Variable not found in config.')
+            Logger.log_event(Logger(), 'Variable not found in config. ' + str(exc_info()))
         except NameError:
             windll.user32.MessageBoxW(0, 'Error 0x102 Variable not found in return of function.', 'Error', 0x1000)
-            Logger.log_event(Logger(), 'Variable not found in return of function.')
+            Logger.log_event(Logger(), 'Variable not found in return of function. ' + str(exc_info()))

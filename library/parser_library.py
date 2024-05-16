@@ -63,7 +63,7 @@ class Parser:
                             data = data.splitlines()
                             size = len(data)
 
-                        if self.remove_file is True:
+                        if self.remove_file:
                             self.split_path = newest.rsplit('\\', 1)
                             replace(newest, self.split_path[0][:-8] + '\\PROBLEMS\\' + str(start_time) +
                                     self.split_path[1])
@@ -81,7 +81,7 @@ class Parser:
                         self.sn = data[0].split(',')
                         self.sn = self.sn[5] + self.sn[4] + 'E9'
 
-                        if self.use_itac is True:
+                        if self.use_itac:
                             if Itac.check1(self.sn) != '0' and Itac.check1(self.sn) != '212':
                                 continue
 
@@ -170,12 +170,12 @@ class Parser:
 
                             upload_values = upload_values.replace(',', '', 1)
 
-                            if self.use_itac is True:
+                            if self.use_itac:
                                 Itac.upload(self.station_number, self.sn, self.itac_pos, self.test_result,
                                             '20', upload_values)
                             Seso.upload(self.itac_desc, self.station_number, self.itac_wa, self.status, self.sn)
 
-                            if self.use_seso is False:
+                            if self.use_seso:
                                 global pass_count
                                 global fail_count
 
@@ -184,7 +184,7 @@ class Parser:
                                 else:
                                     fail_count += 1
 
-                        if self.remove_file is True:
+                        if self.remove_file:
                             remove(self.split_path[0][:-8] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
 
                     except ValueError:
@@ -265,7 +265,7 @@ class Parser:
                         data = data.splitlines()
                         size = len(data)
 
-                    if self.remove_file is True:
+                    if self.remove_file:
                         self.split_path = newest.rsplit('\\', 1)
                         replace(newest, self.split_path[0] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
                     ########################################################
@@ -329,11 +329,11 @@ class Parser:
 
                         if self.sn == '':
                             windll.user32.MessageBoxW(0, 'Error 0x106 DMX read error', 'Error', 0x1000)
-                            if self.remove_file is True:
+                            if self.remove_file:
                                 remove(self.split_path[0] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
                             continue
 
-                        if self.use_itac is True:
+                        if self.use_itac:
                             if Itac.check1(self.sn) != '0' and Itac.check1(self.sn) != '212':
                                 continue
 
@@ -342,8 +342,8 @@ class Parser:
                             self.itac_desc = itac_data[1]
                             self.itac_pos = itac_data[3]
 
-                            if any([self.itac_desc == 'M830', self.itac_desc == 'M830-001', self.itac_desc == 'M830-002',
-                                    self.itac_desc == 'M830-003']):
+                            if any([self.itac_desc == 'M830', self.itac_desc == 'M830-001',
+                                    self.itac_desc == 'M830-002', self.itac_desc == 'M830-003']):
                                 if int(self.itac_pos) in range(0, 10):
                                     comp = 0
                                 elif int(self.itac_pos) in range(10, 19):
@@ -354,7 +354,8 @@ class Parser:
                                     comp = 27
 
                             elif any([self.itac_desc == 'M951', self.itac_desc == 'M951-001', self.itac_desc == 'M952',
-                                      self.itac_desc == 'M952-001', self.itac_desc == 'M953', self.itac_desc == 'M953-001']):
+                                      self.itac_desc == 'M952-001', self.itac_desc == 'M953',
+                                      self.itac_desc == 'M953-001']):
                                 if int(self.itac_pos) in range(0, 18):
                                     comp = 0
                                 else:
@@ -368,7 +369,7 @@ class Parser:
 
                             if len(self.sn) == 13:
                                 self.sn = self.sn.strip('AP')
-                                if self.multi_panel is True:
+                                if self.multi_panel:
                                     self.sn = int(self.sn) - int(self.itac_pos) + comp + int(self.pos)
                                 self.sn = str(self.sn)
                                 self.sn = 'AP' + self.sn.zfill(11)
@@ -491,14 +492,14 @@ class Parser:
                                       - datetime.datetime.strptime(times[0], '%H:%M:%S'))
                         cycle_time = str(cycle_time.total_seconds())
 
-                        if self.use_itac is True:
+                        if self.use_itac:
                             Itac.upload(self.station_number, self.sn, self.itac_pos, self.test_result, cycle_time,
                                         upload_values)
                         Seso.upload(self.itac_desc, self.station_number, self.itac_wa, self.status, self.sn)
 
                     # End of main function definition
                     ########################################################
-                        if self.use_seso is False:
+                        if self.use_seso:
                             global pass_count
                             global fail_count
 
@@ -507,7 +508,7 @@ class Parser:
                             else:
                                 fail_count += 1
 
-                    if self.remove_file is True:
+                    if self.remove_file:
                         remove(self.split_path[0] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
 
                 except ValueError:

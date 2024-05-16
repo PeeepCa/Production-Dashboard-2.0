@@ -5,6 +5,8 @@
 # Finnish muster
 # Try exe build - Done
 # Multithreading - Partially done
+# Add locking screen
+# Add logging
 
 import tkinter
 import sys
@@ -19,6 +21,7 @@ from library.seso_library import Seso
 from library.logger_library import Logger
 from library.config_library import Config
 from library.hw_library import Hw
+from sys import exc_info
 
 
 class App:
@@ -209,7 +212,7 @@ class App:
                 logo.place(x=323, y=203)
             except FileNotFoundError:
                 windll.user32.MessageBoxW(0, 'Error 0x001 Image not found. Please check image name.', 'Error', 0x1000)
-                Logger.log_event(Logger(), 'Error 0x001 Image not found.')
+                Logger.log_event(Logger(), 'Error 0x001 Image not found. ' + str(exc_info()))
 
         top.protocol('WM_DELETE_WINDOW', main_exit)
         while self.run:
@@ -221,7 +224,7 @@ class App:
                 pass
             except:
                 windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.', 'Error', 0x1000)
-                Logger.log_event(Logger(), 'Error 0x000 Undefined error in main.')
+                Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + str(exc_info()))
 
         top.destroy()
 
