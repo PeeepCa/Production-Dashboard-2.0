@@ -19,6 +19,7 @@ class Parser:
         self.use_seso = args[4]
         self.remove_file = args[5]
         self.station_number = args[6]
+        self.restApi = args[7]
         self.start_number = None
         self.split_path = None
         self.tLock = BoundedSemaphore(value=1)
@@ -82,10 +83,10 @@ class Parser:
                         self.sn = self.sn[5] + self.sn[4] + 'E9'
 
                         if self.use_itac:
-                            if Itac.check1(self.sn) != '0' and Itac.check1(self.sn) != '212':
+                            if Itac.sn_state(Itac(), self.sn) != '0' and Itac.sn_state(self, self.sn) != '212':
                                 continue
 
-                            itac_data = Itac.check0(self.sn)
+                            itac_data = Itac.sn_info(self.sn)
                             self.itac_wa = itac_data[2]
                             self.itac_desc = itac_data[1]
                             self.itac_pos = itac_data[3]
@@ -171,7 +172,7 @@ class Parser:
                             upload_values = upload_values.replace(',', '', 1)
 
                             if self.use_itac:
-                                Itac.upload(self.station_number, self.sn, self.itac_pos, self.test_result,
+                                Itac.upload(self, self.station_number, self.sn, self.itac_pos, self.test_result,
                                             '20', upload_values)
                             Seso.upload(self.itac_desc, self.station_number, self.itac_wa, self.status, self.sn)
 

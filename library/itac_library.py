@@ -1,5 +1,6 @@
 # ITAC library
 # input for self class ITAC should be station number and restAPI address
+# restAPI=http://acz-itac/mes/imsapi/rest/actions/
 
 from requests import post
 from ctypes import windll
@@ -7,6 +8,14 @@ from logger_library import Logger
 
 
 class Itac:
+    """
+    login,
+    sn_info,
+    sn_state,
+    upload,
+    logout
+    :param args: rest_address, station_number
+    """
     def __init__(self, *args):
         # init for all components needed for library to work
         self.login = 'regLogin'
@@ -18,9 +27,14 @@ class Itac:
         self.timeout = 5
         self.stationNumber = args[0]
         self.restAPI = args[1]
+        self.function = None
+        self.body = None
 
     def login(self):
-        # Login
+        """
+        Login
+        :return: sessionId, persId, locale as global vars
+        """
         body = """{"sessionValidationStruct":
                     {"stationNumber":""" + self.stationNumber + """,
                     "stationPassword":"",
@@ -29,20 +43,19 @@ class Itac:
                     "client":"01",
                     "registrationType":"S",
                     "systemIdentifier":"Test"}}"""
-        req = post(self.restAPI + self.login, headers=self.headers, data=body, timeout=self.timeout)
-        if req.status_code != 200:
-            windll.user32.MessageBoxW(0, 'Error 0x301 iTAC regLogin problem ' +
-                                      str(req.status_code), 'iTAC Message', 0x1000)
-            Logger.log_event(Logger(), 'Error 0x301 iTAC regLogin problem ' + str(req.status_code))
-        
-        js = req.text.replace(' ', '').replace('\r\n', '').replace('{"result":{"return_value":0', '').split(',')
+        js = (Itac.data_post(self, self.login, body).replace(' ', '').replace('\r\n', '')
+              .replace('{"result":{"return_value":0', '').split(','))
+        print(js)
         globals()['sessionId'] = js[1].replace('sessionContext":{', '').split(':')[1]
         globals()['persId'] = js[2].split(':')[1]
         globals()['locale'] = js[3].replace('}}}', '').replace('"', '').split(':')[1]
 
     def sn_info(self, *args):
-        # SN information
-        # Part number, parts desc, work order and SN pos
+        """
+        SN info
+        :param args: sn
+        :return: part_no, part_dest, wa, sn_pos
+        """
         sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
@@ -52,13 +65,8 @@ class Itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberResultKeys": ["PART_NUMBER","PART_DESC","WORKORDER_NUMBER","SERIAL_NUMBER_POS"]}"""
-        req = post(self.restAPI + self.sn_info, headers=self.headers, data=body, timeout=self.timeout)
-        if req.status_code != 200:
-            windll.user32.MessageBoxW(0, 'Error 0x302 iTAC trGetSerialNumberInfo problem ' +
-                                      str(req.status_code), 'iTAC Message', 0x1000)
-            Logger.log_event(Logger(), 'Error 0x302 iTAC trGetSerialNumberInfo problem ' + str(req.status_code))
-
-        data = req.text.replace(' ', '').replace('\r\n', '').replace('"', '').split(',')
+        data = (Itac.data_post(self, self.sn_info, body).replace(' ', '')
+                .replace('\r\n', '').replace('"', '').split(','))
         part_no = str(data[1]).split('[')[1]
         part_desc = str(data[2])
         wa = str(data[3])
@@ -66,8 +74,11 @@ class Itac:
         return part_no, part_desc, wa, sn_pos
 
     def sn_state(self, *args):
-        # SN information
-        # Interlocking
+        """
+        Interlocking
+        :param args: sn
+        :return: status
+        """
         sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
@@ -79,20 +90,17 @@ class Itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberStateResultKeys": ["ERROR_CODE"]}"""
-        req = post(self.restAPI + self.sn_state, headers=self.headers, data=body, timeout=self.timeout)
-        if req.status_code != 200:
-            windll.user32.MessageBoxW(0, 'Error 0x303 iTAC trCheckSerialNumberState problem ' +
-                                      str(req.status_code), 'iTAC Message', 0x1000)
-            Logger.log_event(Logger(), 'Error 0x303 iTAC trCheckSerialNumberState problem ' + str(req.status_code))
-        
-        status = req.text.replace(' ', '').replace('\r\n', '').split(',')[1]
+        status = Itac.data_post(self, self.sn_state, body).replace(' ', '').replace('\r\n', '').split(',')[1]
         status = status.replace('"', '').replace('}', '').replace('[', '').replace(']', '').split(':')[1]
         if status != '0' and status != '212':
             windll.user32.MessageBoxW(0, 'iTAC AOI ' + status, 'iTAC Message', 0x1000)
         return status
 
     def upload(self, *args):
-        # Upload of SN result
+        """
+        Upload of the results
+        :param args: sn, sn_pos, test_result, cycle_time, upload_values
+        """
         sn = args[0]
         sn_pos = args[1]
         test_result = args[2]
@@ -115,20 +123,30 @@ class Itac:
                     "resultUploadKeys": ["MEASURE_TYPE","ERROR_CODE","MEASURE_FAIL_CODE","UNIT","MEASURE_NAME",
                     "MEASURE_VALUE","LOWER_LIMIT","UPPER_LIMIT","TEST_STEP_NUMBER"],
                     "resultUploadValues": [""" + upload_values + """]}"""
-        req = post(self.restAPI + self.upload, headers=self.headers, data=body, timeout=self.timeout)
-        if req.status_code != 200:
-            windll.user32.MessageBoxW(0, 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' +
-                                      str(req.status_code), 'iTAC Message', 0x1000)
-            Logger.log_event(Logger(), 'Error 0x304 iTAC trUploadResultDataAndRecipe problem ' + str(req.status_code))
+        Itac.data_post(self, self.upload, body).replace(' ', '')
 
     def logout(self):
-        # Logout
+        """
+        Logout
+        """
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
                     "locale":""" + '"' + locale + '"' + """}}"""
-        req = post(self.restAPI + self.logout, headers=self.headers, data=body, timeout=self.timeout)
+        Itac.data_post(self, self.logout, body).replace(' ', '')
+
+    # Modify sending all the iTAC through the single function
+    def data_post(self, *args):
+        """
+        Send data to server
+        :param args: function, body
+        :return: 'req.text'
+        """
+        function = args[0]
+        body = args[1]
+        req = post(self.restAPI + function, headers=self.headers, data=body, timeout=self.timeout)
         if req.status_code != 200:
-            windll.user32.MessageBoxW(0, 'Error 0x305 iTAC regLogout problem ' +
+            windll.user32.MessageBoxW(0, 'Error 0x300 iTAC' + self.function + 'problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
-            Logger.log_event(Logger(), 'Error 0x305 iTAC regLogout problem ' + str(req.status_code))
+            Logger.log_event(Logger(), 'Error 0x305 iTAC' + self.function + 'problem ' + str(req.status_code))
+        return req.text
