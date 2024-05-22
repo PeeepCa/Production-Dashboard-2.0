@@ -7,18 +7,28 @@ from serial import Serial, serialutil
 from ctypes import windll
 from library.logger_library import Logger
 from sys import exc_info
-
 msg_show = 1
 ser = Serial()
 
 
 class Hw:
+    """
+    Hardware handling.
+    rfid_open,
+    rfid_read,
+    rfid_close
+    :param args: COM, BAUD
+    """
     def __init__(self, *args):
         # input of COM and BAUD // COM8, 9600
         self.COM = args[0]
         self.BAUD = args[1]
 
     def rfid_open(self):
+        """
+        Opening the RS232
+        :return: use_reader
+        """
         try:
             globals()['ser'] = Serial(self.COM, self.BAUD, timeout=0.5)
             use_reader = True
@@ -37,6 +47,10 @@ class Hw:
         return use_reader
 
     def rfid_read(self):
+        """
+        RS232 read
+        :return: serial_string
+        """
         # readout of CARD id
         try:
             ser.write(b'0500100\r')
@@ -58,4 +72,7 @@ class Hw:
 
     @staticmethod
     def rfid_close():
+        """
+        Close the RS232
+        """
         ser.close()

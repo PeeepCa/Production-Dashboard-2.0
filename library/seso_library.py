@@ -10,12 +10,21 @@ from library.logger_library import Logger
 
 
 class Seso:
+    """
+    Communication with SESO via restAPI. Second parameter is restAPI address.
+    :param args: station_number, rest_api
+    """
     def __init__(self, *args):
         self.station_number = args[0]
         self.rest_api = args[1]
         self.timeout = 5
 
     def upload(self, *args):
+        """
+        Upload results to SESO.
+        :param args: serial_number, work_order, status, description
+        :return:
+        """
         try:
             # Uploading the results to SESO
             serial_number = args[0]
@@ -36,6 +45,10 @@ class Seso:
             windll.user32.MessageBoxW(0, 'Error 0x401 URL for upload.', 'SESO Message', 0x1000)
 
     def operator_without_reader(self):
+        """
+        Operator info based on station number.
+        :return: op_id, op_name, unlock, training
+        """
         try:
             # Function which returns the card number and operator name for tester without reader
             # If its secondary machine, then it does not want trainings
@@ -57,12 +70,17 @@ class Seso:
             windll.user32.MessageBoxW(0, 'Error 0x402 URL for operatorWithoutReader.', 'SESO Message', 0x1000)
     
     def operator_with_reader(self, *args):
+        """
+        Operator info based on card number.
+        :param args: card_id, use_training
+        :return: op_id, op_name, unlock, training
+        """
         try:
             # This function checks the trainings for primary machine and returns back operator name and id
             # sesoOperator
-            card_reader = args[0]
+            card_id = args[0]
             use_training = args[1]
-            payload = {'type': 'card', 'id': card_reader, 'station': self.station_number}
+            payload = {'type': 'card', 'id': card_id, 'station': self.station_number}
             req = post(self.rest_api, data=payload, timeout=self.timeout)
             data = req.text.split(',')
             op_id = data[2].split(':')[1].replace('"', '')
@@ -89,6 +107,11 @@ class Seso:
             windll.user32.MessageBoxW(0, 'Error 0x403 URL for operatorWithReader.', 'SESO Message', 0x1000)
 
     def login_logout(self, *args):
+        """
+        Login / Logout for operator.
+        :param args: op_name, op_id, in_out
+        :return: logged
+        """
         try:
             # Login / Logout for operator
             op_name = args[0]
@@ -107,6 +130,10 @@ class Seso:
             windll.user32.MessageBoxW(0, 'Error 0x404 URL for loginLogout.', 'SESO Message', 0x1000)
     
     def update_prod_data(self):
+        """
+        Performance info from SESO based on station number.
+        :return: pass_count, fail_count, fpy, instruction_list, module, lrf, curr_perf
+        """
         try:
             # Production data display
             # There ll be probably changes since we do not need to calculate everything here

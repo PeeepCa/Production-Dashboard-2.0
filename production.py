@@ -77,6 +77,7 @@ class App:
                 n = n + 1
                 if n > 2:
                     windll.user32.MessageBoxW(0, 'Error 0x204 App is already running', 'Error', 0x1000)
+                    Logger.log_event(Logger(), 'Error 0x204 App is already running. ' + str(sys.exc_info()))
                     sys.exit()
 
     def ui(self):

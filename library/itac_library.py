@@ -9,6 +9,7 @@ from logger_library import Logger
 
 class Itac:
     """
+    Itac library, communication via rest.
     login,
     sn_info,
     sn_state,

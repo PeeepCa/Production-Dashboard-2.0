@@ -4,6 +4,10 @@ from sys import exc_info
 
 
 class Config:
+    """
+    Read config. Path should be sent as first argument
+    :param args: file
+    """
     def __init__(self, *args):
         self.station_number = ''
         self.path = ''
@@ -36,6 +40,15 @@ class Config:
         self.temp = file.read(-1).splitlines()
         
     def read_config(self):
+        """
+        Read config. Path should be sent as first argument
+        :return: station_number, path, thread_number, rest_api, remove_file,
+                    seso_data, use_seso, parse_log, use_reader,
+                    com, baud, green_fpy, orange_fpy, show_instr,
+                    use_login, company_logo, seso_operator, use_training,
+                    log_format, server_instr_gen, canvas_back, rect_back, graph_back,
+                    text_color, graph_color, use_itac
+        """
         try:
             for x in self.temp:
                 if '##' in x:
