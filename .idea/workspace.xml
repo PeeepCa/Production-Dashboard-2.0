@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.05">
+    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.06">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/config_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/config_library.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/hw_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/hw_library.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/itac_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/itac_library.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/library/logger_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/logger_library.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/library/seso_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/seso_library.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/production.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716302294670</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="v0.06">
+      <option name="closed" value="true" />
+      <created>1716375536143</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716375536143</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,7 +177,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="v0.04" />
     <MESSAGE value="v0.05" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.05" />
+    <MESSAGE value="v0.06" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.06" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

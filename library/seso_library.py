@@ -12,6 +12,11 @@ from library.logger_library import Logger
 class Seso:
     """
     Communication with SESO via restAPI. Second parameter is restAPI address.
+    upload,
+    operator_without_reader,
+    operator_with_reader
+    login_logout,
+    update_prod_data
     :param args: station_number, rest_api
     """
     def __init__(self, *args):

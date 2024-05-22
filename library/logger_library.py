@@ -5,8 +5,7 @@ from datetime import datetime
 
 class Logger:
     """
-    Library for logging.
-    Logged in directory as txt file named as date.
+    Library for logging. Logged in directory as txt file named as date.
     time_stamp,
     log_event
     """
