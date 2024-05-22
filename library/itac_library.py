@@ -36,6 +36,7 @@ class Itac:
         Login
         :return: sessionId, persId, locale as global vars
         """
+        # Itac login
         body = """{"sessionValidationStruct":
                     {"stationNumber":""" + self.stationNumber + """,
                     "stationPassword":"",
@@ -57,6 +58,7 @@ class Itac:
         :param args: sn
         :return: part_no, part_dest, wa, sn_pos
         """
+        # serial number information
         sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
@@ -80,6 +82,7 @@ class Itac:
         :param args: sn
         :return: status
         """
+        # Interlocking
         sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
@@ -102,6 +105,7 @@ class Itac:
         Upload of the results
         :param args: sn, sn_pos, test_result, cycle_time, upload_values
         """
+        # Upload state and result
         sn = args[0]
         sn_pos = args[1]
         test_result = args[2]
@@ -130,6 +134,7 @@ class Itac:
         """
         Logout
         """
+        # Logout
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
@@ -143,6 +148,7 @@ class Itac:
         :param args: function, body
         :return: 'req.text'
         """
+        # Function for sent data to restAPI
         function = args[0]
         body = args[1]
         req = post(self.restAPI + function, headers=self.headers, data=body, timeout=self.timeout)

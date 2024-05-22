@@ -1,4 +1,4 @@
-import datetime
+from datetime import date, datetime
 from threading import BoundedSemaphore
 from time import sleep, time
 from os import listdir, replace, path, remove
@@ -39,8 +39,8 @@ class Parser:
             # We do not want to crash if the production does not run
             # This ll crash only till the production start
             try:
-                date = str(datetime.date.today()).replace('-', '') + '\\'
-                if len(listdir(path=self.path + date)) > 0:
+                date_v = str(date.today()).replace('-', '') + '\\'
+                if len(listdir(path=self.path + date_v)) > 0:
                     try:
                         start_time = time()
                         ########################################################
@@ -489,8 +489,8 @@ class Parser:
 
                         upload_values = upload_values.replace(',', '', 1)
                         self.start_number = start_array[i]
-                        cycle_time = (datetime.datetime.strptime(times[1], '%H:%M:%S')
-                                      - datetime.datetime.strptime(times[0], '%H:%M:%S'))
+                        cycle_time = (datetime.strptime(times[1], '%H:%M:%S')
+                                      - datetime.strptime(times[0], '%H:%M:%S'))
                         cycle_time = str(cycle_time.total_seconds())
 
                         if self.use_itac:
