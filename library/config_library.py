@@ -9,32 +9,32 @@ class Config:
     :param args: file
     """
     def __init__(self, *args):
-        self.station_number = ''
-        self.path = ''
-        self.thread_number = ''
-        self.rest_api = ''
-        self.remove_file = ''
-        self.seso_data = ''
-        self.seso_operator = ''
-        self.use_seso = ''
-        self.use_itac = ''
-        self.parse_log = ''
-        self.use_reader = ''
-        self.com = ''
-        self.baud = ''
-        self.green_fpy = ''
-        self.orange_fpy = ''
-        self.server_instr_gen = ''
-        self.show_instr = ''
-        self.use_login = ''
-        self.company_logo = ''
-        self.use_training = ''
-        self.log_format = ''
-        self.canvas_back = ''
-        self.rect_back = ''
-        self.graph_back = ''
-        self.text_color = ''
-        self.graph_color = ''
+        self.station_number = None
+        self.path = None
+        self.thread_number = None
+        self.rest_api = None
+        self.remove_file = None
+        self.seso_data = None
+        self.seso_operator = None
+        self.use_seso = None
+        self.use_itac = None
+        self.parse_log = None
+        self.use_reader = None
+        self.com = None
+        self.baud = None
+        self.green_fpy = None
+        self.orange_fpy = None
+        self.server_instr_gen = None
+        self.show_instr = None
+        self.use_login = None
+        self.company_logo = None
+        self.use_training = None
+        self.log_format = None
+        self.canvas_back = None
+        self.rect_back = None
+        self.graph_back = None
+        self.text_color = None
+        self.graph_color = None
 
         file = open(args[0], 'r')
         self.temp = file.read(-1).splitlines()
@@ -70,13 +70,13 @@ class Config:
                 elif 'sesoOperator' in x:
                     self.seso_operator = x.split('=')[1]
                 elif 'SESO' in x:
-                    self.use_itac = x.split('=')[1]
-                    if self.use_itac == 'False':
-                        self.use_itac = ''
-                elif 'ITAC' in x:
                     self.use_seso = x.split('=')[1]
                     if self.use_seso == 'False':
                         self.use_seso = ''
+                elif 'ITAC' in x:
+                    self.use_itac = x.split('=')[1]
+                    if self.use_itac == 'False':
+                        self.use_itac = ''
                 elif 'parse' in x:
                     self.parse_log = x.split('=')[1]
                     if self.parse_log == 'False':
