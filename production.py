@@ -38,6 +38,7 @@ class App:
         self.companyLogo = temp[15]
         self.greenFpy = temp[11]
         self.orangeFpy = temp[12]
+        self.use_login = temp[13]
         self.sesoData = temp[5]
         self.sesoOperator = temp[16]
         self.useSeso = temp[6]
@@ -133,6 +134,10 @@ class App:
                 if self.useReader is True and int(self.card_id) > 0:
                     self.op_id, self.op_name, self.unlock, self.training = Seso.operator_with_reader(
                         Seso(self.stationNo, self.sesoOperator), self.card_id, False)
+                    if self.use_login is True:
+                        # Placeholder
+                        Seso.login_logout(Seso(self.stationNo, 'https://seso.apag-elektronik.com/api/'),
+                                          self.op_name, self.op_id, self.unlock)
             else:
                 # Placeholder
                 pass
@@ -222,7 +227,7 @@ class App:
                 update_data()
             except KeyboardInterrupt:
                 pass
-            except:
+            except Exception:
                 windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.', 'Error', 0x1000)
                 Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + str(sys.exc_info()))
 

@@ -15,7 +15,7 @@ class Itac:
     sn_state,
     upload,
     logout
-    :param args: rest_address, station_number
+    :param args: station_number, rest_address
     """
     def __init__(self, *args):
         # init for all components needed for library to work
@@ -47,7 +47,6 @@ class Itac:
                     "systemIdentifier":"Test"}}"""
         js = (Itac.data_post(self, self.login, body).replace(' ', '').replace('\r\n', '')
               .replace('{"result":{"return_value":0', '').split(','))
-        print(js)
         globals()['sessionId'] = js[1].replace('sessionContext":{', '').split(':')[1]
         globals()['persId'] = js[2].split(':')[1]
         globals()['locale'] = js[3].replace('}}}', '').replace('"', '').split(':')[1]

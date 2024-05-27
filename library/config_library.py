@@ -42,12 +42,12 @@ class Config:
     def read_config(self):
         """
         Read config. Path should be sent as first argument
-        :return: station_number, path, thread_number, rest_api, remove_file,
-                    seso_data, use_seso, parse_log, use_reader,
-                    com, baud, green_fpy, orange_fpy, show_instr,
-                    use_login, company_logo, seso_operator, use_training,
-                    log_format, server_instr_gen, canvas_back, rect_back, graph_back,
-                    text_color, graph_color, use_itac
+        :return: 0-station_number, 1-path, 2-thread_number, 3-rest_api, 4-remove_file,
+                    5-seso_data, 6-use_seso, 7-parse_log, 8-use_reader,
+                    9-com, baud, 10-green_fpy, 11-orange_fpy, 12-show_instr,
+                    13-use_login, 14-company_logo, 15-seso_operator, 16-use_training,
+                    17-log_format, 18-server_instr_gen, 19-canvas_back, 20-rect_back, 21-graph_back,
+                    22-text_color, 23-graph_color, 24-use_itac
         """
         try:
             for x in self.temp:
