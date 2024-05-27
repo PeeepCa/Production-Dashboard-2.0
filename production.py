@@ -1,12 +1,12 @@
-# Finnish iTAC
-# Finnish logging - Done
-# Finnish reader - Done
-# Finnish offline mode
-# Finnish muster
-# Try exe build - Done
-# Multithreading - Partially done
-# Add locking screen
-# Add when data send to itac and timeout try again
+# TODO  Finnish iTAC
+#       Finnish logging - Done
+#       Finnish reader - Done
+#       Finnish offline mode
+#       Finnish muster
+#       Try exe build - Done
+#       Multithreading - Partially done
+#       Add locking screen - Done
+#       Add when data send to itac and timeout try again
 
 import tkinter
 import sys
@@ -98,6 +98,16 @@ class App:
         c.create_rectangle(0, 0, 80, 250, tags='ch', fill=self.rectBack, width=0)
         c.pack()
 
+        # Lockscreen
+        lock = tkinter.Tk()
+        lock.geometry()
+        lock.config(bg='white')
+        lock.attributes('-alpha', 0.8)
+        lock.overrideredirect(True)
+        lock.anchor('center')
+        lock_text = tkinter.Label(lock, text=self.training, font='Helvetica 40 bold', bg='white')
+        lock_text.place(x=self.screen_width / 2, y=self.screen_height / 2)
+
         def main_exit(*args):
             # just the exit which stops the main loop
             Logger.log_event(Logger(), 'App exit by button.')
@@ -121,26 +131,20 @@ class App:
             c.coords(app_minimize_ico, 380 - self.dsh_offset, 5, 390 - self.dsh_offset, 5)
             c.pack()
 
-        def update_data():
-            # update function for seso and other dynamic data
-            if self.useReader:
-                self.card_id = Hw.rfid_read(self)
-            if self.useSeso:
-                (self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf,
-                 curr_perf) = Seso.update_prod_data(Seso(self.stationNo, self.sesoData))
-                if int(self.card_id) == 0:
-                    self.op_id, self.op_name, self.unlock, self.training = Seso.operator_without_reader(
-                        Seso(self.stationNo, self.sesoOperator))
-                if self.useReader is True and int(self.card_id) > 0:
-                    self.op_id, self.op_name, self.unlock, self.training = Seso.operator_with_reader(
-                        Seso(self.stationNo, self.sesoOperator), self.card_id, False)
-                    if self.use_login is True:
-                        # Placeholder
-                        Seso.login_logout(Seso(self.stationNo, 'https://seso.apag-elektronik.com/api/'),
-                                          self.op_name, self.op_id, self.unlock)
-            else:
-                # Placeholder
-                pass
+        def screen_lock():
+            # Screen lock
+            top.attributes('-topmost', 0)
+            lock.geometry(f'{int(top.winfo_screenwidth())}x{int(top.winfo_screenheight())}')
+            lock.attributes('-topmost', 1)
+
+        def screen_unlock():
+            # Screen unlock
+            lock.geometry('0x0')
+            lock.attributes('-topmost', 0)
+            top.attributes('-topmost', 1)
+
+        def operator_perf():
+            # Update colors and data for frontend
             current_color = c.itemcget(app_alive, 'fill')
             if current_color == 'black':
                 c.itemconfig(app_alive, fill='white')
@@ -160,10 +164,38 @@ class App:
             pass_pcbs.config(text='Passed: ' + str(self.pass_count))
             fail_pcbs.config(text='Failed: ' + str(self.fail_count))
             operator.config(text=self.op_id)
+            lock_text.config(text = self.training)
             c.itemconfig(fpy_graph, extent=180 / 100 * self.fpy_perf)
             if self.lrf_perf > 100:
                 self.lrf_perf = 100
             c.itemconfig(lrf_graph, extent=180 / 100 * self.lrf_perf)
+
+        def update_data():
+            # update function for seso and other dynamic data
+            if self.useReader:
+                self.card_id = Hw.rfid_read(self)
+            if self.useSeso:
+                (self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf,
+                 curr_perf) = Seso.update_prod_data(Seso(self.stationNo, self.sesoData))
+                if int(self.card_id) == 0:
+                    self.op_id, self.op_name, self.unlock, self.training = Seso.operator_without_reader(
+                        Seso(self.stationNo, self.sesoOperator))
+                if self.useReader and int(self.card_id) > 0:
+                    self.op_id, self.op_name, self.unlock, self.training = Seso.operator_with_reader(
+                        Seso(self.stationNo, self.sesoOperator), self.card_id, False)
+                    if self.use_login:
+                        # Placeholder
+                        Seso.login_logout(Seso(self.stationNo, 'https://seso.apag-elektronik.com/api/'),
+                                          self.op_name, self.op_id, self.unlock)
+                self.unlock = False
+                if self.unlock:
+                    screen_unlock()
+                else:
+                    screen_lock()
+            else:
+                # Placeholder
+                pass
+            operator_perf()
             sleep(0.5)
 
         instr_button = tkinter.Button(top, text='Instruction', command='', width=9, bd=0, bg=self.graphBack,
