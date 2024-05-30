@@ -41,7 +41,6 @@ class Parser:
         self.itac_wa = None
         self.status = None
         if self.use_itac:
-            print(self.station_number, self.itac_restApi)
             Itac.login(Itac(self.station_number, self.itac_restApi))
 
     def rexxam_handle(self):
@@ -244,14 +243,14 @@ class Parser:
                         except ValueError:
                             continue
 
-                    except Exception:
-                        try:
-                            windll.user32.MessageBoxW(0, 'Error 0x100 ' + str(exc_info()), 'Error', 0x1000)
-                            Logger.log_event(Logger(), 'Error 0x100. ' + str(exc_info()))
-                            self.tLock.release()
-                            continue
-                        except ValueError:
-                            continue
+                    # except Exception:
+                    #     try:
+                    #         windll.user32.MessageBoxW(0, 'Error 0x100 ' + str(exc_info()), 'Error', 0x1000)
+                    #         Logger.log_event(Logger(), 'Error 0x100. ' + str(exc_info()))
+                    #         self.tLock.release()
+                    #         continue
+                    #     except ValueError:
+                    #         continue
             except FileNotFoundError:
                 continue
         exit(0)
@@ -352,7 +351,9 @@ class Parser:
 
                         if self.use_itac:
                             if Itac.sn_state(Itac(self.station_number, self.itac_restApi),
-                                             self.sn) != '0' and Itac.sn_state(Itac(self.station_number, self.itac_restApi), self.sn) != '212':
+                                             self.sn) != '0' and Itac.sn_state(Itac(self.station_number,
+                                                                                    self.itac_restApi),
+                                                                               self.sn) != '212':
                                 continue
 
                             itac_data = Itac.sn_info(Itac(self.station_number, self.itac_restApi), self.sn)

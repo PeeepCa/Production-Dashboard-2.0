@@ -295,34 +295,27 @@ class App:
         instr_button = tkinter.Button(top, text='Instruction', command='', width=9, bd=0, bg=self.graphBack,
                                       font='Arial 9', fg='black')
         instr_button.place(x=5, y=224)
-
         gen_instr_button = tkinter.Button(top, text='General ins.', command='', width=9, bd=0, bg=self.graphBack,
                                           font='Arial 9', fg='black')
         gen_instr_button.place(x=5, y=201)
-
         app_alive = c.create_rectangle(390 - self.dsh_offset, 0, 400 - self.dsh_offset, 10, tags='APP_ALIVE')
         c.tag_bind('APP_ALIVE', '<Button-1>', main_exit)
-
         app_minimize = c.create_rectangle(380 - self.dsh_offset, 0, 390 - self.dsh_offset, 10, tags='app_minimize')
         app_minimize_ico = c.create_line(380 - self.dsh_offset, 5, 390 - self.dsh_offset, 5, tags='app_minimize',
                                          fill='white')
         c.tag_bind('app_minimize', '<Button-1>', minimize)
         c.tag_bind('app_minimize_ico', '<Button-1>', minimize)
         c.itemconfig(app_minimize, fill='black')
-
         app_name = tkinter.Label(top, text='Production Dashboard', bg=self.canvasBack, font='Arial 10',
                                  fg=self.textColor)
         app_name.place(x=240, y=10, anchor='center')
-
         operator = tkinter.Label(top, text=self.op_id, bg=self.canvasBack, font='Arial 14', fg=self.textColor)
         operator.place(x=240, y=30, anchor='center')
-
         c.create_arc(-60, 0, 220, 250, start=270, extent=180, fill=self.graphBack, outline='')
         fpy_graph = c.create_arc(-60, 0, 220, 250, start=270, extent=180, fill=self.graphColor, outline='')
         c.create_arc(-20, 35, 180, 215, start=270, extent=180, fill=self.graphBack, outline='')
         lrf_graph = c.create_arc(-20, 35, 180, 215, start=270, extent=180, fill=self.graphColor, outline='')
         c.create_arc(20, 70, 140, 180, start=270, extent=180, fill=self.rectBack, outline='')
-
         total_pcbs = tkinter.Label(top, text='Total: ' + str(self.pass_count + self.fail_count), bg=self.canvasBack,
                                    font='Arial 8', fg=self.textColor)
         pass_pcbs = tkinter.Label(top, text='Passed: ' + str(self.pass_count), bg=self.canvasBack, font='Arial 8',
@@ -367,10 +360,9 @@ class App:
                 main_exit()
             except KeyboardInterrupt:
                 pass
-            except Exception:
-                windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.', 'Error', 0x1000)
-                Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + str(sys.exc_info()))
-
+            # except Exception:
+            #     windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.', 'Error', 0x1000)
+            #     Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + str(sys.exc_info()))
         top.destroy()
 
     def main(self):

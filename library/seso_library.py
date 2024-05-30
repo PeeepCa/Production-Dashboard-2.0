@@ -172,7 +172,7 @@ class Seso:
                 else:
                     fpy = 0
                     lrf = 0
-                if fpy > 0:
+                if fpy > 0 and len(data) == 15:
                     curr_perf = int(float(data[14].split(':')[1].replace('"', '').replace('}', '').replace(']', '')))
                 else:
                     curr_perf = 0
