@@ -1,0 +1,64 @@
+30.05.2024 10:28:24: Logging started.
+30.05.2024 10:36:47: App exit by button.
+30.05.2024 10:38:45: Logging started.
+30.05.2024 10:38:56: Logging started.
+30.05.2024 10:39:21: Logging started.
+30.05.2024 10:39:55: Logging started.
+30.05.2024 10:41:02: Logging started.
+30.05.2024 10:41:10: Logging started.
+30.05.2024 10:42:52: Logging started.
+30.05.2024 10:43:01: App exit by button.
+30.05.2024 10:45:27: Logging started.
+30.05.2024 10:45:35: App exit by button.
+30.05.2024 10:45:36: Logging started.
+30.05.2024 10:45:43: Logging started.
+30.05.2024 10:45:47: App exit by button.
+30.05.2024 10:47:37: Logging started.
+30.05.2024 10:47:50: App exit by button.
+30.05.2024 10:47:51: Logging started.
+30.05.2024 10:47:57: App exit by button.
+30.05.2024 10:48:00: Logging started.
+30.05.2024 10:48:09: App exit by button.
+30.05.2024 10:51:50: Logging started.
+30.05.2024 10:57:16: Error 0x100. (<class 'AttributeError'>, AttributeError("type object 'Itac' has no attribute 'check1'"), <traceback object at 0x074142B0>)
+30.05.2024 10:58:46: Logging started.
+30.05.2024 10:58:56: Error 0x100. (<class 'NameError'>, NameError("name 'sessionId' is not defined"), <traceback object at 0x03757788>)
+30.05.2024 10:59:07: Error 0x100. (<class 'NameError'>, NameError("name 'sessionId' is not defined"), <traceback object at 0x03766A58>)
+30.05.2024 11:00:23: App exit by button.
+30.05.2024 11:00:24: Logging started.
+30.05.2024 11:00:58: Logging started.
+30.05.2024 11:03:11: Logging started.
+30.05.2024 11:04:14: Logging started.
+30.05.2024 11:06:43: Error 0x000 Undefined error in main. (<class 'IndexError'>, IndexError('list index out of range'), <traceback object at 0x065ABFD0>)
+30.05.2024 11:09:09: App exit by button.
+30.05.2024 11:09:47: Logging started.
+30.05.2024 11:10:19: Logging started.
+30.05.2024 11:12:56: Logging started.
+30.05.2024 11:14:32: Logging started.
+30.05.2024 12:05:03: Logging started.
+30.05.2024 13:22:00: Logging started.
+30.05.2024 14:09:04: Logging started.
+30.05.2024 14:11:03: Logging started.
+30.05.2024 14:12:09: Logging started.
+30.05.2024 14:12:33: Logging started.
+30.05.2024 14:13:41: Logging started.
+30.05.2024 14:19:50: Logging started.
+30.05.2024 14:20:10: Logging started.
+30.05.2024 14:20:26: Logging started.
+30.05.2024 14:20:31: Error 0x000 Undefined error in main. (<class 'TypeError'>, TypeError("object of type 'type' has no len()"), <traceback object at 0x03FBE300>) Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 348, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 294, in update_data
+    len(list)
+TypeError: object of type 'type' has no len()
+
+30.05.2024 14:20:33: Error 0x000 Undefined error in main. (<class 'TypeError'>, TypeError("object of type 'type' has no len()"), <traceback object at 0x03FBD300>) Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 348, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 294, in update_data
+    len(list)
+TypeError: object of type 'type' has no len()
+
+30.05.2024 15:20:15: Logging started.
+30.05.2024 15:21:01: App exit by button.
+30.05.2024 15:21:03: Logging started.
