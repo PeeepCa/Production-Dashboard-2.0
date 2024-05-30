@@ -40,6 +40,9 @@ class Parser:
         self.itac_desc = None
         self.itac_wa = None
         self.status = None
+        if self.use_itac:
+            print(self.station_number, self.itac_restApi)
+            Itac.login(Itac(self.station_number, self.itac_restApi))
 
     def rexxam_handle(self):
         while self.run:
@@ -348,12 +351,11 @@ class Parser:
                             continue
 
                         if self.use_itac:
-                            if Itac.check1(Itac(self.station_number, self.itac_restApi),
-                                           self.sn) != '0' and Itac.check1(self.sn) != '212':
+                            if Itac.sn_state(Itac(self.station_number, self.itac_restApi),
+                                             self.sn) != '0' and Itac.sn_state(Itac(self.station_number, self.itac_restApi), self.sn) != '212':
                                 continue
 
-                            itac_data = Itac.check0(Itac(self.station_number,
-                                                         self.itac_restApi), self.sn)
+                            itac_data = Itac.sn_info(Itac(self.station_number, self.itac_restApi), self.sn)
                             self.itac_wa = itac_data[2]
                             self.itac_desc = itac_data[1]
                             self.itac_pos = itac_data[3]
@@ -570,14 +572,14 @@ class Parser:
                     except ValueError:
                         continue
 
-                except Exception:
-                    try:
-                        windll.user32.MessageBoxW(0, 'Error 0x100 ' + str(exc_info()), 'Error', 0x1000)
-                        Logger.log_event(Logger(), 'Error 0x100. ' + str(exc_info()))
-                        self.tLock.release()
-                        continue
-                    except ValueError:
-                        continue
+                # except Exception:
+                #     try:
+                #         windll.user32.MessageBoxW(0, 'Error 0x100 ' + str(exc_info()), 'Error', 0x1000)
+                #         Logger.log_event(Logger(), 'Error 0x100. ' + str(exc_info()))
+                #         self.tLock.release()
+                #         continue
+                #     except ValueError:
+                #         continue
         exit(0)
 
     def main(self):

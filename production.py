@@ -376,20 +376,19 @@ class App:
     def main(self):
         t0 = Thread(target=self.ui)
         t0.start()
-
         if self.parse_log:
             if self.threadCount == 1:
                 t1 = Thread(target=Parser.main, daemon=True, args=(Parser(self.run, self.path, self.log_format,
-                                                                          self.useItac, self.useItac, self.useSeso,
+                                                                          self.useItac, self.useSeso,
                                                                           self.remove_file, self.stationNo,
                                                                           self.itac_restApi, self.sesoData),))
                 t1.start()
-                t0.join()
-                t1.join()
+                t0.join(1)
+                t1.join(1)
             else:
                 for i in range(1, self.threadCount):
                     t = Thread(target=Parser.main, daemon=True, args=(Parser(self.run, self.path, self.log_format,
-                                                                             self.useItac, self.useItac, self.useSeso,
+                                                                             self.useItac, self.useSeso,
                                                                              self.remove_file, self.stationNo,
                                                                              self.itac_restApi, self.sesoData),))
                     t.start()

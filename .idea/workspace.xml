@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing">
-      <change beforePath="$PROJECT_DIR$/library/shared_varriables.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/shared_varriables.py" afterDir="false" />
+    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing&#10;- Offline mode">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/CZ2314N.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/CZ2314N.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/parser_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/parser_library.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/production.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717056094313</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing&#10;- Offline mode">
+      <option name="closed" value="true" />
+      <created>1717056367603</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1717056367603</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -246,7 +257,8 @@
     <MESSAGE value="v0.06" />
     <MESSAGE value="v0.07" />
     <MESSAGE value="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing" />
+    <MESSAGE value="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing&#10;- Offline mode" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing&#10;- Offline mode" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
