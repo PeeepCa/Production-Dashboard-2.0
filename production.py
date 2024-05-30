@@ -2,7 +2,7 @@
 #  Finnish iTAC - Done
 #  Finnish logging - Done
 #  Finnish reader - Done
-#  Finnish offline mode
+#  Finnish offline mode - Done
 #  Finnish muster
 #  Try exe build - Done
 #  Multithreading - Done
@@ -171,8 +171,16 @@ class App:
 
         def operator_perf():
             # Update colors and data for frontend
-            (self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf,
-             curr_perf) = Seso.update_prod_data(Seso(self.stationNo, self.sesoData))
+            if self.useSeso:
+                (self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf,
+                 curr_perf) = Seso.update_prod_data(Seso(self.stationNo, self.sesoData))
+            else:
+                # Offline mode
+                self.pass_count = library.shared_varriables.pass_count
+                self.fail_count = library.shared_varriables.fail_count
+                self.fpy_perf = (((self.pass_count + self.fail_count) - self.fail_count) /
+                                 (self.pass_count + self.fail_count) * 100)
+                self.lrf_perf = 0
             current_color = c.itemcget(app_alive, 'fill')
             if current_color == 'black':
                 c.itemconfig(app_alive, fill='white')

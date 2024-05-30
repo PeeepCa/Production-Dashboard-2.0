@@ -40,8 +40,6 @@ class Parser:
         self.itac_desc = None
         self.itac_wa = None
         self.status = None
-        self.pass_count = None
-        self.fail_count = None
 
     def rexxam_handle(self):
         while self.run:
@@ -191,10 +189,9 @@ class Parser:
 
                             if self.use_seso is False:
                                 if self.status == 'pass':
-                                    self.pass_count += 1
+                                    library.shared_varriables.pass_count += 1
                                 else:
-                                    self.fail_count += 1
-                                return self.pass_count, self.fail_count
+                                    library.shared_varriables.fail_count += 1
 
                         if self.remove_file:
                             remove(self.split_path[0][:-8] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
@@ -521,11 +518,9 @@ class Parser:
                     ########################################################
                         if self.use_seso is False:
                             if self.status == 'pass':
-                                self.pass_count += 1
+                                library.shared_varriables.pass_count += 1
                             else:
-                                self.fail_count += 1
-
-                            return self.pass_count, self.fail_count
+                                library.shared_varriables.fail_count += 1
 
                     if self.remove_file:
                         remove(self.split_path[0] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])

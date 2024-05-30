@@ -1,7 +1,0 @@
-18.04.2024 10:56:25: Logging started.
-18.04.2024 10:56:27: Error 0x202 Image not found.
-18.04.2024 10:56:49: App exit by button.
-18.04.2024 15:28:59: Logging started.
-18.04.2024 15:29:01: Error 0x202 Image not found.
-18.04.2024 15:30:14: Logging started.
-18.04.2024 15:31:25: App exit by button.
