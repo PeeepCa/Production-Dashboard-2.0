@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/14052024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/16052024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/18042024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/22042024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/23042024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/24042024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/25042024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/26042024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/30042024_log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/OLD/config.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/parser_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/parser_library.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/library/shared_varriables.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/shared_varriables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/production.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +201,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717054970381</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="v0.10&#10;- Finnished multithreding&#10;- Finnished parsing">
+      <option name="closed" value="true" />
+      <created>1717056094313</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1717056094313</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
