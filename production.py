@@ -1,12 +1,13 @@
-# TODO  Finnish iTAC - Done
-#       Finnish logging - Done
-#       Finnish reader - Done
-#       Finnish offline mode
-#       Finnish muster
-#       Try exe build - Done
-#       Multithreading - Done
-#       Add locking screen - Done
-#       Add when data send to itac and timeout try again
+# TODO
+#  Finnish iTAC - Done
+#  Finnish logging - Done
+#  Finnish reader - Done
+#  Finnish offline mode
+#  Finnish muster
+#  Try exe build - Done
+#  Multithreading - Done
+#  Add locking screen - Done
+#  Add when data send to itac and timeout try again
 
 import tkinter
 import sys
