@@ -5,7 +5,7 @@ import sys
 from serial import Serial, serialutil
 from ctypes import windll
 from library.logger_library import Logger
-from sys import exc_info
+from traceback import format_exc
 msg_show = 1
 ser = Serial()
 
@@ -36,7 +36,7 @@ class Hw:
                 dec = windll.user32.MessageBoxW(0, 'Error 0x203 Reader at: ' + self.COM +
                                                 ' cannot be found.\rContinue without reader?', 'HW Error', 0x1001)
                 Logger.log_event(Logger(), 'RFID reader at ' + self.COM +
-                                 ' doesnt work. POPUP for continue or exit. ' + str(exc_info()))
+                                 ' doesnt work. POPUP for continue or exit. ' + format_exc())
                 if dec == 1:
                     use_reader = False
                 else:
@@ -61,7 +61,7 @@ class Hw:
             return serial_string
 
         except serialutil.SerialException:
-            Logger.log_event(Logger(), 'RFID reader trying to reconnect. ' + str(exc_info()))
+            Logger.log_event(Logger(), 'RFID reader trying to reconnect. ' + format_exc())
             Hw.rfid_close()
             global msg_show
             msg_show = 0

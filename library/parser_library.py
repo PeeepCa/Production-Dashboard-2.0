@@ -7,6 +7,7 @@ from ctypes import windll
 from sys import exc_info
 from re import match, split
 from glob import iglob
+from traceback import format_exc
 from library.itac_library import Itac
 from library.seso_library import Seso
 from library.logger_library import Logger
@@ -204,8 +205,8 @@ class Parser:
                                 self.tLock.release()
                                 continue
                             else:
-                                windll.user32.MessageBoxW(0, 'Error 0x101 ' + str(exc_info()), 'Error', 0x1000)
-                                Logger.log_event(Logger(), 'Error 0x101. ' + str(exc_info()))
+                                windll.user32.MessageBoxW(0, 'Error 0x101 ' + format_exc(), 'Error', 0x1000)
+                                Logger.log_event(Logger(), 'Error 0x101. ' + format_exc())
                                 self.tLock.release()
                                 continue
                         except ValueError:
@@ -220,8 +221,8 @@ class Parser:
 
                     except UnboundLocalError:
                         try:
-                            windll.user32.MessageBoxW(0, 'Error 0x103 ' + str(exc_info()), 'Error', 0x1000)
-                            Logger.log_event(Logger(), 'Error 0x103. ' + str(exc_info()))
+                            windll.user32.MessageBoxW(0, 'Error 0x103 ' + format_exc(), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x103. ' + format_exc())
                             self.tLock.release()
                             continue
                         except ValueError:
@@ -236,8 +237,8 @@ class Parser:
 
                     except IndexError:
                         try:
-                            windll.user32.MessageBoxW(0, 'Error 0x105 ' + str(exc_info()), 'Error', 0x1000)
-                            Logger.log_event(Logger(), 'Error 0x105. ' + str(exc_info()))
+                            windll.user32.MessageBoxW(0, 'Error 0x105 ' + format_exc(), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x105. ' + format_exc())
                             self.tLock.release()
                             continue
                         except ValueError:
@@ -534,8 +535,8 @@ class Parser:
                             self.tLock.release()
                             continue
                         else:
-                            windll.user32.MessageBoxW(0, 'Error 0x101 ' + str(exc_info()), 'Error', 0x1000)
-                            Logger.log_event(Logger(), 'Error 0x101. ' + str(exc_info()))
+                            windll.user32.MessageBoxW(0, 'Error 0x101 ' + format_exc(), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x101. ' + format_exc())
                             self.tLock.release()
                             continue
                     except ValueError:
@@ -550,8 +551,8 @@ class Parser:
 
                 except UnboundLocalError:
                     try:
-                        windll.user32.MessageBoxW(0, 'Error 0x103 ' + str(exc_info()), 'Error', 0x1000)
-                        Logger.log_event(Logger(), 'Error 0x103. ' + str(exc_info()))
+                        windll.user32.MessageBoxW(0, 'Error 0x103 ' + format_exc(), 'Error', 0x1000)
+                        Logger.log_event(Logger(), 'Error 0x103. ' + format_exc())
                         self.tLock.release()
                         continue
                     except ValueError:
@@ -566,8 +567,8 @@ class Parser:
 
                 except IndexError:
                     try:
-                        windll.user32.MessageBoxW(0, 'Error 0x105 ' + str(exc_info()), 'Error', 0x1000)
-                        Logger.log_event(Logger(), 'Error 0x105. ' + str(exc_info()))
+                        windll.user32.MessageBoxW(0, 'Error 0x105 ' + format_exc(), 'Error', 0x1000)
+                        Logger.log_event(Logger(), 'Error 0x105. ' + format_exc())
                         self.tLock.release()
                         continue
                     except ValueError:
@@ -575,8 +576,8 @@ class Parser:
 
                 # except Exception:
                 #     try:
-                #         windll.user32.MessageBoxW(0, 'Error 0x100 ' + str(exc_info()), 'Error', 0x1000)
-                #         Logger.log_event(Logger(), 'Error 0x100. ' + str(exc_info()))
+                #         windll.user32.MessageBoxW(0, 'Error 0x100 ' + format_exc(), 'Error', 0x1000)
+                #         Logger.log_event(Logger(), 'Error 0x100. ' + format_exc())
                 #         self.tLock.release()
                 #         continue
                 #     except ValueError:

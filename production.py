@@ -19,6 +19,7 @@ from os import path
 from socket import gethostname
 from time import sleep
 from PIL import ImageTk, Image
+from traceback import format_exc
 from library.seso_library import Seso
 from library.logger_library import Logger
 from library.config_library import Config
@@ -102,7 +103,7 @@ class App:
                 n = n + 1
                 if n > 2:
                     windll.user32.MessageBoxW(0, 'Error 0x204 App is already running', 'Error', 0x1000)
-                    Logger.log_event(Logger(), 'Error 0x204 App is already running. ' + str(sys.exc_info()))
+                    Logger.log_event(Logger(), 'Error 0x204 App is already running. ' + format_exc())
                     sys.exit()
 
     def ui(self):
@@ -336,7 +337,7 @@ class App:
                 logo.place(x=323, y=203)
             except FileNotFoundError:
                 windll.user32.MessageBoxW(0, 'Error 0x001 Image not found. Please check image name.', 'Error', 0x1000)
-                Logger.log_event(Logger(), 'Error 0x001 Image not found. ' + str(sys.exc_info()))
+                Logger.log_event(Logger(), 'Error 0x001 Image not found. ' + format_exc())
 
         top.protocol('WM_DELETE_WINDOW', main_exit)
         while self.run:
@@ -346,7 +347,7 @@ class App:
                 update_data()
             except FileNotFoundError:
                 windll.user32.MessageBoxW(0, 'Error 0x201 Instruction not found.', 'Error', 0x1000)
-                Logger.log_event(Logger(), 'Error 0x201 Instruction not found. ' + str(sys.exc_info()))
+                Logger.log_event(Logger(), 'Error 0x201 Instruction not found. ' + format_exc())
                 continue
             except IOError:
                 if self.useSeso:
@@ -360,9 +361,9 @@ class App:
                 main_exit()
             except KeyboardInterrupt:
                 pass
-            # except Exception:
-            #     windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.', 'Error', 0x1000)
-            #     Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + str(sys.exc_info()))
+            except Exception:
+                windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.' + format_exc(), 'Error', 0x1000)
+                Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + format_exc())
         top.destroy()
 
     def main(self):
