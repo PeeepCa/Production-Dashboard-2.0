@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.06">
+    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.07">
+      <change afterPath="$PROJECT_DIR$/library/shared_varriables.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/CZ2314N.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/CZ2314N.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/config_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/config_library.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/hw_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/hw_library.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/itac_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/itac_library.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/parser_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/parser_library.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/seso_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/seso_library.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/production.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +46,7 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
+  &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2fcwk0jlglezkf8if7uDCmaGIzB" />
   <component name="ProjectViewState">
@@ -52,7 +59,9 @@
     "Python.hw_library.executor": "Run",
     "Python.itac_library.executor": "Run",
     "Python.parser_library.executor": "Run",
+    "Python.pppp.executor": "Run",
     "Python.production.executor": "Run",
+    "Python.production_old.pyw.executor": "Run",
     "Python.test1.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -176,7 +185,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716807151023</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="v0.07">
+      <option name="closed" value="true" />
+      <created>1716810227154</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716810227154</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -211,7 +228,8 @@
     <MESSAGE value="v0.04" />
     <MESSAGE value="v0.05" />
     <MESSAGE value="v0.06" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.06" />
+    <MESSAGE value="v0.07" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.07" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

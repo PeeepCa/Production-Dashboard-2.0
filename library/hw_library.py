@@ -2,7 +2,6 @@
 # so far only the RFID reader
 
 import sys
-
 from serial import Serial, serialutil
 from ctypes import windll
 from library.logger_library import Logger

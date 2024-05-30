@@ -1,3 +1,4 @@
+import library.shared_varriables
 from datetime import date, datetime
 from threading import BoundedSemaphore
 from time import sleep, time
@@ -8,9 +9,15 @@ from re import match, split
 from glob import iglob
 from library.itac_library import Itac
 from library.seso_library import Seso
+from library.logger_library import Logger
 
 
 class Parser:
+    """
+    Read config. Path should be sent as first argument
+    :param args: 0-run, 1-path, 2-what_to_handle, 3-use_itac, 4-use_seso, 5-remove_file, 6-station_number,
+    7-itac_restApi, 8-seso_restApi
+    """
     def __init__(self, *args):
         self.run = args[0]
         self.path = args[1]
@@ -19,7 +26,8 @@ class Parser:
         self.use_seso = args[4]
         self.remove_file = args[5]
         self.station_number = args[6]
-        self.restApi = args[7]
+        self.itac_restApi = args[7]
+        self.seso_restApi = args[8]
         self.start_number = None
         self.split_path = None
         self.tLock = BoundedSemaphore(value=1)
@@ -32,10 +40,13 @@ class Parser:
         self.itac_desc = None
         self.itac_wa = None
         self.status = None
+        self.pass_count = None
+        self.fail_count = None
 
     def rexxam_handle(self):
         while self.run:
             sleep(0.001)
+            self.run = library.shared_varriables.run_thread
             # We do not want to crash if the production does not run
             # This ll crash only till the production start
             try:
@@ -78,15 +89,16 @@ class Parser:
                         else:
                             self.test_result = '1'
                             self.status = 'fail'
-
                         self.sn = data[0].split(',')
                         self.sn = self.sn[5] + self.sn[4] + 'E9'
 
                         if self.use_itac:
-                            if Itac.sn_state(Itac(), self.sn) != '0' and Itac.sn_state(self, self.sn) != '212':
+                            if Itac.sn_state(Itac(self.station_number, self.itac_restApi),
+                                             self.sn) != '0' and Itac.sn_state(self, self.sn) != '212':
                                 continue
 
-                            itac_data = Itac.sn_info(self.sn)
+                            itac_data = Itac.sn_info(Itac(self.station_number,
+                                                          self.itac_restApi), self.sn)
                             self.itac_wa = itac_data[2]
                             self.itac_desc = itac_data[1]
                             self.itac_pos = itac_data[3]
@@ -172,18 +184,17 @@ class Parser:
                             upload_values = upload_values.replace(',', '', 1)
 
                             if self.use_itac:
-                                Itac.upload(self, self.station_number, self.sn, self.itac_pos, self.test_result,
-                                            '20', upload_values)
-                            Seso.upload(self.itac_desc, self.station_number, self.itac_wa, self.status, self.sn)
+                                Itac.upload(Itac(self.station_number, self.itac_restApi),
+                                            self.sn, self.itac_pos, self.test_result, '20', upload_values)
+                            Seso.upload(Seso(self.station_number, self.seso_restApi),
+                                        self.sn, self.itac_wa, self.status, self.itac_desc)
 
-                            if self.use_seso:
-                                global pass_count
-                                global fail_count
-
+                            if self.use_seso is False:
                                 if self.status == 'pass':
-                                    pass_count += 1
+                                    self.pass_count += 1
                                 else:
-                                    fail_count += 1
+                                    self.fail_count += 1
+                                return self.pass_count, self.fail_count
 
                         if self.remove_file:
                             remove(self.split_path[0][:-8] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
@@ -195,6 +206,7 @@ class Parser:
                                 continue
                             else:
                                 windll.user32.MessageBoxW(0, 'Error 0x101 ' + str(exc_info()), 'Error', 0x1000)
+                                Logger.log_event(Logger(), 'Error 0x101. ' + str(exc_info()))
                                 self.tLock.release()
                                 continue
                         except ValueError:
@@ -210,6 +222,7 @@ class Parser:
                     except UnboundLocalError:
                         try:
                             windll.user32.MessageBoxW(0, 'Error 0x103 ' + str(exc_info()), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x103. ' + str(exc_info()))
                             self.tLock.release()
                             continue
                         except ValueError:
@@ -225,14 +238,16 @@ class Parser:
                     except IndexError:
                         try:
                             windll.user32.MessageBoxW(0, 'Error 0x105 ' + str(exc_info()), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x105. ' + str(exc_info()))
                             self.tLock.release()
                             continue
                         except ValueError:
                             continue
 
-                    except:
+                    except Exception:
                         try:
                             windll.user32.MessageBoxW(0, 'Error 0x100 ' + str(exc_info()), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x100. ' + str(exc_info()))
                             self.tLock.release()
                             continue
                         except ValueError:
@@ -244,6 +259,7 @@ class Parser:
     def stdf_handle(self):
         while self.run:
             sleep(0.001)
+            self.run = library.shared_varriables.run_thread
             if len(listdir(path=self.path)) > 1:
                 try:
                     start_time = time()
@@ -335,10 +351,12 @@ class Parser:
                             continue
 
                         if self.use_itac:
-                            if Itac.check1(self.sn) != '0' and Itac.check1(self.sn) != '212':
+                            if Itac.check1(Itac(self.station_number, self.itac_restApi),
+                                           self.sn) != '0' and Itac.check1(self.sn) != '212':
                                 continue
 
-                            itac_data = Itac.check0(self.sn)
+                            itac_data = Itac.check0(Itac(self.station_number,
+                                                         self.itac_restApi), self.sn)
                             self.itac_wa = itac_data[2]
                             self.itac_desc = itac_data[1]
                             self.itac_pos = itac_data[3]
@@ -494,20 +512,20 @@ class Parser:
                         cycle_time = str(cycle_time.total_seconds())
 
                         if self.use_itac:
-                            Itac.upload(self.station_number, self.sn, self.itac_pos, self.test_result, cycle_time,
-                                        upload_values)
-                        Seso.upload(self.itac_desc, self.station_number, self.itac_wa, self.status, self.sn)
+                            Itac.upload(Itac(self.station_number, self.itac_restApi),
+                                        self.sn, self.itac_pos, self.test_result, cycle_time, upload_values)
+                        Seso.upload(Seso(self.station_number, self.seso_restApi),
+                                    self.sn, self.itac_wa, self.status, self.itac_desc)
 
                     # End of main function definition
                     ########################################################
-                        if self.use_seso:
-                            global pass_count
-                            global fail_count
-
+                        if self.use_seso is False:
                             if self.status == 'pass':
-                                pass_count += 1
+                                self.pass_count += 1
                             else:
-                                fail_count += 1
+                                self.fail_count += 1
+
+                            return self.pass_count, self.fail_count
 
                     if self.remove_file:
                         remove(self.split_path[0] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
@@ -519,6 +537,7 @@ class Parser:
                             continue
                         else:
                             windll.user32.MessageBoxW(0, 'Error 0x101 ' + str(exc_info()), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x101. ' + str(exc_info()))
                             self.tLock.release()
                             continue
                     except ValueError:
@@ -534,6 +553,7 @@ class Parser:
                 except UnboundLocalError:
                     try:
                         windll.user32.MessageBoxW(0, 'Error 0x103 ' + str(exc_info()), 'Error', 0x1000)
+                        Logger.log_event(Logger(), 'Error 0x103. ' + str(exc_info()))
                         self.tLock.release()
                         continue
                     except ValueError:
@@ -549,14 +569,16 @@ class Parser:
                 except IndexError:
                     try:
                         windll.user32.MessageBoxW(0, 'Error 0x105 ' + str(exc_info()), 'Error', 0x1000)
+                        Logger.log_event(Logger(), 'Error 0x105. ' + str(exc_info()))
                         self.tLock.release()
                         continue
                     except ValueError:
                         continue
 
-                except:
+                except Exception:
                     try:
                         windll.user32.MessageBoxW(0, 'Error 0x100 ' + str(exc_info()), 'Error', 0x1000)
+                        Logger.log_event(Logger(), 'Error 0x100. ' + str(exc_info()))
                         self.tLock.release()
                         continue
                     except ValueError:
@@ -564,9 +586,4 @@ class Parser:
         exit(0)
 
     def main(self):
-        if self.what_to_handle == 'stdf':
-            Parser.stdf_handle(self)
-        elif self.what_to_handle == 'rexxam':
-            Parser.rexxam_handle(self)
-        else:
-            pass
+        Parser.stdf_handle(self)

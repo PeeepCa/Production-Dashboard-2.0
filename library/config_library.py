@@ -44,10 +44,10 @@ class Config:
         Read config. Path should be sent as first argument
         :return: 0-station_number, 1-path, 2-thread_number, 3-rest_api, 4-remove_file,
                     5-seso_data, 6-use_seso, 7-parse_log, 8-use_reader,
-                    9-com, baud, 10-green_fpy, 11-orange_fpy, 12-show_instr,
-                    13-use_login, 14-company_logo, 15-seso_operator, 16-use_training,
-                    17-log_format, 18-server_instr_gen, 19-canvas_back, 20-rect_back, 21-graph_back,
-                    22-text_color, 23-graph_color, 24-use_itac
+                    9-com, 10-baud, 11-green_fpy, 12-orange_fpy, 13-show_instr,
+                    14-use_login, 15-company_logo, 16-seso_operator, 17-use_training,
+                    18-log_format, 19-server_instr_gen, 20-canvas_back, 21-rect_back, 22-graph_back,
+                    23-text_color, 24-graph_color, 25-use_itac
         """
         try:
             for x in self.temp:

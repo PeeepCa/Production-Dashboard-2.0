@@ -4,8 +4,7 @@
 # sesoOperator=https://seso.apag-elektronik.com/api/
 
 from ctypes import windll
-from requests import post
-from requests import exceptions
+from requests import post, exceptions
 from library.logger_library import Logger
 
 

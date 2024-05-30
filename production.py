@@ -1,15 +1,16 @@
-# TODO  Finnish iTAC
+# TODO  Finnish iTAC - Done
 #       Finnish logging - Done
 #       Finnish reader - Done
 #       Finnish offline mode
 #       Finnish muster
 #       Try exe build - Done
-#       Multithreading - Partially done
+#       Multithreading - Done
 #       Add locking screen - Done
 #       Add when data send to itac and timeout try again
 
 import tkinter
 import sys
+import library.shared_varriables
 from psutil import process_iter
 from threading import Thread
 from ctypes import windll
@@ -21,6 +22,7 @@ from library.seso_library import Seso
 from library.logger_library import Logger
 from library.config_library import Config
 from library.hw_library import Hw
+from library.parser_library import Parser
 
 
 class App:
@@ -35,22 +37,28 @@ class App:
             application_path = None
         temp = Config.read_config(Config(application_path + '/Configuration/' + gethostname() + '.ini'))
         self.stationNo = temp[0]
-        self.companyLogo = temp[15]
-        self.greenFpy = temp[11]
-        self.orangeFpy = temp[12]
-        self.use_login = temp[13]
+        self.path = temp[1]
+        self.threadCount = temp[2]
+        self.itac_restApi = temp[3]
+        self.remove_file = temp[4]
         self.sesoData = temp[5]
-        self.sesoOperator = temp[16]
         self.useSeso = temp[6]
+        self.parse_log = temp[7]
         self.useReader = temp[8]
         self.COM = temp[9]
         self.BAUD = temp[10]
+        self.greenFpy = temp[11]
+        self.orangeFpy = temp[12]
+        self.useLogin = temp[13]
+        self.companyLogo = temp[15]
+        self.sesoOperator = temp[16]
+        self.log_format = temp[18]
         self.canvasBack = temp[20]
         self.rectBack = temp[21]
         self.graphBack = temp[22]
         self.textColor = temp[23]
         self.graphColor = temp[24]
-        self.threadCount = temp[2]
+        self.useItac = temp[25]
         self.run = True
         self.dsh_offset = 0
         self.op_id = 0
@@ -67,8 +75,23 @@ class App:
         self.window_height = None
         self.screen_width = None
         self.screen_height = None
+        self.logged = False
+        self.lock_timeout = 0
+        self.primary = False
+        App.check_app_status()
+        if self.useSeso:
+            self.useReader = False
+            if self.useLogin:
+                self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                     'https://seso.apag-elektronik.com/api/'),
+                                                self.op_name,
+                                                self.op_id, self.unlock, 'OUT')
         if self.useReader:
             self.useReader = Hw.rfid_open(Hw(self.COM, self.BAUD))
+        if self.threadCount > 8:
+            self.threadCount = 8
+        elif self.threadCount <= 1:
+            self.threadCount = 1
 
     @staticmethod
     def check_app_status():
@@ -113,6 +136,8 @@ class App:
             Logger.log_event(Logger(), 'App exit by button.')
             if self.useReader:
                 self.useReader = Hw.rfid_close()
+            library.shared_varriables.run_thread = False
+            Parser.run_baby = False
             self.run = False
 
         def minimize(*args):
@@ -145,6 +170,8 @@ class App:
 
         def operator_perf():
             # Update colors and data for frontend
+            (self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf,
+             curr_perf) = Seso.update_prod_data(Seso(self.stationNo, self.sesoData))
             current_color = c.itemcget(app_alive, 'fill')
             if current_color == 'black':
                 c.itemconfig(app_alive, fill='white')
@@ -164,37 +191,95 @@ class App:
             pass_pcbs.config(text='Passed: ' + str(self.pass_count))
             fail_pcbs.config(text='Failed: ' + str(self.fail_count))
             operator.config(text=self.op_id)
-            lock_text.config(text = self.training)
+            lock_text.config(text=self.training)
             c.itemconfig(fpy_graph, extent=180 / 100 * self.fpy_perf)
             if self.lrf_perf > 100:
                 self.lrf_perf = 100
             c.itemconfig(lrf_graph, extent=180 / 100 * self.lrf_perf)
 
         def update_data():
-            # update function for seso and other dynamic data
-            if self.useReader:
-                self.card_id = Hw.rfid_read(self)
             if self.useSeso:
-                (self.pass_count, self.fail_count, self.fpy_perf, instr_list, module, self.lrf_perf,
-                 curr_perf) = Seso.update_prod_data(Seso(self.stationNo, self.sesoData))
-                if int(self.card_id) == 0:
+                if self.useReader:
+                    try:
+                        self.card_id = Hw.rfid_read(self)
+                        if len(self.card_id) >= 4:
+                            self.op_id, self.op_name, self.unlock, self.training = Seso.operator_with_reader(
+                                Seso(self.stationNo, self.sesoOperator), self.card_id, False)
+                            if self.useLogin and self.unlock:
+                                if self.logged:
+                                    self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                                         'https://seso.apag-elektronik.com/api/'),
+                                                                    self.op_name,
+                                                                    self.op_id, self.unlock, 'IN')
+                                    screen_unlock()
+                                    self.primary = True
+                                self.lock_timeout = 10
+                        else:
+                            self.training = 'Card disconnected'
+                            self.op_id = str(self.lock_timeout)
+                            if self.lock_timeout > 0:
+                                self.lock_timeout -= 1
+                                screen_unlock()
+                            if self.lock_timeout == 0:
+                                screen_lock()
+                                if self.useLogin and self.logged:
+                                    self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                                         'https://seso.apag-elektronik.com/api/'),
+                                                                    self.op_name,
+                                                                    self.op_id, self.unlock, 'OUT')
+                                    self.primary = False
+                        if self.primary:
+                            self.op_id, self.op_name, self.unlock, self.training = Seso.operator_without_reader(
+                                Seso(self.stationNo, self.sesoOperator))
+                            if self.useLogin:
+                                if self.unlock:
+                                    if self.logged is False:
+                                        self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                                             'https://seso.apag-elektronik.com/api/'),
+                                                                        self.op_name,
+                                                                        self.op_id, self.unlock, 'IN')
+                                        screen_unlock()
+                                    self.lock_timeout = 10
+                                else:
+                                    self.training = 'Not logged in'
+                                    screen_lock()
+                                    if self.logged:
+                                        self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                                             'https://seso.apag-elektronik.com/api/'),
+                                                                        self.op_name,
+                                                                        self.op_id, self.unlock, 'OUT')
+                            else:
+                                screen_unlock()
+                    except TypeError:
+                        sleep(1)
+                        self.training = 'Card reader error'
+                        screen_lock()
+                else:
                     self.op_id, self.op_name, self.unlock, self.training = Seso.operator_without_reader(
                         Seso(self.stationNo, self.sesoOperator))
-                if self.useReader and int(self.card_id) > 0:
-                    self.op_id, self.op_name, self.unlock, self.training = Seso.operator_with_reader(
-                        Seso(self.stationNo, self.sesoOperator), self.card_id, False)
-                    if self.use_login:
-                        # Placeholder
-                        Seso.login_logout(Seso(self.stationNo, 'https://seso.apag-elektronik.com/api/'),
-                                          self.op_name, self.op_id, self.unlock)
-                self.unlock = False
-                if self.unlock:
-                    screen_unlock()
-                else:
-                    screen_lock()
+                    if self.useLogin:
+                        if self.unlock:
+                            if self.logged is False:
+                                self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                                     'https://seso.apag-elektronik.com/api/'),
+                                                                self.op_name,
+                                                                self.op_id, self.unlock, 'IN')
+                                screen_unlock()
+                            self.lock_timeout = 10
+                        else:
+                            self.training = 'Not logged in'
+                            screen_lock()
+                            if self.logged:
+                                self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                                     'https://seso.apag-elektronik.com/api/'),
+                                                                self.op_name,
+                                                                self.op_id, self.unlock, 'OUT')
+                    else:
+                        screen_unlock()
             else:
-                # Placeholder
-                pass
+                screen_unlock()
+                if self.useReader is False:
+                    sleep(0.5)
             operator_perf()
             sleep(0.5)
 
@@ -257,6 +342,20 @@ class App:
                 # Main loop for update the GUI
                 top.update()
                 update_data()
+            except FileNotFoundError:
+                windll.user32.MessageBoxW(0, 'Error 0x201 Instruction not found.', 'Error', 0x1000)
+                Logger.log_event(Logger(), 'Error 0x201 Instruction not found. ' + str(sys.exc_info()))
+                continue
+            except IOError:
+                if self.useSeso:
+                    if self.useLogin and self.logged:
+                        self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                             'https://seso.apag-elektronik.com/api/'),
+                                                        self.op_name,
+                                                        self.op_id, self.unlock, 'OUT')
+                continue
+            except tkinter.TclError:
+                main_exit()
             except KeyboardInterrupt:
                 pass
             except Exception:
@@ -265,12 +364,27 @@ class App:
 
         top.destroy()
 
-    @staticmethod
-    def main():
-        App.check_app_status()
-        t0 = Thread(target=App.ui(App()))
+    def main(self):
+        t0 = Thread(target=self.ui)
         t0.start()
+
+        if self.parse_log:
+            if self.threadCount == 1:
+                t1 = Thread(target=Parser.main, daemon=True, args=(Parser(self.run, self.path, self.log_format,
+                                                                          self.useItac, self.useItac, self.useSeso,
+                                                                          self.remove_file, self.stationNo,
+                                                                          self.itac_restApi, self.sesoData),))
+                t1.start()
+                t0.join()
+                t1.join()
+            else:
+                for i in range(1, self.threadCount):
+                    t = Thread(target=Parser.main, daemon=True, args=(Parser(self.run, self.path, self.log_format,
+                                                                             self.useItac, self.useItac, self.useSeso,
+                                                                             self.remove_file, self.stationNo,
+                                                                             self.itac_restApi, self.sesoData),))
+                    t.start()
 
 
 if __name__ == '__main__':
-    sys.exit(App.main())
+    sys.exit(App.main(App()))

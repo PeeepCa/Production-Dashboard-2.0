@@ -4,7 +4,7 @@
 
 from requests import post
 from ctypes import windll
-from logger_library import Logger
+from library.logger_library import Logger
 
 
 class Itac:
