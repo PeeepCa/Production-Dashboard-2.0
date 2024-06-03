@@ -63,6 +63,7 @@ class App:
         self.useItac = temp[25]
         self.run = True
         self.dsh_offset = 0
+        self.label_offset_x = 0
         self.op_id = 0
         self.fpy_perf = 0
         self.lrf_perf = 0
@@ -146,8 +147,16 @@ class App:
             # minimise the window
             if self.dsh_offset == 320:
                 self.dsh_offset = 0
+                self.labels_offset_x = 0
+                total_pcbs.config(fg=self.textColor, bg=self.canvasBack)
+                pass_pcbs.config(fg=self.textColor, bg=self.canvasBack)
+                fail_pcbs.config(fg=self.textColor, bg=self.canvasBack)
             else:
                 self.dsh_offset = 320
+                self.labels_offset_x = 225
+                total_pcbs.config(fg=self.canvasBack, bg=self.textColor)
+                pass_pcbs.config(fg=self.canvasBack, bg=self.textColor)
+                fail_pcbs.config(fg=self.canvasBack, bg=self.textColor)
             self.window_width = 400 - self.dsh_offset
             self.window_height = 250
             self.screen_width = int(top.winfo_screenwidth() - self.window_width)
@@ -157,6 +166,9 @@ class App:
             c.coords(app_minimize, 380 - self.dsh_offset, 0, 390 - self.dsh_offset, 10)
             c.coords(app_minimize_ico, 380 - self.dsh_offset, 5, 390 - self.dsh_offset, 5)
             c.pack()
+            total_pcbs.place(x=230 - self.labels_offset_x, y=100)
+            pass_pcbs.place(x=230 - self.labels_offset_x, y=115)
+            fail_pcbs.place(x=230 - self.labels_offset_x, y=130)
 
         def screen_lock():
             # Screen lock
@@ -358,12 +370,16 @@ class App:
                                                         self.op_id, self.unlock, 'OUT')
                 continue
             except tkinter.TclError:
+                self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                     'https://seso.apag-elektronik.com/api/'),
+                                                self.op_name,
+                                                self.op_id, self.unlock, 'OUT')
                 main_exit()
             except KeyboardInterrupt:
                 pass
-            except Exception:
-                windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.' + format_exc(), 'Error', 0x1000)
-                Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + format_exc())
+            # except Exception:
+            #     windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.' + format_exc(), 'Error', 0x1000)
+            #     Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + format_exc())
         top.destroy()
 
     def main(self):
