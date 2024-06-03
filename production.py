@@ -8,6 +8,7 @@
 #  Multithreading - Done
 #  Add locking screen - Done
 #  Add when data send to itac and timeout try again
+#  Add autoupdating - Done
 
 import tkinter
 import sys
@@ -98,7 +99,6 @@ class App:
             self.threadCount = 8
         elif self.threadCount <= 1:
             self.threadCount = 1
-        self.last_check = path.getmtime(self.application_path. rsplit('\\', 1)[0] + '\\' + 'production.bat')
 
     def update_app(self):
         # Update procedure
@@ -407,6 +407,7 @@ class App:
             #     windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.' + format_exc(), 'Error', 0x1000)
             #     Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + format_exc())
         top.destroy()
+        sys.exit()
 
     def main(self):
         t0 = Thread(target=self.ui)

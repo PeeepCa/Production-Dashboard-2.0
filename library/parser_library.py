@@ -254,7 +254,7 @@ class Parser:
                     #         continue
             except FileNotFoundError:
                 continue
-        exit(0)
+        Itac.login(Itac(self.station_number, self.itac_restApi))
 
     def stdf_handle(self):
         while self.run:
@@ -582,7 +582,10 @@ class Parser:
                 #         continue
                 #     except ValueError:
                 #         continue
-        exit(0)
+        Itac.login(Itac(self.station_number, self.itac_restApi))
 
     def main(self):
-        Parser.stdf_handle(self)
+        if self.what_to_handle == 'stdf':
+            Parser.stdf_handle(self)
+        elif self.what_to_handle == 'rexxam':
+            Parser.rexxam_handle(self)

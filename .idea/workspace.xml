@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.13&#10;- Added data when minimized">
+    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.15&#10;- Autoupdating">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library/parser_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/library/parser_library.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/production.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -262,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717398707049</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="v0.15&#10;- Autoupdating">
+      <option name="closed" value="true" />
+      <created>1717424463408</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1717424463408</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -304,7 +313,8 @@
     <MESSAGE value="v0.12&#10;- Fixed index error in seso" />
     <MESSAGE value="v0.12&#10;- Fixed index error in seso&#10;- Redefined error logging" />
     <MESSAGE value="v0.13&#10;- Added data when minimized" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.13&#10;- Added data when minimized" />
+    <MESSAGE value="v0.15&#10;- Autoupdating" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.15&#10;- Autoupdating" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
