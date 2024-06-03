@@ -12,14 +12,16 @@
 import tkinter
 import sys
 import library.shared_varriables
+
 from psutil import process_iter
 from threading import Thread
 from ctypes import windll
-from os import path
+from os import path, chdir, startfile
 from socket import gethostname
 from time import sleep
 from PIL import ImageTk, Image
 from traceback import format_exc
+
 from library.seso_library import Seso
 from library.logger_library import Logger
 from library.config_library import Config
@@ -32,12 +34,12 @@ class App:
         # init for all the default data + readout of the config file
         Logger.log_event(Logger(), 'Logging started.')
         if getattr(sys, 'frozen', False):
-            application_path = path.dirname(sys.executable)
+            self.application_path = path.dirname(sys.executable)
         elif __file__:
-            application_path = path.dirname(__file__)
+            self.application_path = path.dirname(__file__)
         else:
-            application_path = None
-        temp = Config.read_config(Config(application_path + '/Configuration/' + gethostname() + '.ini'))
+            self.application_path = None
+        temp = Config.read_config(Config(self.application_path + '/Configuration/' + gethostname() + '.ini'))
         self.stationNo = temp[0]
         self.path = temp[1]
         self.threadCount = temp[2]
@@ -63,7 +65,8 @@ class App:
         self.useItac = temp[25]
         self.run = True
         self.dsh_offset = 0
-        self.label_offset_x = 0
+        self.label_offset = 0
+        self.operator_offset = 0
         self.op_id = 0
         self.fpy_perf = 0
         self.lrf_perf = 0
@@ -95,6 +98,24 @@ class App:
             self.threadCount = 8
         elif self.threadCount <= 1:
             self.threadCount = 1
+        self.last_check = path.getmtime(self.application_path. rsplit('\\', 1)[0] + '\\' + 'production.bat')
+
+    def update_app(self):
+        # Update procedure
+        # Checking if folder name is actually same as name inside the production.bat
+        if getattr(sys, 'frozen', False):
+            app_version = self.application_path.rsplit('\\', 1)[1]
+            batch_location = self.application_path.rsplit('\\', 1)[0] + '\\production.bat'
+            file = open(batch_location, 'r')
+            temp = file.read(-1).splitlines()[11].rsplit('\\', 2)[1]
+            if temp != app_version:
+                chdir(self.application_path.rsplit('\\', 1)[0])
+                startfile('update.bat')
+                Logger.log_event(Logger(), 'App exit by button.')
+                if self.useReader:
+                    self.useReader = Hw.rfid_close()
+                library.shared_varriables.run_thread = False
+                self.run = False
 
     @staticmethod
     def check_app_status():
@@ -140,23 +161,26 @@ class App:
             if self.useReader:
                 self.useReader = Hw.rfid_close()
             library.shared_varriables.run_thread = False
-            Parser.run_baby = False
             self.run = False
 
         def minimize(*args):
             # minimise the window
             if self.dsh_offset == 320:
                 self.dsh_offset = 0
-                self.labels_offset_x = 0
+                self.label_offset = 0
+                self.operator_offset = 0
                 total_pcbs.config(fg=self.textColor, bg=self.canvasBack)
                 pass_pcbs.config(fg=self.textColor, bg=self.canvasBack)
                 fail_pcbs.config(fg=self.textColor, bg=self.canvasBack)
+                operator.config(fg=self.textColor, bg=self.canvasBack)
             else:
                 self.dsh_offset = 320
-                self.labels_offset_x = 225
+                self.label_offset = 225
+                self.operator_offset = 210
                 total_pcbs.config(fg=self.canvasBack, bg=self.textColor)
                 pass_pcbs.config(fg=self.canvasBack, bg=self.textColor)
                 fail_pcbs.config(fg=self.canvasBack, bg=self.textColor)
+                operator.config(fg=self.canvasBack, bg=self.textColor)
             self.window_width = 400 - self.dsh_offset
             self.window_height = 250
             self.screen_width = int(top.winfo_screenwidth() - self.window_width)
@@ -166,9 +190,10 @@ class App:
             c.coords(app_minimize, 380 - self.dsh_offset, 0, 390 - self.dsh_offset, 10)
             c.coords(app_minimize_ico, 380 - self.dsh_offset, 5, 390 - self.dsh_offset, 5)
             c.pack()
-            total_pcbs.place(x=230 - self.labels_offset_x, y=100)
-            pass_pcbs.place(x=230 - self.labels_offset_x, y=115)
-            fail_pcbs.place(x=230 - self.labels_offset_x, y=130)
+            total_pcbs.place(x=230 - self.label_offset, y=100)
+            pass_pcbs.place(x=230 - self.label_offset, y=115)
+            fail_pcbs.place(x=230 - self.label_offset, y=130)
+            operator.place(x=240 - self.operator_offset, y=30)
 
         def screen_lock():
             # Screen lock
@@ -303,6 +328,7 @@ class App:
                 if self.useReader is False:
                     sleep(0.5)
             operator_perf()
+            App.update_app(self)
             sleep(0.5)
 
         instr_button = tkinter.Button(top, text='Instruction', command='', width=9, bd=0, bg=self.graphBack,
