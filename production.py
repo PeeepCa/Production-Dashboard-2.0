@@ -41,6 +41,7 @@ class App:
         else:
             self.application_path = None
         temp = Config.read_config(Config(self.application_path + '/Configuration/' + gethostname() + '.ini'))
+
         self.stationNo = temp[0]
         self.path = temp[1]
         self.threadCount = temp[2]
@@ -64,6 +65,7 @@ class App:
         self.textColor = temp[23]
         self.graphColor = temp[24]
         self.useItac = temp[25]
+
         self.run = True
         self.dsh_offset = 0
         self.label_offset = 0
@@ -85,7 +87,9 @@ class App:
         self.logged = False
         self.lock_timeout = 0
         self.primary = False
+
         App.check_app_status()
+
         if self.useSeso:
             self.useReader = False
             if self.useLogin:
@@ -109,9 +113,9 @@ class App:
             file = open(batch_location, 'r')
             temp = file.read(-1).splitlines()[11].rsplit('\\', 2)[1]
             if temp != app_version:
+                Logger.log_event(Logger(), 'App update to version: ' + temp + '.')
                 chdir(self.application_path.rsplit('\\', 1)[0])
                 startfile('update.bat')
-                Logger.log_event(Logger(), 'App exit by button.')
                 if self.useReader:
                     self.useReader = Hw.rfid_close()
                 library.shared_varriables.run_thread = False
@@ -119,6 +123,7 @@ class App:
 
     @staticmethod
     def check_app_status():
+        # On the beginning there s check if app is already running
         n = 0
         for p in process_iter(attrs=['pid', 'name']):
             if p.info['name'] == 'production.exe':
@@ -407,7 +412,6 @@ class App:
             #     windll.user32.MessageBoxW(0, 'Error 0x000 Undefined error in main.' + format_exc(), 'Error', 0x1000)
             #     Logger.log_event(Logger(), 'Error 0x000 Undefined error in main. ' + format_exc())
         top.destroy()
-        sys.exit()
 
     def main(self):
         t0 = Thread(target=self.ui)
