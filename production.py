@@ -10,6 +10,12 @@
 #  Add when data send to itac and timeout try again
 #  Add autoupdating - Done
 
+# Production dashboard
+#
+# App is using SESO, ITAC, and it parses log files in defined folder.
+# Everything is defined in config files.
+# Config files are located in main folder.
+
 import tkinter
 import sys
 import library.shared_varriables
@@ -40,7 +46,7 @@ class App:
             self.application_path = path.dirname(__file__)
         else:
             self.application_path = None
-        temp = Config.read_config(Config(self.application_path + '/Configuration/' + gethostname() + '.ini'))
+        temp = Config.read_config(Config(self.application_path.rsplit('\\', 1)[0] + '/Configuration/' + gethostname() + '.ini'))
 
         self.stationNo = temp[0]
         self.path = temp[1]

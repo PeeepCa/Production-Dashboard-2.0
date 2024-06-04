@@ -1,0 +1,228 @@
+03.06.2024 08:00:44: App exit by button.
+03.06.2024 08:00:48: Logging started.
+03.06.2024 08:02:54: Logging started.
+03.06.2024 08:05:13: App exit by button.
+03.06.2024 08:05:14: Logging started.
+03.06.2024 08:05:44: Logging started.
+03.06.2024 08:07:03: Logging started.
+03.06.2024 08:07:20: Logging started.
+03.06.2024 08:07:41: Logging started.
+03.06.2024 08:07:54: Logging started.
+03.06.2024 08:10:00: Logging started.
+03.06.2024 08:10:45: Logging started.
+03.06.2024 09:01:45: Logging started.
+03.06.2024 09:26:44: Logging started.
+03.06.2024 10:32:00: Logging started.
+03.06.2024 12:51:24: Logging started.
+03.06.2024 12:53:57: Logging started.
+03.06.2024 12:54:23: Logging started.
+03.06.2024 12:55:54: Logging started.
+03.06.2024 12:56:09: Logging started.
+03.06.2024 12:56:25: Logging started.
+03.06.2024 12:56:56: Logging started.
+03.06.2024 12:57:12: Logging started.
+03.06.2024 12:57:25: Logging started.
+03.06.2024 12:57:39: Logging started.
+03.06.2024 12:58:19: Logging started.
+03.06.2024 14:41:21: Logging started.
+03.06.2024 14:41:28: Logging started.
+03.06.2024 14:41:49: Logging started.
+03.06.2024 14:42:58: Logging started.
+03.06.2024 14:43:20: Logging started.
+03.06.2024 14:43:34: Logging started.
+03.06.2024 14:44:48: Logging started.
+03.06.2024 14:44:56: Logging started.
+03.06.2024 14:55:48: Logging started.
+03.06.2024 15:03:17: Logging started.
+03.06.2024 15:04:13: Logging started.
+03.06.2024 15:11:21: Logging started.
+03.06.2024 15:12:08: Logging started.
+03.06.2024 15:13:14: Logging started.
+03.06.2024 15:15:07: Logging started.
+03.06.2024 15:16:13: Logging started.
+03.06.2024 15:19:44: Logging started.
+03.06.2024 15:20:30: Logging started.
+03.06.2024 15:20:44: Logging started.
+03.06.2024 15:21:43: Logging started.
+03.06.2024 15:22:18: Logging started.
+03.06.2024 15:22:28: Logging started.
+03.06.2024 15:22:37: Logging started.
+03.06.2024 15:22:45: Logging started.
+03.06.2024 15:23:28: Logging started.
+03.06.2024 15:24:57: Logging started.
+03.06.2024 15:25:59: Logging started.
+03.06.2024 15:26:44: Logging started.
+03.06.2024 15:26:55: Logging started.
+03.06.2024 15:27:12: Logging started.
+03.06.2024 15:28:13: Logging started.
+03.06.2024 15:43:03: Logging started.
+03.06.2024 15:45:06: Logging started.
+03.06.2024 15:45:45: Logging started.
+03.06.2024 15:46:11: Logging started.
+03.06.2024 15:51:03: Logging started.
+03.06.2024 15:53:24: Logging started.
+03.06.2024 15:56:01: Logging started.
+03.06.2024 15:57:06: Logging started.
+03.06.2024 15:57:52: Logging started.
+03.06.2024 15:59:36: Logging started.
+03.06.2024 16:01:05: Logging started.
+03.06.2024 16:01:43: Logging started.
+03.06.2024 16:03:30: Logging started.
+03.06.2024 16:03:52: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0] + '\\update.bat')
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:03:53: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0] + '\\update.bat')
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:03:54: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0] + '\\update.bat')
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:03:54: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0] + '\\update.bat')
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:03:55: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0] + '\\update.bat')
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:03:56: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0] + '\\update.bat')
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:04:45: Logging started.
+03.06.2024 16:04:49: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0])
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:04:50: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0])
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:04:51: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0])
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:05:05: Logging started.
+03.06.2024 16:05:46: Logging started.
+03.06.2024 16:05:49: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0])
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:05:50: Error 0x201 Instruction not found. Traceback (most recent call last):
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 391, in ui
+    update_data()
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 337, in update_data
+    App.update_app(self)
+  File "C:\Users\pokorny\OneDrive - APAG Elektronik s.r.o\Documents\GitHub\Production-Dashboard-2.0\production.py", line 123, in update_app
+    Popen('update.bat', cwd=self.application_path.rsplit('\\', 1)[0])
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+03.06.2024 16:06:31: Logging started.
+03.06.2024 16:08:39: Logging started.
+03.06.2024 16:13:02: Logging started.
+03.06.2024 16:15:29: Logging started.
+03.06.2024 16:18:20: Logging started.
+03.06.2024 16:25:56: Logging started.
+03.06.2024 16:27:53: Logging started.
+03.06.2024 16:29:11: App exit by button.
+03.06.2024 16:29:14: Logging started.
+03.06.2024 16:29:20: App exit by button.
+03.06.2024 16:30:50: Logging started.
+03.06.2024 16:30:56: App exit by button.

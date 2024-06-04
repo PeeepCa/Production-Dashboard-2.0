@@ -1,0 +1,2 @@
+04.06.2024 14:52:29: Logging started.
+04.06.2024 14:52:34: App exit by button.
