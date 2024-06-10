@@ -1,20 +1,23 @@
 # TODO
-#  Finnish iTAC - Done
-#  Finnish logging - Done
-#  Finnish reader - Done
-#  Finnish offline mode - Done
+#  Finnish iTAC - DONE
+#  Finnish logging - DONE
+#  Finnish reader - DONE
+#  Finnish offline mode - DONE
 #  Finnish muster
-#  Try exe build - Done
-#  Multithreading - Done
-#  Add locking screen - Done
+#  Try exe build - DONE
+#  Multithreading - DONE
+#  Add locking screen - DONE
 #  Add when data send to itac and timeout try again
-#  Add autoupdating - Done
+#  Add autoupdating - DONE
+#  Add sharepoint support for instructions
+#  When they swap cards too fast, it wont relog the operator
+#  Add ACA testers
 
 # Production dashboard
 #
 # App is using SESO, ITAC, and it parses log files in defined folder.
 # Everything is defined in config files.
-# Config files are located in main folder.
+# Config files are located in main folder in folder configuration.
 
 import tkinter
 import sys
@@ -46,7 +49,8 @@ class App:
             self.application_path = path.dirname(__file__)
         else:
             self.application_path = None
-        temp = Config.read_config(Config(self.application_path.rsplit('\\', 1)[0] + '/Configuration/' + gethostname() + '.ini'))
+        temp = Config.read_config(Config(self.application_path.rsplit('\\', 1)[0] + '/Configuration/' +
+                                         gethostname() + '.ini'))
 
         self.stationNo = temp[0]
         self.path = temp[1]
@@ -93,6 +97,7 @@ class App:
         self.logged = False
         self.lock_timeout = 0
         self.primary = False
+        self.card_id_prev = self.card_id
 
         App.check_app_status()
 
@@ -187,7 +192,7 @@ class App:
             else:
                 self.dsh_offset = 320
                 self.label_offset = 225
-                self.operator_offset = 210
+                self.operator_offset = 200
                 total_pcbs.config(fg=self.canvasBack, bg=self.textColor)
                 pass_pcbs.config(fg=self.canvasBack, bg=self.textColor)
                 fail_pcbs.config(fg=self.canvasBack, bg=self.textColor)
@@ -261,14 +266,23 @@ class App:
                     try:
                         self.card_id = Hw.rfid_read(self)
                         if len(self.card_id) >= 4:
-                            self.op_id, self.op_name, self.unlock, self.training = Seso.operator_with_reader(
-                                Seso(self.stationNo, self.sesoOperator), self.card_id, False)
+                            # Added because they sometimes swap the cards before timer ends
+                            # Check the card ID and if its different then before it ll log out operator
+                            if self.card_id_prev != self.card_id:
+                                self.op_id, self.op_name, self.unlock, self.training = Seso.operator_with_reader(
+                                    Seso(self.stationNo, self.sesoOperator), self.card_id_prev, False)
+                                self.logged = Seso.login_logout(Seso(self.stationNo,
+                                                                     'https://seso.apag-elektronik.com/api/'),
+                                                                self.op_name, self.op_id, 'OUT')
+                            else:
+                                self.card_id_prev = self.card_id
+                                self.op_id, self.op_name, self.unlock, self.training = Seso.operator_with_reader(
+                                    Seso(self.stationNo, self.sesoOperator), self.card_id, False)
                             if self.useLogin and self.unlock:
-                                if self.logged:
+                                if self.logged is False:
                                     self.logged = Seso.login_logout(Seso(self.stationNo,
                                                                          'https://seso.apag-elektronik.com/api/'),
-                                                                    self.op_name,
-                                                                    self.op_id, self.unlock, 'IN')
+                                                                    self.op_name, self.op_id, 'IN')
                                     screen_unlock()
                                     self.primary = True
                                 self.lock_timeout = 10
@@ -283,8 +297,7 @@ class App:
                                 if self.useLogin and self.logged:
                                     self.logged = Seso.login_logout(Seso(self.stationNo,
                                                                          'https://seso.apag-elektronik.com/api/'),
-                                                                    self.op_name,
-                                                                    self.op_id, self.unlock, 'OUT')
+                                                                    self.op_name, self.op_id, 'OUT')
                                     self.primary = False
                         if self.primary:
                             self.op_id, self.op_name, self.unlock, self.training = Seso.operator_without_reader(
@@ -294,8 +307,7 @@ class App:
                                     if self.logged is False:
                                         self.logged = Seso.login_logout(Seso(self.stationNo,
                                                                              'https://seso.apag-elektronik.com/api/'),
-                                                                        self.op_name,
-                                                                        self.op_id, self.unlock, 'IN')
+                                                                        self.op_name, self.op_id, 'IN')
                                         screen_unlock()
                                     self.lock_timeout = 10
                                 else:
@@ -304,8 +316,7 @@ class App:
                                     if self.logged:
                                         self.logged = Seso.login_logout(Seso(self.stationNo,
                                                                              'https://seso.apag-elektronik.com/api/'),
-                                                                        self.op_name,
-                                                                        self.op_id, self.unlock, 'OUT')
+                                                                        self.op_name, self.op_id, 'OUT')
                             else:
                                 screen_unlock()
                     except TypeError:
@@ -320,8 +331,7 @@ class App:
                             if self.logged is False:
                                 self.logged = Seso.login_logout(Seso(self.stationNo,
                                                                      'https://seso.apag-elektronik.com/api/'),
-                                                                self.op_name,
-                                                                self.op_id, self.unlock, 'IN')
+                                                                self.op_name, self.op_id, 'IN')
                                 screen_unlock()
                             self.lock_timeout = 10
                         else:
@@ -330,8 +340,7 @@ class App:
                             if self.logged:
                                 self.logged = Seso.login_logout(Seso(self.stationNo,
                                                                      'https://seso.apag-elektronik.com/api/'),
-                                                                self.op_name,
-                                                                self.op_id, self.unlock, 'OUT')
+                                                                self.op_name, self.op_id, 'OUT')
                     else:
                         screen_unlock()
             else:
@@ -403,14 +412,12 @@ class App:
                     if self.useLogin and self.logged:
                         self.logged = Seso.login_logout(Seso(self.stationNo,
                                                              'https://seso.apag-elektronik.com/api/'),
-                                                        self.op_name,
-                                                        self.op_id, self.unlock, 'OUT')
+                                                        self.op_name, self.op_id, 'OUT')
                 continue
             except tkinter.TclError:
                 self.logged = Seso.login_logout(Seso(self.stationNo,
                                                      'https://seso.apag-elektronik.com/api/'),
-                                                self.op_name,
-                                                self.op_id, self.unlock, 'OUT')
+                                                self.op_name, self.op_id, 'OUT')
                 main_exit()
             except KeyboardInterrupt:
                 pass

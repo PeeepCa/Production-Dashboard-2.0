@@ -5,38 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.15&#10;- Autoupdating">
+      <change afterPath="$PROJECT_DIR$/library/msgraph_library.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/2724.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010011.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010012.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010014.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010015.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010016.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010017.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010018.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010019.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010020.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010021.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40010022.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/40040011.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50020013.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50043011.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50045001.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50045002.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50046001.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50047001.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50053010.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50053011.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50053012.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50053013.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50059010.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50064001.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50065001.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/50072011.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/CZ2314N.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/Thumbs.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/apag logo.bmp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/company.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/03062024_log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/04062024_log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/30052024_log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/31052024_log.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/production.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -77,27 +51,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.config_library.executor&quot;: &quot;Run&quot;,
-    &quot;Python.hw_library.executor&quot;: &quot;Run&quot;,
-    &quot;Python.itac_library.executor&quot;: &quot;Run&quot;,
-    &quot;Python.kivy.executor&quot;: &quot;Run&quot;,
-    &quot;Python.kivy_UI.executor&quot;: &quot;Run&quot;,
-    &quot;Python.kivy_production.executor&quot;: &quot;Run&quot;,
-    &quot;Python.parser_library.executor&quot;: &quot;Run&quot;,
-    &quot;Python.pppp.executor&quot;: &quot;Run&quot;,
-    &quot;Python.production.executor&quot;: &quot;Run&quot;,
-    &quot;Python.production_old.pyw.executor&quot;: &quot;Run&quot;,
-    &quot;Python.seso_library.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test1.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/pokorny/OneDrive - APAG Elektronik s.r.o/Desktop/Ukol/test1.py&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.config_library.executor": "Run",
+    "Python.hw_library.executor": "Run",
+    "Python.itac_library.executor": "Run",
+    "Python.kivy.executor": "Run",
+    "Python.kivy_UI.executor": "Run",
+    "Python.kivy_production.executor": "Run",
+    "Python.msgraph_library.executor": "Run",
+    "Python.parser_library.executor": "Run",
+    "Python.pppp.executor": "Run",
+    "Python.production.executor": "Run",
+    "Python.production_old.pyw.executor": "Run",
+    "Python.seso_library.executor": "Run",
+    "Python.test1.executor": "Run",
+    "Python.trayico.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/pokorny/OneDrive - APAG Elektronik s.r.o/Desktop/Ukol/test1.py",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <console-settings module-name="Production-Dashboard-2.0" is-module-sdk="true">
@@ -317,7 +293,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717505289168</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="v0.15&#10;- Autoupdating">
+      <option name="closed" value="true" />
+      <created>1717505604981</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1717505604981</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
