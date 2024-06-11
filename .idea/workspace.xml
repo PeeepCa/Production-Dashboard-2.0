@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.15&#10;- Autoupdating">
-      <change afterPath="$PROJECT_DIR$/library/msgraph_library.py" afterDir="false" />
+    <list default="true" id="356ab033-15d3-4320-af75-0248058a42d2" name="Changes" comment="v0.15&#10;- Fixed issue with operator swap">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/03062024_log.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/04062024_log.txt" beforeDir="false" />
@@ -71,7 +70,7 @@
     "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/pokorny/OneDrive - APAG Elektronik s.r.o/Desktop/Ukol/test1.py",
     "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="PyConsoleOptionsProvider">
@@ -301,7 +300,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717505604981</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="v0.15&#10;- Fixed issue with operator swap">
+      <option name="closed" value="true" />
+      <created>1718003676248</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1718003676248</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -344,7 +351,8 @@
     <MESSAGE value="v0.12&#10;- Fixed index error in seso&#10;- Redefined error logging" />
     <MESSAGE value="v0.13&#10;- Added data when minimized" />
     <MESSAGE value="v0.15&#10;- Autoupdating" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.15&#10;- Autoupdating" />
+    <MESSAGE value="v0.15&#10;- Fixed issue with operator swap" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.15&#10;- Fixed issue with operator swap" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

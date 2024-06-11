@@ -1,3 +1,9 @@
+# Production dashboard
+#
+# App is using SESO, ITAC, and it parses log files in defined folder.
+# Everything is defined in config files.
+# Config files are located in main folder in folder configuration.
+# Updates are done by checking up production.bat, if version was changed it ll automatically restart app.
 # TODO
 #  Finnish iTAC - DONE
 #  Finnish logging - DONE
@@ -13,11 +19,6 @@
 #  When they swap cards too fast, it wont relog the operator
 #  Add ACA testers
 
-# Production dashboard
-#
-# App is using SESO, ITAC, and it parses log files in defined folder.
-# Everything is defined in config files.
-# Config files are located in main folder in folder configuration.
 
 import tkinter
 import sys
@@ -115,6 +116,7 @@ class App:
         elif self.threadCount <= 1:
             self.threadCount = 1
 
+    @staticmethod
     def update_app(self):
         # Update procedure
         # Checking if folder name is actually same as name inside the production.bat
@@ -171,7 +173,7 @@ class App:
         lock_text = tkinter.Label(lock, text=self.training, font='Helvetica 40 bold', bg='white')
         lock_text.place(x=self.screen_width / 2, y=self.screen_height / 2)
 
-        def main_exit(*args):
+        def main_exit(*_):
             # just the exit which stops the main loop
             Logger.log_event(Logger(), 'App exit by button.')
             if self.useReader:
@@ -179,7 +181,7 @@ class App:
             library.shared_varriables.run_thread = False
             self.run = False
 
-        def minimize(*args):
+        def minimize(*_):
             # minimise the window
             if self.dsh_offset == 320:
                 self.dsh_offset = 0
