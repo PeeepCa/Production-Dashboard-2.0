@@ -4,6 +4,7 @@
 # Everything is defined in config files.
 # Config files are located in main folder in folder configuration.
 # Updates are done by checking up production.bat, if version was changed it ll automatically restart app.
+# New repo is on github.
 
 # TODO
 #  Finnish iTAC - DONE
