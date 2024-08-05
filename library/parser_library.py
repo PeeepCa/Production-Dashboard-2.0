@@ -70,16 +70,16 @@ class Parser:
                         name_d = 0
                         name_e = 0
 
-                        newest = max(iglob(self.path + date + '*.[Dd][Aa][Tt]'), key=path.getctime)
+                        oldest = min(iglob(self.path + date + '*.[Dd][Aa][Tt]'), key=path.getctime)
 
-                        with open(newest, 'r') as file_opened:
+                        with open(oldest, 'r') as file_opened:
                             data = file_opened.read(-1)
                             data = data.splitlines()
                             size = len(data)
 
                         if self.remove_file:
-                            self.split_path = newest.rsplit('\\', 1)
-                            replace(newest, self.split_path[0][:-8] + '\\PROBLEMS\\' + str(start_time) +
+                            self.split_path = oldest.rsplit('\\', 1)
+                            replace(oldest, self.split_path[0][:-8] + '\\PROBLEMS\\' + str(start_time) +
                                     self.split_path[1])
 
                         self.tLock.release()
@@ -276,16 +276,16 @@ class Parser:
                     count = 0
                     time_count = 0
 
-                    newest = max(iglob(self.path + '*.[TtLl][XxOo][TtGg]'), key=path.getctime)
+                    oldest = min(iglob(self.path + '*.[TtLl][XxOo][TtGg]'), key=path.getctime)
 
-                    with open(newest, 'r') as file_opened:
+                    with open(oldest, 'r') as file_opened:
                         data = file_opened.read(-1)
                         data = data.splitlines()
                         size = len(data)
 
                     if self.remove_file:
-                        self.split_path = newest.rsplit('\\', 1)
-                        replace(newest, self.split_path[0] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
+                        self.split_path = oldest.rsplit('\\', 1)
+                        replace(oldest, self.split_path[0] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
                     ########################################################
                     self.tLock.release()
                     ########################################################

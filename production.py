@@ -4,7 +4,8 @@
 # Everything is defined in config files.
 # Config files are located in main folder in folder configuration.
 # Updates are done by checking up production.bat, if version was changed it ll automatically restart app.
-# New repo is on github.
+# New repo is on GitHub.
+# Implemented FIFO for log files.
 
 # TODO
 #  Finnish iTAC - DONE
@@ -53,8 +54,8 @@ class App:
         else:
             self.application_path = None
         try:
-            temp = Config.read_config(Config(self.application_path.rsplit('\\', 1)[0] + '/Configuration/' +
-                                         gethostname() + '.ini'))
+            temp = Config.read_config(Config(self.application_path.rsplit('\\', 1)[0] + '/Configuration/'
+                                             + gethostname() + '.ini'))
         except FileNotFoundError:
             windll.user32.MessageBoxW(0, 'Error 0x100 Config file not found', 'Error', 0x1000)
             Logger.log_event(Logger(), 'Error 0x100 Config file not found. ' + format_exc())
