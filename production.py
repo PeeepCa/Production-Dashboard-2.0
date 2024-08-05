@@ -52,8 +52,13 @@ class App:
             self.application_path = path.dirname(__file__)
         else:
             self.application_path = None
-        temp = Config.read_config(Config(self.application_path.rsplit('\\', 1)[0] + '/Configuration/' +
+        try:
+            temp = Config.read_config(Config(self.application_path.rsplit('\\', 1)[0] + '/Configuration/' +
                                          gethostname() + '.ini'))
+        except FileNotFoundError:
+            windll.user32.MessageBoxW(0, 'Error 0x100 Config file not found', 'Error', 0x1000)
+            Logger.log_event(Logger(), 'Error 0x100 Config file not found. ' + format_exc())
+            sys.exit()
         self.stationNo = temp[0]
         self.path = temp[1]
         self.threadCount = temp[2]

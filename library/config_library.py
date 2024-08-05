@@ -138,6 +138,3 @@ class Config:
         except NameError:
             windll.user32.MessageBoxW(0, 'Error 0x102 Variable not found in return of function.', 'Error', 0x1000)
             Logger.log_event(Logger(), 'Variable not found in return of function. ' + format_exc())
-        except FileNotFoundError:
-            windll.user32.MessageBoxW(0, 'Error 0x103 Config on server not found', 'Error', 0x1000)
-            Logger.log_event(Logger(), 'Config on server not found. ' + format_exc())
