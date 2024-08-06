@@ -6,6 +6,7 @@
 # Updates are done by checking up production.bat, if version was changed it ll automatically restart app.
 # New repo is on GitHub.
 # Implemented FIFO for log files.
+# Added json par
 
 # TODO
 #  Finnish iTAC - DONE

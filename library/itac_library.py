@@ -4,6 +4,7 @@
 
 from requests import post
 from ctypes import windll
+from json import loads
 from library.logger_library import Logger
 
 
@@ -45,11 +46,10 @@ class Itac:
                     "client":"01",
                     "registrationType":"S",
                     "systemIdentifier":"Test"}}"""
-        js = (Itac.data_post(self, self.login, body).replace(' ', '').replace('\r\n', '')
-              .replace('{"result":{"return_value":0', '').split(','))
-        globals()['sessionId'] = js[1].replace('sessionContext":{', '').split(':')[1]
-        globals()['persId'] = js[2].split(':')[1]
-        globals()['locale'] = js[3].replace('}}}', '').replace('"', '').split(':')[1]
+        js = loads(Itac.data_post(self, self.login, body))
+        globals()['sessionId'] = str(js['result']['sessionContext']['sessionId'])
+        globals()['persId'] = str(js['result']['sessionContext']['persId'])
+        globals()['locale'] = str(js['result']['sessionContext']['locale'])
 
     def sn_info(self, *args):
         """
@@ -67,13 +67,8 @@ class Itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberResultKeys": ["PART_NUMBER","PART_DESC","WORKORDER_NUMBER","SERIAL_NUMBER_POS"]}"""
-        data = (Itac.data_post(self, self.sn_info, body).replace(' ', '')
-                .replace('\r\n', '').replace('"', '').split(','))
-        part_no = str(data[1]).split('[')[1]
-        part_desc = str(data[2])
-        wa = str(data[3])
-        sn_pos = str(data[4].split(']')[0])
-        return part_no, part_desc, wa, sn_pos
+        data = loads(Itac.data_post(self, self.sn_info, body))['result']['serialNumberResultValues']
+        return data[0], data[1], data[2], data[3]
 
     def sn_state(self, *args):
         """
@@ -93,10 +88,9 @@ class Itac:
                     "serialNumber":""" + '"' + sn + '"' + """,
                     "serialNumberPos":"-1",
                     "serialNumberStateResultKeys": ["ERROR_CODE"]}"""
-        status = Itac.data_post(self, self.sn_state, body).replace(' ', '').replace('\r\n', '').split(',')[1]
-        status = status.replace('"', '').replace('}', '').replace('[', '').replace(']', '').split(':')[1]
+        status = str(loads(Itac.data_post(self, self.sn_state, body))['result']['serialNumberStateResultValues'][0])
         if status != '0' and status != '212':
-            windll.user32.MessageBoxW(0, 'iTAC AOI ' + status, 'iTAC Message', 0x1000)
+            windll.user32.MessageBoxW(0, 'iTAC AOI ' + str(status), 'iTAC Message', 0x1000)
         return status
 
     def upload(self, *args):
