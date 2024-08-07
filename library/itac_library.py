@@ -126,6 +126,11 @@ class Itac:
         Itac.data_post(self, self.upload, body)
 
     def get_result_data(self, *args):
+        """
+        Get result data
+        :param args: sn
+        :return: measured_value
+        """
         # Get results data
         sn = args[0]
         body = """{"sessionContext":
@@ -140,7 +145,7 @@ class Itac:
                     "name":"-1",
                     "allProductEntries":"0",
                     "onlyLastEntry":"0",
-                    "resultDataKeys": ["MEASURE_TYPE","MEASURE_VALUE"]}"""
+                    "resultDataKeys": ["MEASURE_VALUE"]}"""
         print(body)
         return loads(Itac.data_post(self, self.get_result_data, body))
 
