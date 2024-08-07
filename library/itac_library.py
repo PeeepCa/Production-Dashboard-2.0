@@ -24,6 +24,7 @@ class Itac:
         self.sn_info = 'trGetSerialNumberInfo'
         self.sn_state = 'trCheckSerialNumberState'
         self.upload = 'trUploadResultDataAndRecipe'
+        self.get_result_data = 'trGetResultDataForSerialNumber'
         self.logout = 'regLogout'
         self.headers = {'content-type': 'application/json'}
         self.timeout = 5
@@ -124,6 +125,25 @@ class Itac:
                     "resultUploadValues": [""" + upload_values + """]}"""
         Itac.data_post(self, self.upload, body)
 
+    def get_result_data(self, *args):
+        # Get results data
+        sn = args[0]
+        body = """{"sessionContext":
+                    {"sessionId":""" + sessionId + """,
+                    "persId":""" + '"' + persId + '"' + """,
+                    "locale":""" + '"' + locale + '"' + """},
+                    "stationNumber":""" + self.stationNumber + """,
+                    "processLayer":"1",
+                    "serialNumber":""" + '"' + sn + '"' + """,
+                    "serialNumberPos":"-1",
+                    "type":"-1",
+                    "name":"-1",
+                    "allProductEntries":"0",
+                    "onlyLastEntry":"0",
+                    "resultDataKeys": ["MEASURE_TYPE","MEASURE_VALUE"]}"""
+        print(body)
+        return loads(Itac.data_post(self, self.get_result_data, body))
+
     def logout(self):
         """
         Logout
@@ -147,7 +167,7 @@ class Itac:
         body = args[1]
         req = post(self.restAPI + function, headers=self.headers, data=body, timeout=self.timeout)
         if req.status_code != 200:
-            windll.user32.MessageBoxW(0, 'Error 0x300 iTAC' + self.function + 'problem ' +
+            windll.user32.MessageBoxW(0, 'Error 0x300 iTAC' + str(self.function) + 'problem ' +
                                       str(req.status_code), 'iTAC Message', 0x1000)
-            Logger.log_event(Logger(), 'Error 0x305 iTAC' + self.function + 'problem ' + str(req.status_code))
+            Logger.log_event(Logger(), 'Error 0x305 iTAC' + str(self.function) + 'problem ' + str(req.status_code))
         return req.text
