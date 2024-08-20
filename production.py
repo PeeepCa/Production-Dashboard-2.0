@@ -121,6 +121,8 @@ class App:
                                                 self.op_id, self.unlock, 'OUT')
         if self.useReader:
             self.useReader = Hw.rfid_open(Hw(self.COM, self.BAUD))
+            if not self.useReader:
+                self.useLogin = self.useReader
         if self.threadCount > 8:
             self.threadCount = 8
         elif self.threadCount <= 1:
