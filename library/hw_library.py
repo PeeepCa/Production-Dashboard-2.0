@@ -17,7 +17,7 @@ class Hw:
     :param baud: BAUD
     """
     def __init__(self, com, baud):
-        # input of COM and BAUD // COM8, 9600
+        # input of COM and BAUD
         self.COM = com
         self.BAUD = baud
 
