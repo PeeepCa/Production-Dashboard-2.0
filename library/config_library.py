@@ -5,10 +5,10 @@ from traceback import format_exc
 
 class Config:
     """
-    Read config. Path should be sent as first argument
-    :param args: file
+    Read config. Path should be sent as first argument.
+    :param file: Config file to read.
     """
-    def __init__(self, *args):
+    def __init__(self, file):
         self.station_number = None
         self.path = None
         self.thread_number = None
@@ -37,7 +37,7 @@ class Config:
         self.graph_color = None
         self.process_layer = None
 
-        file = open(args[0], 'r')
+        file = open(file, 'r')
         self.temp = file.read(-1).splitlines()
         
     def read_config(self):

@@ -16,20 +16,29 @@ from library.logger_library import Logger
 class Parser:
     """
     Read config. Path should be sent as first argument
-    :param args: 0-run, 1-path, 2-what_to_handle, 3-use_itac, 4-use_seso, 5-remove_file, 6-station_number,
-    7-itac_restApi, 8-seso_restApi
+    :param run: Boolean value if thread should run
+    :param log_path: Path to read
+    :param what_to_handle: What to handle
+    :param use_itac: Boolean value if itac should be used
+    :param use_seso: Boolean value if seso should be used
+    :param remove_file: Boolean value if file should be removed
+    :param station_number: station number
+    :param itac_restapi: itac rest api
+    :param seso_restapi: seso rest api
+    :param process_layer: process layer
     """
-    def __init__(self, *args):
-        self.run = args[0]
-        self.path = args[1]
-        self.what_to_handle = args[2]
-        self.use_itac = args[3]
-        self.use_seso = args[4]
-        self.remove_file = args[5]
-        self.station_number = args[6]
-        self.itac_restApi = args[7]
-        self.seso_restApi = args[8]
-        self.process_layer = args[9]
+    def __init__(self, run, log_path, what_to_handle, use_itac, use_seso, remove_file, station_number, itac_restapi,
+                 seso_restapi, process_layer):
+        self.run = run
+        self.path = log_path
+        self.what_to_handle = what_to_handle
+        self.use_itac = use_itac
+        self.use_seso = use_seso
+        self.remove_file = remove_file
+        self.station_number = station_number
+        self.itac_restApi = itac_restapi
+        self.seso_restApi = seso_restapi
+        self.process_layer = process_layer
         self.start_number = None
         self.split_path = None
         self.tLock = BoundedSemaphore(value=1)

@@ -6,8 +6,6 @@ from datetime import datetime
 class Logger:
     """
     Library for logging. Logged in directory as txt file named as date.
-    time_stamp,
-    log_event
     """
     def __init__(self):
         self.config = open(Logger.time_stamp().split(' ')[0].replace('.', '') + '_log.txt', 'a')
@@ -22,11 +20,10 @@ class Logger:
         actual_time = actual_time.strftime('%d.%m.%Y %H:%M:%S')
         return str(actual_time)
 
-    def log_event(self, *args):
+    def log_event(self, content):
         """
         Log event, write data to log file.
-        :param args: content
+        :param content: What to write to log file.
         """
-        content = args[0]
         self.config.write(Logger.time_stamp() + ': ' + content + '\n')
         self.config.close()

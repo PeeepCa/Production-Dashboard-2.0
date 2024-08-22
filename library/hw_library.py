@@ -12,16 +12,14 @@ ser = Serial()
 
 class Hw:
     """
-    Hardware handling.
-    rfid_open,
-    rfid_read,
-    rfid_close
-    :param args: COM, BAUD
+    Hardware handling for RFID reader.
+    :param com: COM
+    :param baud: BAUD
     """
-    def __init__(self, *args):
+    def __init__(self, com, baud):
         # input of COM and BAUD // COM8, 9600
-        self.COM = args[0]
-        self.BAUD = args[1]
+        self.COM = com
+        self.BAUD = baud
 
     def rfid_open(self):
         """

@@ -11,14 +11,10 @@ from library.logger_library import Logger
 class Itac:
     """
     Itac library, communication via rest.
-    login,
-    sn_info,
-    sn_state,
-    upload,
-    logout
-    :param args: station_number, rest_address
+    :param station_number: station_number from iTAC
+    :param restapi: restapi address
     """
-    def __init__(self, *args):
+    def __init__(self, station_number, restapi):
         # init for all components needed for library to work
         self.login = 'regLogin'
         self.sn_info = 'trGetSerialNumberInfo'
@@ -28,8 +24,8 @@ class Itac:
         self.logout = 'regLogout'
         self.headers = {'content-type': 'application/json'}
         self.timeout = 5
-        self.stationNumber = args[0]
-        self.restAPI = args[1]
+        self.stationNumber = station_number
+        self.restAPI = restapi
         self.function = None
         self.body = None
 
@@ -52,14 +48,13 @@ class Itac:
         globals()['persId'] = str(js['result']['sessionContext']['persId'])
         globals()['locale'] = str(js['result']['sessionContext']['locale'])
 
-    def sn_info(self, *args):
+    def sn_info(self, sn):
         """
         SN info
-        :param args: sn
+        :param sn: serial number
         :return: part_no, part_dest, wa, sn_pos
         """
         # serial number information
-        sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
@@ -71,14 +66,13 @@ class Itac:
         data = loads(Itac.data_post(self, self.sn_info, body))['result']['serialNumberResultValues']
         return data[0], data[1], data[2], data[3]
 
-    def sn_state(self, *args):
+    def sn_state(self, sn):
         """
         Interlocking
-        :param args: sn
+        :param sn: serial number
         :return: status
         """
         # Interlocking
-        sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
@@ -94,18 +88,17 @@ class Itac:
             windll.user32.MessageBoxW(0, 'iTAC AOI ' + str(status), 'iTAC Message', 0x1000)
         return status
 
-    def upload(self, *args):
+    def upload(self, process_layer, sn, sn_pos, test_result, cycle_time, upload_values):
         """
         Upload of the results
-        :param args: sn, sn_pos, test_result, cycle_time, upload_values
+        :param sn: serial number
+        :param process_layer: process layer
+        :param sn_pos: serial number position
+        :param test_result: test result
+        :param cycle_time: cycle time
+        :param upload_values: upload values
         """
         # Upload state and result
-        process_layer = args[0]
-        sn = args[1]
-        sn_pos = args[2]
-        test_result = args[3]
-        cycle_time = args[4]
-        upload_values = args[5]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
@@ -125,14 +118,13 @@ class Itac:
                     "resultUploadValues": [""" + upload_values + """]}"""
         Itac.data_post(self, self.upload, body)
 
-    def get_result_data(self, *args):
+    def get_result_data(self, sn):
         """
         Get result data
-        :param args: sn
+        :param sn: serial number
         :return: measured_value
         """
         # Get results data
-        sn = args[0]
         body = """{"sessionContext":
                     {"sessionId":""" + sessionId + """,
                     "persId":""" + '"' + persId + '"' + """,
@@ -161,15 +153,14 @@ class Itac:
         Itac.data_post(self, self.logout, body)
 
     # Modify sending all the iTAC through the single function
-    def data_post(self, *args):
+    def data_post(self, function, body):
         """
         Send data to server
-        :param args: function, body
+        :param function: function
+        :param body: body
         :return: 'req.text'
         """
         # Function for sent data to restAPI
-        function = args[0]
-        body = args[1]
         req = post(self.restAPI + function, headers=self.headers, data=body, timeout=self.timeout)
         if req.status_code != 200:
             windll.user32.MessageBoxW(0, 'Error 0x300 iTAC' + str(self.function) + 'problem ' +
