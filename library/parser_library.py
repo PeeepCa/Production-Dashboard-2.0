@@ -1,4 +1,5 @@
 import library.shared_varriables
+
 from datetime import date, datetime
 from threading import BoundedSemaphore
 from time import sleep, time
@@ -8,6 +9,7 @@ from sys import exc_info
 from re import match, split
 from glob import iglob
 from traceback import format_exc
+
 from library.itac_library import Itac
 from library.seso_library import Seso
 from library.logger_library import Logger

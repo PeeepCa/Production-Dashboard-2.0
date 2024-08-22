@@ -2,10 +2,13 @@
 # RFID and 232 library
 
 import sys
+
 from serial import Serial, serialutil
 from ctypes import windll
-from library.logger_library import Logger
 from traceback import format_exc
+
+from library.logger_library import Logger
+
 msg_show = 1
 ser = Serial()
 
