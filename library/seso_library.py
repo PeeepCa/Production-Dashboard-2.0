@@ -43,7 +43,7 @@ class Seso:
                     status = '1'
                 payload = {'type': 'production', 'itac': '0', 'station': self.station_number, 'wa': work_order,
                            'module': description, 'ap': serial_number, 'result': status}
-                post(self.rest_api, data=payload, timeout=self.timeout)
+                post(self.rest_api, data=payload, timeout=self.timeout, verify=False)
         except exceptions.MissingSchema:
             Logger.log_event(Logger(), 'Wrong URL at upload.')
             windll.user32.MessageBoxW(0, 'Error 0x401 URL for upload.', 'SESO Message', 0x1000)
@@ -57,7 +57,7 @@ class Seso:
             # Function which returns the card number and operator name for tester without reader
             # If its secondary machine, then it does not want trainings
             payload = {'type': 'station-info', 'station': self.station_number}
-            req = post(self.rest_api, data=payload, timeout=self.timeout)
+            req = post(self.rest_api, data=payload, timeout=self.timeout, verify=False)
             op_id = req.text.split(',')[5].split(':')[1].split('-')[0].replace('"', '')
             op_name = req.text.split(',')[4].split(':')[1].split('-')[0].replace('"', '')
             if list(op_id)[0] == '0':
@@ -85,7 +85,7 @@ class Seso:
             card_id = args[0]
             use_training = args[1]
             payload = {'type': 'card', 'id': card_id, 'station': self.station_number}
-            req = post(self.rest_api, data=payload, timeout=self.timeout)
+            req = post(self.rest_api, data=payload, timeout=self.timeout, verify=False)
             data = req.text.split(',')
             op_id = data[2].split(':')[1].replace('"', '')
             op_name = data[1].split(':')[1].replace('"', '') + ' ' + data[0].split(':')[2].replace('"', '')
@@ -124,7 +124,7 @@ class Seso:
             in_out = args[2]
             payload = {'type': 'operator', 'station': self.station_number, 'perName': op_name, 'perNr': op_id,
                        'action': in_out}
-            post(self.rest_api, data=payload, timeout=self.timeout)
+            post(self.rest_api, data=payload, timeout=self.timeout, verify=False)
             if in_out == 'IN':
                 logged = True
             else:
@@ -145,7 +145,7 @@ class Seso:
             # Time ll show
             # sesoData
             payload = {'action': 'hourly', 'station': self.station_number}
-            data = post(self.rest_api, data=payload, timeout=self.timeout).text.split(',')
+            data = post(self.rest_api, data=payload, timeout=self.timeout, verify=False).text.split(',')
             working = int(data[3].split(':')[1]) + int(data[4].split(':')[1])
             tester_type = data[0].split(':')[1].replace('"', '')
             if 'ICT' in tester_type:
