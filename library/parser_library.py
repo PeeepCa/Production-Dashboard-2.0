@@ -213,7 +213,7 @@ class Parser:
 
                     except ValueError:
                         try:
-                            if 'max' in str(exc_info()):
+                            if 'min' in str(exc_info()):
                                 self.tLock.release()
                                 continue
                             else:
@@ -543,7 +543,7 @@ class Parser:
 
                 except ValueError:
                     try:
-                        if 'max' in str(exc_info()):
+                        if 'min' in str(exc_info()):
                             self.tLock.release()
                             continue
                         else:
