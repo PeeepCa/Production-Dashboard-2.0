@@ -28,6 +28,7 @@ import tkinter
 import sys
 import library.shared_varriables
 
+
 from psutil import process_iter
 from threading import Thread
 from ctypes import windll
@@ -36,6 +37,7 @@ from socket import gethostname
 from time import sleep
 from PIL import ImageTk, Image
 from traceback import format_exc
+from warnings import filterwarnings
 
 from library.seso_library import Seso
 from library.logger_library import Logger
@@ -47,6 +49,7 @@ from library.parser_library import Parser
 class App:
     def __init__(self):
         # init for all the default data + readout of the config file
+        filterwarnings("ignore")
         Logger.log_event(Logger(), 'Logging started.')
         if getattr(sys, 'frozen', False):
             self.application_path = path.dirname(sys.executable)

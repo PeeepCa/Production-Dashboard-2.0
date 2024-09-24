@@ -329,6 +329,11 @@ class Parser:
                                 self.status = 'pass'
 
                         for x in range(self.start_number, start_array[i]):
+                            if 'SN=' in data[x]:
+                                self.sn = data[x].split('=')[1]
+                                self.multi_panel = False
+                                self.sn = self.sn[:2] + '00' + self.sn[-5:]
+                                break
                             if 'SN ' in data[x]:
                                 self.sn = data[x].split(' ')
                                 self.sn = self.sn[4]
