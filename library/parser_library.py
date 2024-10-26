@@ -1,3 +1,5 @@
+import re
+
 import library.shared_varriables
 
 from datetime import date, datetime
@@ -116,97 +118,98 @@ class Parser:
                             self.itac_desc = itac_data[1]
                             self.itac_pos = itac_data[3]
 
-                            for x in range(size):
-                                raw_data = data[x].replace(' ', '').split(',')
-                                if 'CP=' not in raw_data[9]:
-                                    name = raw_data[1].replace('MR', 'R').replace('MC', 'C')
-                                    value = raw_data[13]
-                                    unit = raw_data[14]
+                        for x in range(size):
+                            raw_data = data[x].replace(' ', '').split(',')
+                            if 'CP=' not in raw_data[9]:
+                                name = raw_data[1].replace('MR', 'R').replace('MC', 'C')
+                                value = raw_data[13]
+                                unit = raw_data[14]
 
-                                    if raw_data[15] == '*PASS*':
-                                        self.meas_fail_code = '0'
-                                    elif raw_data[15] == '':
-                                        continue
-                                    else:
-                                        self.meas_fail_code = '1'
+                                if raw_data[15] == '*PASS*':
+                                    self.meas_fail_code = '0'
+                                elif raw_data[15] == '':
+                                    continue
+                                else:
+                                    self.meas_fail_code = '1'
 
-                                    if name == 'T1':
-                                        name = name + '_' + str(name_a)
-                                        name_a += 1
+                                if name == 'T1':
+                                    name = name + '_' + str(name_a)
+                                    name_a += 1
 
-                                    if name == 'XT801M':
-                                        name = name + '_' + str(name_b)
-                                        name_b += 1
+                                if name == 'XT801M':
+                                    name = name + '_' + str(name_b)
+                                    name_b += 1
 
-                                    if name == 'XT1M':
-                                        name = name + '_' + str(name_c)
-                                        name_c += 1
+                                if name == 'XT1M':
+                                    name = name + '_' + str(name_c)
+                                    name_c += 1
 
-                                    if name == 'DB101':
-                                        name = name + '_' + str(name_d)
-                                        name_d += 1
+                                if name == 'DB101':
+                                    name = name + '_' + str(name_d)
+                                    name_d += 1
 
-                                    if 'IC' in name:
-                                        name = name + '_' + str(name_e)
-                                        name_e += 1
+                                if 'IC' in name:
+                                    name = name + '_' + str(name_e)
+                                    name_e += 1
 
-                                    if name == name_prev:
-                                        name += '_1'
+                                if name == name_prev:
+                                    name += '_1'
 
-                                    if str(raw_data[13]) == '':
-                                        value = '0'
+                                if str(raw_data[13]) == '':
+                                    value = '0'
 
-                                    if '%' in raw_data[10]:
-                                        h_limit = int(value.split('.')[0]) + (int(value.split('.')[0]) / 100 *
-                                                                              int(raw_data[9].split('.')[0]))
-                                    else:
-                                        h_limit = raw_data[9]
+                                if '%' in raw_data[10]:
+                                    h_limit = int(value.split('.')[0]) + (int(value.split('.')[0]) / 100 *
+                                                                          int(raw_data[9].split('.')[0]))
+                                else:
+                                    h_limit = raw_data[9]
 
-                                    if '%' in raw_data[12]:
-                                        l_limit = int(value.split('.')[0]) + (int(value.split('.')[0]) / 100 *
-                                                                              int(raw_data[11].split('.')[0]))
-                                    else:
-                                        l_limit = raw_data[11]
+                                if '%' in raw_data[12]:
+                                    l_limit = int(value.split('.')[0]) + (int(value.split('.')[0]) / 100 *
+                                                                          int(raw_data[11].split('.')[0]))
+                                else:
+                                    l_limit = raw_data[11]
 
-                                    unit_format = (str(unit[:1]).replace('M', 'E+6').replace('G', 'E+9')
-                                                   .replace('K', 'E+3').replace('m', 'E-3').replace('u', 'E-6')
-                                                   .replace('n', 'E-9').replace('p', 'E-12'))
+                                unit_format = (str(unit[:1]).replace('M', 'E+6').replace('G', 'E+9')
+                                               .replace('K', 'E+3').replace('m', 'E-3').replace('u', 'E-6')
+                                               .replace('n', 'E-9').replace('p', 'E-12'))
 
-                                    if 'o' in unit[-1:]:
-                                        unit = 'Ohm'
-                                    elif 'F' in unit[-1:]:
-                                        unit = 'F'
-                                    elif 'V' in unit[-1:]:
-                                        unit = 'V'
-                                    elif 'A' in unit[-1:]:
-                                        unit = 'A'
-                                    else:
-                                        unit = ''
+                                if 'o' in unit[-1:]:
+                                    unit = 'Ohm'
+                                elif 'F' in unit[-1:]:
+                                    unit = 'F'
+                                elif 'V' in unit[-1:]:
+                                    unit = 'V'
+                                elif 'A' in unit[-1:]:
+                                    unit = 'A'
+                                else:
+                                    unit = ''
 
-                                    if len(unit_format) <= 1:
-                                        unit_format = ''
+                                if len(unit_format) <= 1:
+                                    unit_format = ''
 
-                                    name_prev = name
+                                name_prev = name
 
-                                    number_of_records += 1
+                                number_of_records += 1
 
-                                    upload_values += (',"T",0,"' + self.meas_fail_code + '","' + str(unit) + unit_format
-                                                      + '","' + str(name) + '","' + str(value) + '","' + str(l_limit)
-                                                      + '","' + str(h_limit) + '",' + str(number_of_records))
+                                upload_values += (',"T",0,"' + self.meas_fail_code + '","' + str(unit)
+                                                  + '","' + str(name) + '","' + str(value) + unit_format + '","' + str(l_limit) + unit_format
+                                                  + '","' + str(h_limit) + unit_format + '",' + str(number_of_records))
 
-                            upload_values = upload_values.replace(',', '', 1)
+                        upload_values = upload_values.replace(',', '', 1)
 
-                            if self.use_itac:
-                                Itac.upload(Itac(self.station_number, self.itac_restApi), self.process_layer,
-                                            self.sn, self.itac_pos, self.test_result, '20', upload_values)
+                        if self.use_itac:
+                            Itac.upload(Itac(self.station_number, self.itac_restApi), self.process_layer,
+                                        self.sn, self.itac_pos, self.test_result, '20', upload_values)
+                        if self.use_seso:
                             Seso.upload(Seso(self.station_number, self.seso_restApi),
                                         self.sn, self.itac_wa, self.status, self.itac_desc)
 
-                            if self.use_seso is False:
-                                if self.status == 'pass':
-                                    library.shared_varriables.pass_count += 1
-                                else:
-                                    library.shared_varriables.fail_count += 1
+                        if self.use_seso is False:
+                            if self.status == 'pass':
+                                library.shared_varriables.pass_count += 1
+                            else:
+                                library.shared_varriables.fail_count += 1
 
                         if self.remove_file:
                             remove(self.split_path[0][:-8] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
@@ -266,7 +269,6 @@ class Parser:
                             continue
             except FileNotFoundError:
                 continue
-        Itac.login(Itac(self.station_number, self.itac_restApi))
 
     def stdf_handle(self):
         while self.run:
@@ -532,8 +534,9 @@ class Parser:
                         if self.use_itac:
                             Itac.upload(Itac(self.station_number, self.itac_restApi), self.process_layer,
                                         self.sn, self.itac_pos, self.test_result, cycle_time, upload_values)
-                        Seso.upload(Seso(self.station_number, self.seso_restApi),
-                                    self.sn, self.itac_wa, self.status, self.itac_desc)
+                        if self.use_seso:
+                            Seso.upload(Seso(self.station_number, self.seso_restApi),
+                                        self.sn, self.itac_wa, self.status, self.itac_desc)
 
                     # End of main function definition
                     ########################################################
@@ -599,10 +602,198 @@ class Parser:
                         continue
                     except ValueError:
                         continue
-        Itac.login(Itac(self.station_number, self.itac_restApi))
+
+    def tri_handle(self, **args):
+        module = args['module']
+        print(module)
+        while self.run:
+            sleep(0.001)
+            self.run = library.shared_varriables.run_thread
+            # We do not want to crash if the production does not run
+            # This ll crash only till the production start
+            try:
+                date_v = module + "-" + str(date.today())[:7] + '\\' + str(date.today())[-2:] + '\\'
+                print(date_v)
+                if len(listdir(path=self.path + date_v)) > 0:
+                    try:
+                        start_time = time()
+                        ########################################################
+                        self.tLock.acquire()
+                        ########################################################
+                        # Main function definition
+                        ########################################################
+                        upload_values = ''
+                        number_of_records = 0
+
+                        oldest = min(iglob(self.path + date_v + '*.[Cc][Ss][Vv]'), key=path.getctime)
+
+                        with open(oldest, 'r') as file_opened:
+                            data = file_opened.read(-1)
+                            data = data.splitlines()
+                            size = len(data)
+
+                        if self.remove_file:
+                            self.split_path = oldest.rsplit('\\', 1)
+                            print(self.split_path[0][:-8])
+                            replace(oldest, self.path + '\\PROBLEMS\\' + str(start_time) +
+                                    self.split_path[1])
+
+                        self.tLock.release()
+
+                        result_data = data[0].split(',')
+                        if 'P' in result_data[6]:
+                            self.test_result = '0'
+                            self.status = 'pass'
+                        else:
+                            self.test_result = '1'
+                            self.status = 'fail'
+                        self.sn = data[0].split(',')[3]
+
+                        if self.use_itac:
+                            if Itac.sn_state(Itac(self.station_number, self.itac_restApi),
+                                             self.sn) != '0' and Itac.sn_state(self, self.sn) != '212':
+                                continue
+
+                            itac_data = Itac.sn_info(Itac(self.station_number,
+                                                          self.itac_restApi), self.sn)
+                            self.itac_wa = itac_data[2]
+                            self.itac_desc = itac_data[1]
+                            self.itac_pos = itac_data[3]
+
+                        for x in range(2, size):
+                            raw_data = data[x].replace(' ', '').split(',')
+                            name = raw_data[1]
+                            value = raw_data[6]
+                            unit = raw_data[8]
+                            h_limit = raw_data[7]
+                            l_limit = raw_data[5]
+
+                            if raw_data[11] == 'T':
+                                continue
+
+                            if raw_data[9] == '0':
+                                self.meas_fail_code = '0'
+                            else:
+                                self.meas_fail_code = '1'
+
+                            result = re.search(r'(\d+\.\d+)(\D+)', l_limit)
+                            if result:
+                                l_limit = result.group(1)
+
+                            result = re.search(r'(\d+\.\d+)(\D+)', h_limit)
+                            if result:
+                                h_limit = result.group(1)
+
+                            result = re.search(r'(\d+\.\d+)(\D+)', value)
+                            if result:
+                                value = result.group(1)
+                                unit = result.group(2)
+
+                            unit_format = (str(unit[:1]).replace('M', 'E+6').replace('G', 'E+9')
+                                           .replace('K', 'E+3').replace('m', 'E-3').replace('u', 'E-6')
+                                           .replace('n', 'E-9').replace('p', 'E-12'))
+
+                            value = value + unit_format
+                            l_limit = l_limit + unit_format
+                            h_limit = h_limit + unit_format
+
+                            unit = raw_data[8]
+
+                            if 'R' in unit[-1:]:
+                                unit = 'Ohm'
+                            elif 'C' in unit[-1:]:
+                                unit = 'F'
+                            elif 'V' in unit[-1:]:
+                                unit = 'V'
+                            elif 'A' in unit[-1:]:
+                                unit = 'A'
+                            else:
+                                unit = ''
+
+                            number_of_records += 1
+
+                            upload_values += (',"T",0,"' + self.meas_fail_code + '","' + str(unit)
+                                              + '","' + str(name) + '","' + str(value) + '","' + str(l_limit)
+                                              + '","' + str(h_limit) + '",' + str(number_of_records))
+
+                        upload_values = upload_values.replace(',', '', 1)
+
+                        if self.use_itac:
+                            Itac.upload(Itac(self.station_number, self.itac_restApi), self.process_layer,
+                                        self.sn, self.itac_pos, self.test_result, '20', upload_values)
+                        if self.use_seso:
+                            Seso.upload(Seso(self.station_number, self.seso_restApi),
+                                        self.sn, self.itac_wa, self.status, self.itac_desc)
+
+                        if self.use_seso is False:
+                            if self.status == 'pass':
+                                library.shared_varriables.pass_count += 1
+                            else:
+                                library.shared_varriables.fail_count += 1
+
+                        if self.remove_file:
+                            remove(self.split_path[0][:-8] + '\\PROBLEMS\\' + str(start_time) + self.split_path[1])
+
+                    except ValueError:
+                        try:
+                            if 'min' in str(exc_info()):
+                                self.tLock.release()
+                                continue
+                            else:
+                                windll.user32.MessageBoxW(0, 'Error 0x101 ' + format_exc(), 'Error', 0x1000)
+                                Logger.log_event(Logger(), 'Error 0x101. ' + format_exc())
+                                self.tLock.release()
+                                continue
+                        except ValueError:
+                            continue
+
+                    except PermissionError:
+                        try:
+                            self.tLock.release()
+                            continue
+                        except ValueError:
+                            continue
+
+                    except UnboundLocalError:
+                        try:
+                            windll.user32.MessageBoxW(0, 'Error 0x103 ' + format_exc(), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x103. ' + format_exc())
+                            self.tLock.release()
+                            continue
+                        except ValueError:
+                            continue
+
+                    except FileNotFoundError:
+                        try:
+                            self.tLock.release()
+                            continue
+                        except ValueError:
+                            continue
+
+                    except IndexError:
+                        try:
+                            windll.user32.MessageBoxW(0, 'Error 0x105 ' + format_exc(), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x105. ' + format_exc())
+                            self.tLock.release()
+                            continue
+                        except ValueError:
+                            continue
+
+                    except (Exception, BaseException):
+                        try:
+                            windll.user32.MessageBoxW(0, 'Error 0x100 ' + str(exc_info()), 'Error', 0x1000)
+                            Logger.log_event(Logger(), 'Error 0x100. ' + str(exc_info()))
+                            self.tLock.release()
+                            continue
+                        except ValueError:
+                            continue
+            except FileNotFoundError:
+                continue
 
     def main(self):
         if self.what_to_handle == 'stdf':
             Parser.stdf_handle(self)
         elif self.what_to_handle == 'rexxam':
             Parser.rexxam_handle(self)
+        elif 'tri' in self.what_to_handle:
+            Parser.tri_handle(self, module = self.what_to_handle.split('_')[1])
