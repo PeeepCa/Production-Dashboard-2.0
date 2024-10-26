@@ -1,6 +1,7 @@
 # Logger library
 
 from datetime import datetime
+from os import path, makedirs
 
 
 class Logger:
@@ -8,7 +9,10 @@ class Logger:
     Library for logging. Logged in directory as txt file named as date.
     """
     def __init__(self):
-        self.config = open(Logger.time_stamp().split(' ')[0].replace('.', '') + '_log.txt', 'a')
+        log_dir = 'C:\\temp_logs\\'
+        if not path.exists(log_dir):
+            makedirs(log_dir)
+        self.config = open(log_dir + Logger.time_stamp().split(' ')[0].replace('.', '') + '_log.txt', 'a')
 
     @staticmethod
     def time_stamp():

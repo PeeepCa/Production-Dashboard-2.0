@@ -249,8 +249,9 @@ class App:
                 # Offline mode
                 self.pass_count = library.shared_varriables.pass_count
                 self.fail_count = library.shared_varriables.fail_count
-                self.fpy_perf = (((self.pass_count + self.fail_count) - self.fail_count) /
-                                 (self.pass_count + self.fail_count) * 100)
+                if self.pass_count and self.fail_count is not 0:
+                    self.fpy_perf = (((self.pass_count + self.fail_count) - self.fail_count) /
+                                     (self.pass_count + self.fail_count) * 100)
                 self.lrf_perf = 0
             current_color = c.itemcget(app_alive, 'fill')
             if current_color == 'black':
