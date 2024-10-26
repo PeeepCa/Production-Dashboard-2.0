@@ -3,7 +3,7 @@
 # App is using SESO, ITAC, and it parses log files in defined folder.
 # Everything is defined in config files.
 # Config files are located in main folder in folder configuration.
-# Updates are done by checking up production.bat, if version was changed it ll automatically restart app.
+# Updates are done by checking up production_new.bat, if version was changed it ll automatically restart app.
 # New repo is on GitHub.
 # Implemented FIFO for log files.
 # Added json parser.
@@ -134,10 +134,10 @@ class App:
     @staticmethod
     def update_app(self):
         # Update procedure
-        # Checking if folder name is actually same as name inside the production.bat
+        # Checking if folder name is actually same as name inside the production_new.bat
         if getattr(sys, 'frozen', False):
             app_version = self.application_path.rsplit('\\', 1)[1]
-            batch_location = self.application_path.rsplit('\\', 1)[0] + '\\production.bat'
+            batch_location = self.application_path.rsplit('\\', 1)[0] + '\\production_new.bat'
             file = open(batch_location, 'r')
             temp = file.read(-1).splitlines()[11].rsplit('\\', 2)[1]
             if temp != app_version:
